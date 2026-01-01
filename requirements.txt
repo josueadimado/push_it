@@ -1,0 +1,26 @@
+# Core Framework
+Django==6.0
+
+# Environment Variables Management
+# Used for reading .env file securely
+python-decouple==3.8
+
+# HTTP Requests Library
+# Used for Paystack API, YouTube API, Facebook Graph API, Instagram Graph API, TikTok API
+requests==2.32.5
+
+# Image Processing
+# Required for ImageField (company logo uploads)
+Pillow==12.0.0
+
+# Web Scraping (Optional - for Instagram/Facebook follower verification fallback)
+# Only needed if using scraping as fallback for follower verification
+beautifulsoup4==4.14.3
+
+# Note: The following packages are automatically installed as dependencies
+# but are listed here for production deployment clarity:
+# - asgiref (Django dependency)
+# - sqlparse (Django dependency)
+# - certifi, charset-normalizer, idna, urllib3 (requests dependencies)
+# - soupsieve (beautifulsoup4 dependency)
+# - typing_extensions (type hints support)

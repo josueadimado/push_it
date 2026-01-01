@@ -1,0 +1,602 @@
+// Footer One
+.footer-one {
+    padding: 110px 0 80px;
+    .email-banner {
+        border: 2px solid #000;
+        padding: 50px 40px;
+        margin-bottom: 100px;
+        box-shadow: 8px 8px 0 (#000);
+        h3 {
+            font-family: $font-Montserrat;
+            font-size: 52px;
+            font-style: italic;
+            text-transform: uppercase;
+            margin: 0;
+        }
+        form {
+            max-width: 510px;
+            margin-left: auto;
+            height: 80px;
+            input {
+               width: 100%;
+               height: 100%;
+               border: 2px solid #000;
+               border-radius: 10px;
+               background: transparent;
+               padding: 0 70px 0 25px;
+               font-weight: 500;
+               font-size: 20px;
+               color: #000;
+               &::placeholder {
+                color: #000;
+               }
+            }
+            button {
+                position: absolute;
+                top:10px;
+                right: 10px;
+                bottom: 10px;
+                width: 65px;
+                border-radius: 10px;
+                background: #000;
+                &:hover {
+                    background: $bg-two;
+                }
+            }
+        }
+    }
+    .footer-contact {
+        .tel {
+            color: #000;
+            &:hover {
+                color: $bg-two;
+            }
+        }
+        .social-icon {
+            margin: 0 -5px;
+            li {
+                padding: 0 5px;
+                a {
+                    width: 48px;
+                    height: 48px;
+                    border: 1px solid #000;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #000;
+                    font-size: 22px;
+                    @include transition(0.3s);
+                    &:hover {
+                        background: #000;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+    .footer-nav {
+        .footer-nav-link a {
+            line-height: 53px;
+            font-weight: 500;
+            font-size: 20px;
+            color: #000;
+            color: $text-color;
+            @include transition(0.2s);
+            &:hover {
+                color: $bg-two;
+            }
+        }
+    }
+    .copyright-text {
+        position: absolute;
+        left: 0;
+        bottom: 30px;
+        color: rgba($color: #000000, $alpha: 0.4);
+    }
+}
+// Footer Two
+.footer-two {
+    .bg-wrapper {
+        background: #000;
+        border-radius: 40px;
+        padding: 85px 10px 0;
+    }
+    .footer-intro {
+        h3 {
+            font-family: $font-Montserrat;
+            font-size: 42px;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            span {
+                color: $color-four;
+            }
+        }
+        form {
+            height: 80px;
+            margin-top: 50px;
+            input {
+               width: 100%;
+               height: 100%;
+               border: none;
+               border-bottom: 1px solid #fff;
+               border-radius: 0;
+               background: transparent;
+               padding: 0 70px 0 0;
+               font-size: 20px;
+               color: #fff;
+               &::placeholder {
+                color: rgba($color: #fff, $alpha: 0.5);
+               }
+            }
+            button {
+                position: absolute;
+                top:10px;
+                right: 0;
+                bottom: 10px;
+            }
+        }
+    }
+    .footer-nav-link {
+        a {
+            font-weight: 500;
+            color: rgba($color: #fff, $alpha: 0.5);
+            line-height: 50px;
+            @include transition(0.2s);
+            &:hover {
+                color: $color-four;
+            }
+        }
+    }
+    .footer-contact {
+        p {
+            font-size: 18px;
+            color: rgba($color: #fff, $alpha: 0.5);
+        }
+        .tel {
+            font-size: 24px;
+            color: #fff;
+            margin: 35px 0 55px;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        .social-icon {
+            margin: 0 -5px;
+            li {
+                padding: 0 5px;
+                a {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #000;
+                    font-size: 22px;
+                    background: #fff;
+                    @include transition(0.3s);
+                    &:hover {
+                        background: $color-four;
+                    }
+                }
+            }
+        }
+    }
+    .bottom-footer {
+        margin-top: 50px;
+        padding: 40px 0;
+        border-top: 1px solid rgba($color: #fff, $alpha: 0.14);
+        ul {
+            margin: 0 -4px;
+            li {
+                margin: 0 4px;
+                a {
+                    font-weight: 500;
+                    color: rgba($color: #fff, $alpha: 0.5);
+                    @include transition(0.2s);
+                    &:hover {
+                        color: $color-four;
+                    }
+                }
+            }
+        }
+        p {
+            color: rgba($color: #fff, $alpha: 0.5);
+            span {
+                color: #fff;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+
+// Footer Three
+.footer-three {
+    padding-top: 100px;
+    .footer-intro {
+        h3 {
+            font-size: 64px;
+            line-height: 1.15625em;
+            letter-spacing: -1px;
+        }
+        form {
+            height: 70px;
+            margin-top: 50px;
+            input {
+               width: 100%;
+               height: 100%;
+               border: none;
+               border-radius: 10px;
+               background: #F7F7F7;
+               padding: 0 70px 0 20px;
+               font-size: 20px;
+               color: #000;
+               &::placeholder {
+                color: rgba($color: #000, $alpha: 0.5);
+               }
+            }
+            button {
+                position: absolute;
+                top:0;
+                right: 0;
+                bottom: 0;
+                width: 60px;
+            }
+            &.style-two {
+                max-width: 480px;
+                height: 65px;
+                input {
+                    background: transparent;
+                    border: 2px solid #000;
+                    border-radius: 50px;
+                    button {
+                        border-radius: 0 50px 50px 0;
+                    }
+                }
+            }
+        }
+    }
+    .footer-nav-link {
+        a {
+            font-weight: 500;
+            color: #000;
+            line-height: 50px;
+            @include transition(0.2s);
+            &:hover {
+                color: $color-two;
+            }
+        }
+    }
+    .footer-contact {
+        p {
+            font-size: 18px;
+            color: #000;
+        }
+        .tel {
+            font-size: 24px;
+            color: #000;
+            margin: 35px 0 55px;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        .social-icon {
+            margin: 0 -5px;
+            li {
+                padding: 0 5px;
+                a {
+                    width: 50px;
+                    height: 50px;
+                    border: 1px solid rgba($color: #000000, $alpha: 0.1);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #000;
+                    font-size: 22px;
+                    @include transition(0.3s);
+                    &:hover {
+                        background: $color-two;
+                        border-color: $color-two;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+    .bottom-footer {
+        margin-top: 50px;
+        padding: 40px 0;
+        border-top: 1px solid rgba($color: #000, $alpha: 0.08);
+        ul {
+            margin: 0 -4px;
+            li {
+                margin: 0 4px;
+                a {
+                    font-weight: 500;
+                    color: #000;
+                    @include transition(0.2s);
+                    &:hover {
+                        color: $color-two;
+                    }
+                }
+            }
+        }
+        p {
+            color: #000;
+            span {
+                font-weight: 500;
+            }
+        }
+    }
+    &.version-two {
+        .footer-intro {
+            h3 {
+                font-family: $font-Playfair;
+            }
+            form {
+                max-width: 480px;
+                margin-top: 45px;
+                input {
+                    background: transparent;
+                    border-bottom: 2px solid #000;
+                    font-weight: 500;
+                    border-radius: 0;
+                    padding-left: 0;
+                }
+            }
+        }
+        .bottom-footer {
+            margin-top: 35px;
+            border: none;
+        }
+    }
+    &.dark-version {
+        background: #000;
+        padding-bottom: 80px;
+        position: relative;
+        z-index: 1;
+        .address-wrapper {
+            margin-bottom: 90px;
+            h2 {
+                font-family: $font-Playfair;
+                color: #fff;
+                font-size: 62px;
+                font-weight: 600;
+                margin-bottom: 30px;
+            }
+            .block {
+                padding: 40px 35px;
+                background: rgba($color: #fff, $alpha: 0.1);
+                border-radius: 20px;
+                .icon {
+                    width: 64px;
+                    height: 64px;
+                    background: rgba($color: #fff, $alpha: 0.09)
+                }
+                .text {
+                    width: calc(100% - 64px);
+                    padding-left: 20px;
+                    color: rgba($color: #fff, $alpha: 0.5);
+                    .title {
+                        font-size: 22px;
+                        color: #fff;
+                        margin-bottom: 3px;
+                    }
+                }
+            }
+        }
+        .footer-nav-link a {
+            color: #fff;
+            &:hover {
+                color: $color-nine;
+            }
+        }
+        .social-icon li {
+            a {
+                color: #fff;
+                font-size: 20px;
+                margin-right: 20px;
+            }
+        }
+        .copyright-text {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            color: rgba($color: #fff, $alpha: 0.4);
+        }
+        .shape_01 {
+            top:12%;
+            right: 10%;
+            max-width: 52%;
+        }
+    }
+}
+
+// Footer Four
+.footer-four {
+    .wrapper {
+        border: 2px solid #000;
+        border-radius: 40px;
+        padding: 70px 40px 60px;
+    }
+    .footer-nav {
+        .footer-nav-link a {
+            line-height: 50px;
+            font-weight: 500;
+            font-size: 18px;
+            color: #000;
+            color: #000;
+            @include transition(0.2s);
+            &:hover {
+                color: $bg-two;
+            }
+        }
+    }
+    .footer-newsletter {
+        h6 {
+            font-size: 21px;
+            margin-bottom: 35px;
+        }
+        form {
+            height: 70px;
+            input {
+                width: 100%;
+                height: 100%;
+                border: 2px solid #000;
+                border-radius: 8px;
+                background: transparent;
+                font-size: 16px;
+                color: #000;
+                padding: 0 122px 0 20px;
+            }
+            button {
+                font-size: 16px;
+                color: #fff;
+                font-weight: 500;
+                border-radius: 8px;
+                background: #2B2B2B;
+                position: absolute;
+                right: 7px;
+                top:7px;
+                bottom: 7px;
+                width: 115px;
+                &:hover {
+                    background: $color-two;
+                }
+            }
+        }
+    }
+    .copyright-text {
+        color: rgba($color: #000000, $alpha: 0.5);
+        margin: 25px 0;
+    }
+}
+// Footer Five
+.footer-five {
+    padding: 150px 80px 90px;
+    position: relative;
+    z-index: 0;
+    .wrapper {
+        background: #fff;
+        border-radius: 40px;
+        padding: 20px 12px;
+        box-shadow: 0px -40px 90px rgba(0, 0, 0, 0.03);
+    }
+    .newsletter {
+        border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+        padding: 35px 0 45px;
+        margin-bottom: 60px;
+        h3 {
+            font-size: 52px;
+            line-height: 1.15625em;
+        }
+        form {
+            max-width: 620px;
+            margin-left: auto;
+            h6 {
+                font-size: 20px;
+                color: rgba($color: #000, $alpha: 0.5);
+                margin-bottom: 10px;
+            }
+            input {
+               width: 100%;
+               height: 74px;
+               border: none;
+               border-bottom: 2px solid #000;
+               border-radius: 0;
+               background: transparent;
+               padding: 0 70px 0 0;
+               font-size: 24px;
+               color: #000;
+               &::placeholder {
+                color: #000;
+               }
+            }
+            button {
+                position: absolute;
+                right: 0;
+                bottom: 12px;
+                width: 60px;
+                height: 60px;
+                background: #000;
+                border-radius: 50%;
+                &:hover {
+                    background: $color-seven;
+                }
+            }
+        }
+    }
+    .footer-nav-link {
+        a {
+            font-weight: 500;
+            color: #000;
+            line-height: 50px;
+            @include transition(0.2s);
+            &:hover {
+                color: $color-two;
+            }
+        }
+    }
+    .footer-contact {
+        p {
+            font-size: 18px;
+            color: #000;
+        }
+        .tel {
+            font-size: 24px;
+            color: #000;
+            margin: 35px 0 55px;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        .social-icon {
+            margin: 0 -5px;
+            li {
+                padding: 0 5px;
+                a {
+                    width: 50px;
+                    height: 50px;
+                    border: 1px solid rgba($color: #000000, $alpha: 0.1);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #000;
+                    font-size: 22px;
+                    @include transition(0.3s);
+                    &:hover {
+                        background: $color-two;
+                        border-color: $color-two;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+    .copyright-text {
+        position: absolute;
+        left: 0;
+        bottom: 30px;
+        color: rgba($color: #000000, $alpha: 0.4);
+    }
+    .bg_01 {
+        bottom: 0;
+        right: 0;
+    }
+    .shape_02 {
+        max-width: 5%;
+        right: 30px;
+        top:57%;
+        z-index: 0;
+    }
+    .shape_03 {
+        max-width: 5%;
+        left: 30px;
+        top:57%;
+        z-index: 0;
+    }
+}

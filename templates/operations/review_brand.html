@@ -1,0 +1,376 @@
+{% extends "operations/base_admin.html" %}
+{% load static %}
+
+{% block title %}Review Brand · Admin · Push-it{% endblock %}
+
+{% block breadcrumb %}
+<a href="{% url 'operations:verification' %}">Verification</a> / Review Brand
+{% endblock %}
+
+{% block admin_extra_styles %}
+<style>
+.review-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.review-header {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user-avatar-lg {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.user-details h2 {
+    margin: 0 0 4px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--foreground) !important;
+}
+
+.user-details p {
+    margin: 0;
+    color: var(--muted-foreground) !important;
+    font-size: 14px;
+}
+
+.risk-badge {
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.risk-high {
+    background: var(--destructive);
+    color: var(--destructive-foreground);
+}
+
+.risk-medium {
+    background: var(--warning);
+    color: var(--warning-foreground);
+}
+
+.risk-low {
+    background: var(--success);
+    color: var(--success-foreground);
+}
+
+.review-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    color: var(--foreground) !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted-foreground) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 14px;
+    color: var(--foreground) !important;
+    font-weight: 500;
+}
+
+.description-box {
+    margin-top: 16px;
+    padding: 16px;
+    background: var(--background-secondary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+}
+
+.description-box p {
+    margin: 0;
+    color: var(--foreground) !important;
+    line-height: 1.6;
+}
+
+.action-bar {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    bottom: 0;
+    margin-top: 24px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+}
+
+.btn-success {
+    background: var(--success);
+    color: var(--success-foreground);
+}
+
+.btn-danger {
+    background: var(--destructive);
+    color: var(--destructive-foreground);
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: var(--secondary-foreground);
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.back-link {
+    color: var(--muted-foreground) !important;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.back-link:hover {
+    color: var(--foreground) !important;
+}
+</style>
+{% endblock %}
+
+{% block admin_content %}
+<div class="review-container">
+    <a href="{% url 'operations:verification' %}" class="back-link">
+        <iconify-icon icon="lucide:arrow-left"></iconify-icon>
+        Back to Verification Queue
+    </a>
+
+    <div class="review-header">
+        <div class="user-info">
+            <div class="user-avatar-lg">
+                {% with name=brand.company_name|default:brand.user.username %}
+                    {% if name|length >= 2 %}
+                        {{ name|first|upper }}{{ name|slice:"1:"|first|upper }}
+                    {% else %}
+                        {{ name|first|upper }}{{ name|first|upper }}
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <div class="user-details">
+                <h2>{{ brand.company_name|default:brand.user.username }}</h2>
+                <p>{{ brand.user.email }}</p>
+                <p style="margin-top: 4px;">
+                    <strong>Status:</strong> {{ brand.get_verification_status_display }}
+                    {% if brand.is_paused %}
+                        <span class="status-badge status-rejected" style="margin-left: 8px;">Paused</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div>
+            <span class="risk-badge risk-{{ risk_level }}">
+                {% if risk_level == 'high' %}High Risk
+                {% elif risk_level == 'medium' %}Medium Risk
+                {% else %}Low Risk{% endif %}
+            </span>
+        </div>
+    </div>
+
+    <!-- Company Information -->
+    <div class="review-section">
+        <h3 class="section-title">
+            <iconify-icon icon="lucide:building"></iconify-icon>
+            Company Information
+        </h3>
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">Company Name</span>
+                <span class="info-value">{{ brand.company_name|default:"Not provided" }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Industry</span>
+                <span class="info-value">{{ brand.industry|default:"Not provided" }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Website</span>
+                <span class="info-value">
+                    {% if brand.website %}
+                        <a href="{{ brand.website }}" target="_blank" style="color: var(--primary); text-decoration: none;">
+                            {{ brand.website }} →
+                        </a>
+                    {% else %}
+                        Not provided
+                    {% endif %}
+                </span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Contact Email</span>
+                <span class="info-value">{{ brand.contact_email|default:"Not provided" }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Phone Number</span>
+                <span class="info-value">{{ brand.phone_number|default:"Not provided" }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Account Email</span>
+                <span class="info-value">{{ brand.user.email }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Email Verified</span>
+                <span class="info-value">
+                    {% if brand.user.is_email_verified %}
+                        <span style="color: var(--success-foreground);">✓ Yes</span>
+                    {% else %}
+                        <span style="color: var(--destructive);">✗ No</span>
+                    {% endif %}
+                </span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Account Created</span>
+                <span class="info-value">{{ brand.created_at|date:"M d, Y" }}</span>
+            </div>
+        </div>
+        {% if brand.address %}
+        <div style="margin-top: 16px;">
+            <span class="info-label">Address</span>
+            <p style="margin: 8px 0 0 0; color: var(--foreground) !important;">{{ brand.address }}</p>
+        </div>
+        {% endif %}
+        {% if brand.description %}
+        <div class="description-box" style="margin-top: 16px;">
+            <span class="info-label">Company Description</span>
+            <p>{{ brand.description }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Profile Completion -->
+    <div class="review-section">
+        <h3 class="section-title">
+            <iconify-icon icon="lucide:check-circle"></iconify-icon>
+            Profile Completion
+        </h3>
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">Profile Completed</span>
+                <span class="info-value">
+                    {% if brand.is_profile_complete %}
+                        <span style="color: var(--success-foreground);">✓ Yes</span>
+                    {% else %}
+                        <span style="color: var(--destructive);">✗ No</span>
+                    {% endif %}
+                </span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Required Fields</span>
+                <span class="info-value">
+                    {% if brand.company_name and brand.industry and brand.description %}
+                        <span style="color: var(--success-foreground);">✓ All Complete</span>
+                    {% else %}
+                        <span style="color: var(--warning-foreground);">⚠ Missing Fields</span>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Bar -->
+    <div class="action-bar">
+        <div>
+            <p style="margin: 0; color: var(--muted-foreground) !important; font-size: 13px;">
+                Review all information before making a decision
+            </p>
+        </div>
+        <div class="action-buttons">
+            <form method="post" action="{% url 'operations:reject_brand' brand.id %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to reject this brand?');">
+                    <iconify-icon icon="lucide:x"></iconify-icon>
+                    Reject
+                </button>
+            </form>
+            <form method="post" action="{% url 'operations:approve_brand' brand.id %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">
+                    <iconify-icon icon="lucide:check"></iconify-icon>
+                    Approve
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

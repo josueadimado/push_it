@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Push-it{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="icon" href="{% static 'images/logo/Pushit.svg' %}">
+
+    {# Global CSS so every page (including login/signup) is styled #}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" media="all">
+    <!-- Main style sheet -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" media="all">
+    <!-- responsive style sheet -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}" media="all">
+
+    <style>
+        /* Header background when page is scrolled */
+        .theme-main-menu.menu-style-six.white-vr.scrolled {
+            background-color: #ffffff !important;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12);
+        }
+
+        /* Make nav/menu text dark when header is white */
+        .theme-main-menu.menu-style-six.white-vr.scrolled .navbar-nav .nav-link {
+            color: #000000 !important;
+        }
+
+        .theme-main-menu.menu-style-six.white-vr.scrolled .login-btn-four span,
+        .theme-main-menu.menu-style-six.white-vr.scrolled .login-btn-four {
+            color: #000000 !important;
+        }
+
+        /* Logo swap: white logo on dark, color logo when scrolled */
+        .site-logo-color,
+        .mobile-logo-color {
+            display: none;
+        }
+        .site-logo-white,
+        .mobile-logo-white {
+            display: inline-block;
+        }
+        .theme-main-menu.menu-style-six.white-vr.scrolled .site-logo-white,
+        .theme-main-menu.menu-style-six.white-vr.scrolled .mobile-logo-white {
+            display: none;
+        }
+        .theme-main-menu.menu-style-six.white-vr.scrolled .site-logo-color,
+        .theme-main-menu.menu-style-six.white-vr.scrolled .mobile-logo-color {
+            display: inline-block;
+        }
+    </style>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    {# Simple global loader overlay shown on every page #}
+    <div id="global-loader">
+        <div class="global-loader-inner">
+            <img src="{% static 'images/logo/Pushit-white.svg' %}" alt="Push-it" class="global-loader-logo">
+            <div class="global-loader-spinner"></div>
+        </div>
+    </div>
+
+    {% block pre_header %}{% endblock %}
+
+    {% block header %}
+        <!-- 
+        =============================================
+            Theme Main Menu (shared header)
+        ============================================== 
+        -->
+        <header class="theme-main-menu menu-style-six white-vr sticky-menu menu-overlay">
+            <div class="inner-content gap-one">
+                <div class="top-header position-relative">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="logo order-lg-0">
+                            <a href="{% url 'core:home' %}" class="d-flex align-items-center">
+                                <!-- White logo on dark header -->
+                                <img src="{% static 'images/logo/Pushit-white.svg' %}" alt="Push-it logo white"
+                                     class="site-logo-white" style="height:52px; width:auto;">
+                                <!-- Color logo when header is scrolled -->
+                                <img src="{% static 'images/logo/Pushit.svg' %}" alt="Push-it logo color"
+                                     class="site-logo-color" style="height:52px; width:auto;">
+                            </a>
+                        </div>
+                        <!-- logo -->
+                        <div class="right-widget ms-auto ms-lg-0 me-3 me-lg-0 order-lg-3">
+                            <ul class="d-flex align-items-center style-none">
+                                <li>
+                                    <a href="{% url 'accounts:login' %}" class="login-btn-four fw-500 d-flex align-items-center tran3s">
+                                        <img src="{% static 'images/icon/icon_26.svg' %}" alt="" class="me-2">
+                                        <span>Login</span>
+                                    </a>
+                                </li>
+                                <li class="ms-3">
+                                    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                                        <i class="bi bi-sun-fill icon-sun"></i>
+                                        <i class="bi bi-moon-fill icon-moon"></i>
+                                    </button>
+                                </li>
+                                <li class="d-none d-md-inline-block ms-3">
+                                    <div class="dropdown">
+                                        <a class="btn-thirteen" href="{% url 'accounts:signup_brand' %}">
+                                            Start a Campaign
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <nav class="navbar navbar-expand-lg p0 order-lg-2 ms-lg-5">
+                            <button class="navbar-toggler d-block d-lg-none" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                                    aria-label="Toggle navigation">
+                                <span></span>
+                            </button>
+                            <div class="collapse navbar-collapse ms-lg-5" id="navbarNav">
+                                <ul class="navbar-nav align-items-lg-center">
+                                    <li class="d-block d-lg-none">
+                                        <div class="logo">
+                                            <a href="{% url 'core:home' %}" class="d-block">
+                                                <!-- White mobile logo on dark -->
+                                                <img src="{% static 'images/logo/Pushit-white.svg' %}" alt="Push-it logo white"
+                                                     class="mobile-logo-white" style="height:44px; width:auto;">
+                                                <!-- Color mobile logo when header is scrolled -->
+                                                <img src="{% static 'images/logo/Pushit.svg' %}" alt="Push-it logo color"
+                                                     class="mobile-logo-color" style="height:44px; width:auto;">
+                                            </a>
+                                        </div>
+                                    </li>
+                                    {% block main_nav %}
+                                    <!-- Simple in-page navigation -->
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'core:home' %}">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#features">How it works</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#pricing">Pricing</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#faq">FAQ</a>
+                                    </li>
+                                    {% endblock main_nav %}
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+    {% endblock header %}
+
+    {% block content %}{% endblock %}
+
+    {% block footer %}
+        <!--
+        =====================================================
+            Footer Three (shared footer)
+        =====================================================
+        -->
+        <div class="footer-three">
+            <div class="container">
+                <div class="position-relative">
+                    <div class="row">
+                        <div class="col-xxl-5 col-lg-4 me-auto">
+                            <div class="footer-intro mb-30 me-xxl-5 pe-xxl-4">
+                                <h3>Subscribe to our <span>newsletter.</span></h3>
+                                <form action="#" class="position-relative style-two">
+                                    <input type="email" placeholder="Your email address">
+                                    <button class="tran3s">
+                                        <img src="{% static 'images/icon/icon_17.svg' %}" alt="" class="me-auto">
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-6">
+                            <div class="footer-nav mb-40">
+                                <ul class="footer-nav-link style-none">
+                                    <li><a href="#pricing">Pricing</a></li>
+                                    <li><a href="#faq">FAQ</a></li>
+                                    <li><a href="#">Blog</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-6">
+                            <div class="footer-nav mb-40">
+                                <ul class="footer-nav-link style-none">
+                                    <li><a href="#faq">Faq’s</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Terms</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xxl-2 col-lg-3">
+                            <div class="footer-contact mb-20">
+                                <p class="fw-500">210 Wallent Street, California, Main OC, USA</p>
+                                <a href="#" class="tel fw-500 tran3s">(+91) 0187 34 377</a>
+                                <ul class="style-none d-flex align-items-center social-icon">
+                                    <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="container">
+                <div class="bottom-footer">
+                    <div class="d-md-flex align-items-center justify-content-center">
+                        <p class="copyright-text text-center m0">
+                            <span>&copy;{% now "Y" %} Push-it Inc.</span> All rights reserved.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock footer %}
+
+    <button class="scroll-top">
+        <i class="bi bi-arrow-up-short"></i>
+    </button>
+
+    {% block extra_js %}
+        <!-- Global JS from the template, shared by all pages -->
+        <script src="{% static 'vendor/jquery.min.js' %}"></script>
+        <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'vendor/wow/wow.min.js' %}"></script>
+        <script src="{% static 'vendor/slick/slick.min.js' %}"></script>
+        <script src="{% static 'vendor/fancybox/fancybox.umd.js' %}"></script>
+        <script src="{% static 'vendor/jquery.lazy.min.js' %}"></script>
+        <script src="{% static 'vendor/jquery.counterup.min.js' %}"></script>
+        <script src="{% static 'vendor/jquery.waypoints.min.js' %}"></script>
+        <script src="{% static 'vendor/validator.js' %}"></script>
+        <script src="{% static 'js/theme.js' %}"></script>
+
+        <script>
+            // Simple global loader: hide when page is fully loaded
+            (function () {
+                const loader = document.getElementById('global-loader');
+                if (!loader) return;
+
+                window.addEventListener('load', function () {
+                    // Small delay so the loader is visible briefly
+                    setTimeout(function () {
+                        loader.classList.add('global-loader-hidden');
+                    }, 250);
+                });
+            })();
+
+            // Add white background to header when the page is scrolled
+            (function () {
+                const header = document.querySelector('.theme-main-menu');
+                if (!header) return;
+
+                function onScroll() {
+                    if (window.scrollY > 10) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                }
+
+                window.addEventListener('load', onScroll);
+                window.addEventListener('scroll', onScroll);
+            })();
+
+            // Global dark/light theme toggle (shared across pages)
+            // Skip on dashboard pages - they have their own theme handlers
+            (function () {
+                // Check if we're on a dashboard page (admin or influencer)
+                const isAdminDashboard = document.getElementById('adminSidebar') !== null;
+                const isInfluencerDashboard = document.getElementById('infSidebar') !== null;
+                
+                if (isAdminDashboard || isInfluencerDashboard) {
+                    // Let dashboard-specific scripts handle theme toggling
+                    return;
+                }
+
+                const html = document.documentElement;
+
+                // Apply saved theme on load (default to dark)
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                if (savedTheme === 'light') {
+                    html.classList.add('light');
+                } else {
+                    html.classList.remove('light');
+                }
+
+                // Attach handler to header toggle if present
+                const themeToggle = document.getElementById('themeToggle');
+                if (themeToggle) {
+                    themeToggle.addEventListener('click', function () {
+                        html.classList.toggle('light');
+                        const isLight = html.classList.contains('light');
+                        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                    });
+                }
+            })();
+        </script>
+    {% endblock %}
+</body>
+</html>
+
+

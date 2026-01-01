@@ -1,0 +1,462 @@
+{% extends "brands/base_brand.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Brand Dashboard · Push-it{% endblock %}
+
+{% block breadcrumb %}Dashboard{% endblock %}
+
+{% block brand_extra_styles %}
+<style>
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--foreground);
+    margin: 0 0 4px 0;
+}
+
+.page-subtitle {
+    font-size: 14px;
+    color: var(--muted-foreground);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 0.2s;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: var(--secondary-foreground);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background: var(--muted);
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--muted-foreground);
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.stat-trend {
+    font-size: 12px;
+    color: var(--success-foreground);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+}
+
+.stat-trend.negative {
+    color: var(--destructive);
+}
+
+.stat-trend.neutral {
+    color: var(--muted-foreground);
+}
+
+/* Recent Campaigns */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--foreground);
+    margin: 0;
+}
+
+.recent-campaigns {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.table-container {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container thead {
+    background: var(--secondary);
+}
+
+.table-container th {
+    text-align: left;
+    padding: 16px 24px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    border-bottom: 1px solid var(--border);
+}
+
+.table-container td {
+    padding: 16px 24px;
+    font-size: 14px;
+    color: var(--foreground);
+    border-bottom: 1px solid var(--border);
+}
+
+.table-container tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-container tbody tr {
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.table-container tbody tr:hover {
+    background: var(--secondary);
+}
+
+.campaign-name {
+    font-weight: 500;
+    color: var(--foreground);
+}
+
+.campaign-meta {
+    font-size: 12px;
+    color: var(--muted-foreground);
+    margin-top: 2px;
+}
+
+.platform-cell {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+}
+
+.platform-icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-active {
+    background: var(--accent);
+    color: var(--accent-foreground);
+}
+
+.status-completed {
+    background: var(--success);
+    color: var(--success-foreground);
+}
+
+.status-draft {
+    background: var(--secondary);
+    color: var(--muted-foreground);
+}
+
+.status-paused {
+    background: var(--warning);
+    color: var(--warning-foreground);
+}
+
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.progress-text {
+    font-size: 12px;
+    color: var(--muted-foreground);
+}
+
+.progress-bar-container {
+    width: 120px;
+    height: 6px;
+    background: var(--secondary);
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 100px;
+    transition: width 0.3s;
+}
+
+.progress-bar-fill.complete {
+    background: var(--success-foreground);
+}
+
+.action-btn {
+    padding: 6px;
+    color: var(--muted-foreground);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: inline-flex;
+    transition: all 0.2s;
+    background: transparent;
+    border: none;
+}
+
+.action-btn:hover {
+    background: var(--secondary);
+    color: var(--foreground);
+}
+
+@media (max-width: 1200px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .table-container {
+        font-size: 12px;
+    }
+    
+    .table-container th,
+    .table-container td {
+        padding: 12px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block brand_content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Brand Dashboard</h1>
+        <div class="page-subtitle">
+            Welcome back, {{ request.user.get_full_name|default:request.user.username }}. Here's what's happening with your campaigns.
+        </div>
+    </div>
+    <a href="{% url 'brands:create_campaign' %}" class="btn-primary" style="text-decoration: none;">
+        <iconify-icon icon="lucide:plus" style="font-size: 16px;"></iconify-icon>
+        Create New Campaign
+    </a>
+</div>
+
+<!-- Stats Grid -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-label">Active Campaigns</div>
+        <div class="stat-value">{{ stats.active_campaigns }}</div>
+        <div class="stat-trend">
+            <iconify-icon icon="lucide:trending-up" style="font-size: 14px;"></iconify-icon>
+            {% if stats.new_this_week > 0 %}
+                {{ stats.new_this_week }} new this week
+            {% else %}
+                No new campaigns
+            {% endif %}
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">Videos in Progress</div>
+        <div class="stat-value">{{ stats.videos_in_progress }}</div>
+        <div class="stat-trend {% if stats.videos_pending > 0 %}negative{% else %}neutral{% endif %}">
+            {% if stats.videos_pending > 0 %}
+                {{ stats.videos_pending }} pending review
+            {% else %}
+                All up to date
+            {% endif %}
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">Completed Videos</div>
+        <div class="stat-value">{{ stats.videos_completed }}</div>
+        <div class="stat-trend">
+            <iconify-icon icon="lucide:check-circle" style="font-size: 14px;"></iconify-icon>
+            {% if stats.completed_this_month > 0 %}
+                +{{ stats.completed_this_month }} this month
+            {% else %}
+                No completions this month
+            {% endif %}
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">Wallet Balance</div>
+        <div class="stat-value">{{ brand.currency_symbol }}{{ stats.wallet_balance|floatformat:2|intcomma }}</div>
+        <div class="stat-trend neutral">
+            <a href="{% url 'brands:wallet' %}" style="color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 4px;">
+                <iconify-icon icon="lucide:wallet" style="font-size: 14px;"></iconify-icon>
+                Top up wallet
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Additional Stats Row -->
+<div class="stats-grid" style="margin-top: 0;">
+    <div class="stat-card">
+        <div class="stat-label">Total Campaigns</div>
+        <div class="stat-value">{{ stats.total_campaigns }}</div>
+        <div class="stat-trend neutral">
+            {{ stats.completed_campaigns }} completed
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">Total Spend</div>
+        <div class="stat-value">{{ brand.currency_symbol }}{{ stats.total_spend|floatformat:2|intcomma }}</div>
+        <div class="stat-trend neutral">
+            Lifetime spend
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">Total Budget</div>
+        <div class="stat-value">{{ brand.currency_symbol }}{{ stats.total_budget|floatformat:2|intcomma }}</div>
+        <div class="stat-trend neutral">
+            All campaigns
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">Draft Campaigns</div>
+        <div class="stat-value">{{ stats.draft_campaigns }}</div>
+        <div class="stat-trend neutral">
+            Not yet active
+        </div>
+    </div>
+</div>
+
+<!-- Recent Campaigns -->
+<div>
+    <div class="section-header">
+        <h2 class="section-title">Recent Campaigns</h2>
+        <a href="{% url 'brands:campaigns' %}" class="btn-secondary" style="text-decoration: none;">
+            View All
+        </a>
+    </div>
+
+    <div class="recent-campaigns">
+        <table class="table-container">
+            <thead>
+                <tr>
+                    <th style="width: 35%;">Campaign</th>
+                    <th style="width: 15%;">Platform</th>
+                    <th style="width: 15%;">Status</th>
+                    <th style="width: 25%;">Delivery Progress</th>
+                    <th style="width: 10%;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in campaign_data %}
+                <tr onclick="window.location.href='{% url 'brands:campaigns' %}'" style="cursor: pointer;">
+                    <td>
+                        <div class="campaign-name">{{ item.campaign.name }}</div>
+                        <div class="campaign-meta">Created {{ item.campaign.created_at|date:"M d, Y" }}{% if item.campaign.due_date %} · Due {{ item.campaign.due_date|date:"M d, Y" }}{% endif %}</div>
+                    </td>
+                    <td>
+                        <div class="platform-cell">
+                            <div class="platform-icon">
+                                <iconify-icon icon="{% if item.campaign.platform == 'tiktok' %}lucide:music-2{% elif item.campaign.platform == 'instagram' %}lucide:instagram{% elif item.campaign.platform == 'youtube' %}lucide:youtube{% else %}lucide:video{% endif %}" style="font-size: 16px;"></iconify-icon>
+                            </div>
+                            {{ item.campaign.get_platform_display }}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="status-badge status-{{ item.campaign.status|lower }}">
+                            {{ item.campaign.get_status_display }}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="progress-container">
+                            <span class="progress-text">{{ item.delivered }} of {{ item.campaign.package_videos }} videos</span>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill {% if item.progress == 100 %}complete{% endif %}" style="width: {{ item.progress }}%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="text-align: right;">
+                        <a href="{% url 'brands:campaigns' %}" class="action-btn" style="text-decoration: none; color: inherit;">
+                            <iconify-icon icon="lucide:chevron-right" style="font-size: 18px;"></iconify-icon>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" style="text-align: center; padding: 40px; color: var(--muted-foreground);">
+                        No campaigns yet. Create your first campaign to get started!
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

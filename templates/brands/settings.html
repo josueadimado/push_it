@@ -1,0 +1,433 @@
+{% extends "brands/base_brand.html" %}
+{% load static %}
+
+{% block title %}Settings · Brand Dashboard · Push-it{% endblock %}
+
+{% block breadcrumb %}Settings{% endblock %}
+
+{% block brand_extra_styles %}
+<style>
+.settings-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.section-header {
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: var(--foreground);
+}
+
+.section-desc {
+    color: var(--muted-foreground);
+    font-size: 14px;
+}
+
+.card-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.card-row {
+    padding: 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.card-row:last-child {
+    border-bottom: none;
+}
+
+.row-info {
+    flex: 1;
+}
+
+.row-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--foreground);
+}
+
+.row-desc {
+    font-size: 13px;
+    color: var(--muted-foreground);
+}
+
+.row-action {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Switch Component */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--input);
+    transition: 0.4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+input:checked + .slider {
+    background-color: var(--primary);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: var(--secondary-foreground);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background: var(--muted);
+}
+
+.btn-destructive {
+    background: #fef2f2;
+    color: var(--destructive);
+    border: 1px solid #fee2e2;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+html:not(.light) .btn-destructive {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+}
+
+.btn-destructive:hover {
+    background: #fee2e2;
+    border-color: #fecaca;
+}
+
+html:not(.light) .btn-destructive:hover {
+    background: rgba(239, 68, 68, 0.25);
+    border-color: rgba(239, 68, 68, 0.4);
+}
+
+.team-list {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.team-list thead {
+    background: var(--secondary);
+}
+
+.team-list th {
+    text-align: left;
+    font-size: 12px;
+    color: var(--muted-foreground);
+    font-weight: 500;
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.team-list td {
+    padding: 16px 24px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--foreground);
+    vertical-align: middle;
+}
+
+.team-list tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.team-list tbody tr:hover {
+    background: var(--background);
+}
+
+.role-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    background: var(--secondary);
+    color: var(--secondary-foreground);
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.user-avatar-sm {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted-foreground);
+    font-weight: 600;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.user-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.danger-zone {
+    border-color: #fee2e2 !important;
+}
+
+html:not(.light) .danger-zone {
+    border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+@media (max-width: 768px) {
+    .card-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .row-action {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    
+    .team-list {
+        font-size: 12px;
+    }
+    
+    .team-list th,
+    .team-list td {
+        padding: 12px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block brand_content %}
+<div class="settings-container">
+    <!-- Team Settings -->
+    <section>
+        <div class="section-header">
+            <h2 class="section-title">Team Members</h2>
+            <div class="section-desc">
+                Manage who can access this dashboard and their permissions.
+            </div>
+        </div>
+        <div class="card-panel">
+            <table class="team-list">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in team_members %}
+                    <tr>
+                        <td>
+                            <div class="user-cell">
+                                <div class="user-avatar-sm">
+                                    {% with name=member.name %}
+                                        {% if " " in name %}{{ name|first }}{{ name|slice:"1:"|truncatewords:1|first }}{% else %}{{ name|slice:":2"|upper }}{% endif %}
+                                    {% endwith %}
+                                </div>
+                                <span style="font-weight: 500;">{{ member.name }}</span>
+                            </div>
+                        </td>
+                        <td>{{ member.email }}</td>
+                        <td><span class="role-badge">{{ member.role }}</span></td>
+                        <td style="text-align: right;">
+                            <button class="icon-btn" title="More options">
+                                <iconify-icon icon="lucide:more-horizontal" style="font-size: 16px;"></iconify-icon>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 40px; color: var(--muted-foreground);">
+                            No team members found.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div style="padding: 16px 24px; background: var(--secondary); border-top: 1px solid var(--border); display: flex; justify-content: flex-end;">
+                <button class="btn-secondary" style="background: var(--card);">
+                    Invite Member
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notifications -->
+    <section>
+        <div class="section-header">
+            <h2 class="section-title">Notifications</h2>
+            <div class="section-desc">
+                Control which emails and alerts you receive.
+            </div>
+        </div>
+        <div class="card-panel">
+            <div class="card-row">
+                <div class="row-info">
+                    <div class="row-title">Campaign Updates</div>
+                    <div class="row-desc">
+                        Receive emails when influencers submit content or ask questions.
+                    </div>
+                </div>
+                <div class="row-action">
+                    <label class="switch">
+                        <input type="checkbox" {% if notification_prefs.campaign_updates %}checked{% endif %}>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="card-row">
+                <div class="row-info">
+                    <div class="row-title">Billing Alerts</div>
+                    <div class="row-desc">
+                        Get notified about invoices, payment failures, and renewals.
+                    </div>
+                </div>
+                <div class="row-action">
+                    <label class="switch">
+                        <input type="checkbox" {% if notification_prefs.billing_alerts %}checked{% endif %}>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="card-row">
+                <div class="row-info">
+                    <div class="row-title">Marketing & Tips</div>
+                    <div class="row-desc">
+                        News about new features and influencer marketing tips.
+                    </div>
+                </div>
+                <div class="row-action">
+                    <label class="switch">
+                        <input type="checkbox" {% if notification_prefs.marketing_tips %}checked{% endif %}>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security -->
+    <section>
+        <div class="section-header">
+            <h2 class="section-title">Security</h2>
+            <div class="section-desc">
+                Manage your password and account access.
+            </div>
+        </div>
+        <div class="card-panel">
+            <div class="card-row">
+                <div class="row-info">
+                    <div class="row-title">Password</div>
+                    <div class="row-desc">Last changed 3 months ago.</div>
+                </div>
+                <div class="row-action">
+                    <button class="btn-secondary">Change Password</button>
+                </div>
+            </div>
+            <div class="card-row">
+                <div class="row-info">
+                    <div class="row-title">Two-Factor Authentication</div>
+                    <div class="row-desc">
+                        Add an extra layer of security to your account.
+                    </div>
+                </div>
+                <div class="row-action">
+                    <label class="switch">
+                        <input type="checkbox" {% if two_factor_enabled %}checked{% endif %}>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Danger Zone -->
+    <section>
+        <div class="section-header">
+            <h2 class="section-title" style="color: var(--destructive);">Danger Zone</h2>
+        </div>
+        <div class="card-panel danger-zone">
+            <div class="card-row">
+                <div class="row-info">
+                    <div class="row-title">Delete Account</div>
+                    <div class="row-desc">
+                        Permanently remove your account and all data. This cannot be undone.
+                    </div>
+                </div>
+                <div class="row-action">
+                    <button class="btn-destructive">Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+

@@ -1,0 +1,574 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block extra_head %}
+<!-- Inter Font - Apple's official font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
+<style>
+:root {
+    /* Brand Colors */
+    --brand-orange: #ff7505;
+    --brand-cyan: #10b7d6;
+    
+    /* Dark Mode Colors */
+    --background: hsl(222 47% 5%);
+    --background-secondary: hsl(222 47% 8%);
+    --foreground: #f1f5f9;
+    --card: hsl(222 47% 8%);
+    --card-foreground: #f1f5f9;
+    --primary: #ff7505;
+    --primary-foreground: #ffffff;
+    --secondary: hsl(222 47% 12%);
+    --secondary-foreground: #e2e8f0;
+    --muted: hsl(222 47% 12%);
+    --muted-foreground: #94a3b8;
+    --accent: hsl(222 47% 15%);
+    --accent-foreground: #ff7505;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --border: hsl(222 47% 15%);
+    --input: hsl(222 47% 12%);
+    --success: hsl(142 47% 15%);
+    --success-foreground: #4ade80;
+    --warning: hsl(45 47% 15%);
+    --warning-foreground: #fbbf24;
+    --sidebar: hsl(222 47% 7%);
+    --sidebar-foreground: #e5e7eb;
+    --sidebar-hover: rgba(16, 183, 214, 0.15);
+    --sidebar-primary: #ff7505;
+    --sidebar-primary-foreground: #ffffff;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+}
+
+html.light {
+    --background: #f8fafc;
+    --background-secondary: #ffffff;
+    --foreground: #0f172a;
+    --card: #ffffff;
+    --card-foreground: #0f172a;
+    --primary: #ff7505;
+    --primary-foreground: #ffffff;
+    --secondary: #f1f5f9;
+    --secondary-foreground: #1e293b;
+    --muted: #f1f5f9;
+    --muted-foreground: #64748b;
+    --accent: #f1f5f9;
+    --accent-foreground: #ff7505;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --border: #e2e8f0;
+    --input: #e2e8f0;
+    --success: #dcfce7;
+    --success-foreground: #166534;
+    --warning: #fef3c7;
+    --warning-foreground: #92400e;
+    --sidebar: #ffffff;
+    --sidebar-foreground: #1e293b;
+    --sidebar-hover: rgba(16, 183, 214, 0.15);
+    --sidebar-primary: #ff7505;
+    --sidebar-primary-foreground: #ffffff;
+}
+
+html {
+    color-scheme: dark;
+}
+
+html.light {
+    color-scheme: light;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background-color: var(--sidebar);
+    color: var(--sidebar-foreground);
+    padding: 16px 12px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    transition: width 0.3s ease;
+    border-right: 1px solid var(--border);
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    text-decoration: none;
+}
+
+.sidebar-logo img {
+    height: 32px;
+    width: auto;
+}
+
+.sidebar-logo .logo-dark {
+    display: block;
+}
+
+.sidebar-logo .logo-light {
+    display: none;
+}
+
+html.light .sidebar-logo .logo-dark {
+    display: none;
+}
+
+html.light .sidebar-logo .logo-light {
+    display: block;
+}
+
+.sidebar.collapsed .sidebar-logo img {
+    display: none;
+}
+
+.sidebar-section-label {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted-foreground);
+    margin: 12px 0 8px 4px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 24px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--radius-md);
+    color: var(--sidebar-foreground);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.sidebar-item:hover {
+    background-color: var(--accent);
+}
+
+.sidebar-item.active {
+    background-color: var(--sidebar-primary);
+    color: var(--sidebar-primary-foreground);
+}
+
+.sidebar-item-icon {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-spacer {
+    flex: 1;
+}
+
+.sidebar-footer {
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-footer .user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--brand-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 600;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+/* Main area */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background);
+    min-width: 0;
+}
+
+/* Top bar */
+.top-bar {
+    height: 64px;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--card);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    flex-shrink: 0;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.toggle-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50px;
+    background: var(--secondary);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--muted-foreground);
+    transition: background 0.2s, color 0.2s;
+}
+
+.toggle-btn:hover {
+    background: var(--accent);
+    color: var(--foreground);
+}
+
+.breadcrumb {
+    font-size: 13px;
+    color: var(--muted-foreground);
+}
+
+.breadcrumb-link {
+    color: var(--muted-foreground);
+    text-decoration: none;
+}
+
+.breadcrumb-link:hover {
+    color: var(--foreground);
+}
+
+.breadcrumb-separator {
+    margin: 0 4px;
+    color: var(--border);
+}
+
+.breadcrumb-current {
+    color: var(--foreground);
+    font-weight: 500;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.theme-toggle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50px;
+    background: var(--secondary) !important;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--muted-foreground);
+    transition: background 0.2s, color 0.2s;
+    padding: 0;
+}
+
+.theme-toggle:hover {
+    background: var(--accent) !important;
+    color: var(--foreground);
+}
+
+.theme-toggle iconify-icon {
+    font-size: 18px;
+}
+
+.theme-toggle .icon-sun { 
+    display: block; 
+}
+.theme-toggle .icon-moon { 
+    display: none; 
+}
+html.light .theme-toggle .icon-sun { 
+    display: none; 
+}
+html.light .theme-toggle .icon-moon { 
+    display: block; 
+}
+
+.notification-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50px;
+    background: var(--secondary);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--muted-foreground);
+    position: relative;
+    transition: background 0.2s, color 0.2s;
+}
+
+.notification-btn:hover {
+    background: var(--accent);
+    color: var(--foreground);
+}
+
+.badge-dot {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 8px;
+    height: 8px;
+    background: var(--destructive);
+    border-radius: 50%;
+    border: 2px solid var(--card);
+}
+
+.content-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px;
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.sidebar.collapsed {
+    width: 64px;
+    padding: 16px 8px;
+}
+
+.sidebar.collapsed .sidebar-section-label,
+.sidebar.collapsed .sidebar-item span,
+.sidebar.collapsed .sidebar-footer > div:last-child {
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-logo {
+    justify-content: center;
+}
+
+.sidebar.collapsed .sidebar-item {
+    justify-content: center;
+    padding: 10px;
+}
+
+.sidebar.collapsed .sidebar-footer {
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+    
+    .content-area {
+        padding: 16px;
+    }
+    
+    .topbar-left {
+        gap: 8px;
+    }
+    
+    .breadcrumb {
+        font-size: 12px;
+    }
+}
+</style>
+{% block brand_extra_styles %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="brandSidebar">
+        <a href="{% url 'brands:dashboard' %}" class="sidebar-logo">
+            <img src="{% static 'images/logo/Pushit-white.svg' %}" alt="Push-it" class="logo-dark">
+            <img src="{% static 'images/logo/Pushit.svg' %}" alt="Push-it" class="logo-light">
+        </a>
+
+        <!-- Main -->
+        <div class="sidebar-section-label">Main</div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'brands:dashboard' %}" class="sidebar-item {% if active_page == 'dashboard' %}active{% endif %}">
+                <div class="sidebar-item-icon">
+                    <iconify-icon icon="lucide:layout-dashboard" style="font-size: 18px;"></iconify-icon>
+                </div>
+                <span>Dashboard</span>
+            </a>
+        </nav>
+
+        <!-- Campaigns -->
+        <div class="sidebar-section-label">Campaigns</div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'brands:wallet' %}" class="sidebar-item {% if active_page == 'wallet' %}active{% endif %}">
+                <div class="sidebar-item-icon">
+                    <iconify-icon icon="lucide:wallet" style="font-size: 18px;"></iconify-icon>
+                </div>
+                <span>Wallet</span>
+            </a>
+            <a href="{% url 'brands:campaigns' %}" class="sidebar-item {% if active_page == 'campaigns' %}active{% endif %}">
+                <div class="sidebar-item-icon">
+                    <iconify-icon icon="lucide:megaphone" style="font-size: 18px;"></iconify-icon>
+                </div>
+                <span>My Campaigns</span>
+            </a>
+        </nav>
+
+        <!-- Account -->
+        <div class="sidebar-section-label">Account</div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'brands:billing' %}" class="sidebar-item {% if active_page == 'billing' %}active{% endif %}">
+                <div class="sidebar-item-icon">
+                    <iconify-icon icon="lucide:credit-card" style="font-size: 18px;"></iconify-icon>
+                </div>
+                <span>Billing</span>
+            </a>
+            <a href="{% url 'brands:profile' %}" class="sidebar-item {% if active_page == 'profile' %}active{% endif %}">
+                <div class="sidebar-item-icon">
+                    <iconify-icon icon="lucide:building-2" style="font-size: 18px;"></iconify-icon>
+                </div>
+                <span>Company Profile</span>
+            </a>
+            <a href="{% url 'brands:settings' %}" class="sidebar-item {% if active_page == 'settings' %}active{% endif %}">
+                <div class="sidebar-item-icon">
+                    <iconify-icon icon="lucide:settings" style="font-size: 18px;"></iconify-icon>
+                </div>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-spacer"></div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar -->
+        <header class="top-bar">
+            <div class="topbar-left">
+                <button class="toggle-btn" id="sidebarToggle">
+                    <iconify-icon icon="lucide:menu" style="font-size: 18px;"></iconify-icon>
+                </button>
+                <div class="breadcrumb">
+                    Brand <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current">{% block breadcrumb %}Dashboard{% endblock %}</span>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="notification-btn" title="Notifications">
+                    <iconify-icon icon="lucide:bell" style="font-size: 18px;"></iconify-icon>
+                    <div class="badge-dot"></div>
+                </button>
+                <button class="theme-toggle" id="brandThemeToggle" title="Toggle Theme">
+                    <iconify-icon icon="lucide:sun" class="icon-sun" style="font-size: 18px;"></iconify-icon>
+                    <iconify-icon icon="lucide:moon" class="icon-moon" style="font-size: 18px;"></iconify-icon>
+                </button>
+                <!-- User Profile Section -->
+                <div style="display: flex; align-items: center; gap: 12px; margin-left: 12px; padding-left: 12px; border-left: 1px solid var(--border);">
+                    <div class="user-avatar" style="width: 36px; height: 36px; border-radius: 50%; background-color: var(--brand-orange); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 13px; flex-shrink: 0;">
+                        {% with name=request.user.get_full_name|default:request.user.username %}
+                            {% if " " in name %}{{ name|first }}{{ name|slice:"1:"|truncatewords:1|first }}{% else %}{{ name|slice:":2"|upper }}{% endif %}
+                        {% endwith %}
+                    </div>
+                    <div style="font-size: 13px;">
+                        <div style="font-weight: 500; color: var(--foreground);">{{ request.user.get_full_name|default:request.user.username }}</div>
+                        <div style="color: var(--muted-foreground); font-size: 11px;">{{ request.user.email }}</div>
+                    </div>
+                    <form method="post" action="{% url 'accounts:logout' %}" style="margin: 0;">
+                        {% csrf_token %}
+                        <button type="submit" style="background: none; border: none; color: var(--muted-foreground); cursor: pointer; padding: 6px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-md); transition: all 0.2s; margin-left: 4px;" title="Logout" onmouseover="this.style.background='var(--destructive)'; this.style.color='white';" onmouseout="this.style.background='none'; this.style.color='var(--muted-foreground)';">
+                            <iconify-icon icon="lucide:log-out" style="font-size: 18px;"></iconify-icon>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-area">
+            {% block brand_content %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Theme Toggle
+    const themeToggle = document.getElementById('brandThemeToggle');
+    const html = document.documentElement;
+    
+    const savedTheme = localStorage.getItem('brandTheme') || 'dark';
+    if (savedTheme === 'light') {
+        html.classList.add('light');
+    }
+    
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            html.classList.toggle('light');
+            const isLight = html.classList.contains('light');
+            localStorage.setItem('brandTheme', isLight ? 'light' : 'dark');
+        });
+    }
+
+    // Sidebar Toggle
+    const sidebar = document.getElementById('brandSidebar');
+    const toggle = document.getElementById('sidebarToggle');
+    
+    if (sidebar && toggle) {
+        // Apply saved sidebar state on load
+        if (localStorage.getItem('brandSidebarCollapsed') === 'true') {
+            sidebar.classList.add('collapsed');
+        }
+        
+        // Toggle sidebar on click
+        toggle.addEventListener('click', function() {
+            sidebar.classList.toggle('collapsed');
+            localStorage.setItem('brandSidebarCollapsed', sidebar.classList.contains('collapsed'));
+        });
+    }
+});
+</script>
+{% endblock %}
+
+

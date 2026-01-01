@@ -1,0 +1,704 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block extra_head %}
+<!-- Inter Font - Apple's official font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
+<style>
+:root {
+    /* Brand Colors */
+    --brand-orange: #ff7505;
+    --brand-orange-hover: #e66a00;
+    --brand-cyan: #10b7d6;
+    --brand-cyan-hover: #0ea5c0;
+    
+    /* Dark Mode Colors (Default) */
+    --background: hsl(222 47% 5%);
+    --background-secondary: hsl(222 47% 8%);
+    --foreground: #f1f5f9;
+    --card: hsl(222 47% 8%);
+    --card-foreground: #f1f5f9;
+    --primary: #ff7505; /* Orange for primary buttons */
+    --primary-foreground: #ffffff;
+    --secondary: #10b7d6; /* Cyan for secondary actions */
+    --secondary-foreground: #ffffff;
+    --secondary-bg: hsl(222 47% 12%);
+    --secondary-bg-foreground: #e2e8f0;
+    --muted: hsl(222 47% 12%);
+    --muted-foreground: #94a3b8;
+    --accent: hsl(222 47% 15%);
+    --accent-foreground: #10b7d6; /* Cyan for accents */
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --border: hsl(222 47% 15%);
+    --input: hsl(222 47% 12%);
+    --success: hsl(142 47% 15%);
+    --success-foreground: #4ade80;
+    --warning: hsl(45 47% 15%);
+    --warning-foreground: #fbbf24;
+    --sidebar: hsl(222 47% 7%);
+    --sidebar-foreground: #e5e7eb;
+    --sidebar-primary: #ff7505; /* Orange for active items */
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-hover: rgba(16, 183, 214, 0.15); /* Cyan tint for hover */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+}
+
+html.light {
+    --background: #f8fafc;
+    --background-secondary: #ffffff;
+    --foreground: #0f172a;
+    --card: #ffffff;
+    --card-foreground: #0f172a;
+    --primary: #ff7505; /* Orange for primary buttons */
+    --primary-foreground: #ffffff;
+    --secondary: #10b7d6; /* Cyan for secondary actions */
+    --secondary-foreground: #ffffff;
+    --secondary-bg: #f1f5f9;
+    --secondary-bg-foreground: #1e293b;
+    --muted: #f1f5f9;
+    --muted-foreground: #64748b;
+    --accent: #f1f5f9;
+    --accent-foreground: #10b7d6; /* Cyan for accents */
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --border: #e2e8f0;
+    --input: #e2e8f0;
+    --success: #dcfce7;
+    --success-foreground: #166534;
+    --warning: #fef3c7;
+    --warning-foreground: #92400e;
+    --sidebar: #ffffff;
+    --sidebar-foreground: #1e293b;
+    --sidebar-primary: #ff7505; /* Orange for active items */
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-hover: rgba(16, 183, 214, 0.15); /* Cyan tint for hover */
+}
+
+html {
+    color-scheme: dark;
+}
+
+html.light {
+    color-scheme: light;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body * {
+    color: inherit;
+}
+
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background-color: var(--sidebar);
+    color: var(--sidebar-foreground);
+    padding: 16px 12px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    transition: width 0.3s ease;
+    border-right: 1px solid var(--border);
+}
+
+.sidebar.collapsed {
+    width: 64px;
+    padding: 16px 8px;
+}
+
+.sidebar.collapsed .sidebar-logo span,
+.sidebar.collapsed .sidebar-section-label,
+.sidebar.collapsed .sidebar-item span,
+.sidebar.collapsed .sidebar-footer > div:last-child {
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-logo {
+    justify-content: center;
+}
+
+.sidebar.collapsed .sidebar-item {
+    justify-content: center;
+    padding: 10px;
+}
+
+.sidebar.collapsed .sidebar-footer {
+    justify-content: center;
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    text-decoration: none;
+}
+
+.sidebar-logo img {
+    height: 32px;
+    width: auto;
+}
+
+.sidebar-logo .logo-white { display: block; }
+.sidebar-logo .logo-color { display: none; }
+html.light .sidebar-logo .logo-white { display: none; }
+html.light .sidebar-logo .logo-color { display: block; }
+
+.sidebar-section-label {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted-foreground);
+    margin: 12px 0 8px 4px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 24px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--radius-md);
+    color: var(--sidebar-foreground);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.sidebar-item:hover {
+    background-color: var(--sidebar-hover);
+    color: #0ea5c0 !important; /* Darker cyan for better contrast */
+}
+
+.sidebar-item.active {
+    background-color: var(--sidebar-primary);
+    color: var(--sidebar-primary-foreground);
+}
+
+.sidebar-item-icon {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-spacer {
+    flex: 1;
+}
+
+.sidebar-footer {
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-footer .user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--brand-cyan); /* Cyan for influencer avatars */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 600;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+/* Main area */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background);
+    min-width: 0;
+}
+
+/* Top bar */
+.topbar {
+    height: 64px;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--card);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    flex-shrink: 0;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.toggle-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    background: var(--secondary-bg);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--muted-foreground);
+    transition: background 0.2s, color 0.2s;
+}
+
+.toggle-btn:hover {
+    background: var(--accent);
+    color: #0ea5c0 !important; /* Darker cyan for better contrast */
+}
+
+.breadcrumb {
+    font-size: 13px;
+    color: var(--muted-foreground) !important;
+}
+
+/* Dark mode breadcrumb */
+.breadcrumb {
+    color: #cbd5e1 !important; /* Lighter gray for dark mode */
+}
+
+html.light .breadcrumb {
+    color: #475569 !important; /* Darker gray for light mode */
+}
+
+.breadcrumb span {
+    margin: 0 4px;
+    color: inherit !important;
+    opacity: 0.5;
+}
+
+.breadcrumb-current {
+    color: var(--foreground) !important;
+    font-weight: 600;
+    opacity: 1 !important;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.theme-toggle-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    background: var(--secondary-bg);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--muted-foreground);
+    transition: background 0.2s, color 0.2s;
+    font-size: 18px;
+}
+
+.theme-toggle-btn:hover {
+    background: var(--accent);
+    color: #0ea5c0 !important; /* Darker cyan for better contrast */
+}
+
+.theme-toggle-btn .icon-sun { display: none; }
+.theme-toggle-btn .icon-moon { display: block; }
+html.light .theme-toggle-btn .icon-sun { display: block; }
+html.light .theme-toggle-btn .icon-moon { display: none; }
+
+.topbar-icon-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-lg);
+    background-color: var(--secondary-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--muted-foreground);
+    border: none;
+}
+
+.topbar-icon-btn:hover {
+    background: var(--accent);
+    color: #0ea5c0 !important; /* Darker cyan for better contrast */
+}
+
+/* Content */
+.content {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    color: var(--foreground);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+    .content {
+        padding: 16px;
+    }
+}
+</style>
+{% block inf_extra_styles %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="infSidebar">
+        <a href="{% url 'core:home' %}" class="sidebar-logo">
+            <img src="{% static 'images/logo/Pushit-white.svg' %}" alt="Push-it" class="logo-white">
+            <img src="{% static 'images/logo/Pushit.svg' %}" alt="Push-it" class="logo-color">
+        </a>
+
+        <div class="sidebar-section-label">Main</div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'influencers:dashboard' %}" class="sidebar-item {% if active_page == 'dashboard' %}active{% endif %}">
+                <div class="sidebar-item-icon">
+                    <iconify-icon icon="lucide:layout-dashboard" style="font-size: 18px;"></iconify-icon>
+                </div>
+                <span>Dashboard</span>
+            </a>
+            <a href="{% url 'influencers:job_feed' %}" class="sidebar-item {% if active_page == 'job_feed' %}active{% endif %}">
+                <div class="sidebar-item-icon">
+                    <iconify-icon icon="lucide:rss" style="font-size: 18px;"></iconify-icon>
+                </div>
+                <span>Job Feed</span>
+            </a>
+            <a href="{% url 'influencers:my_jobs' %}" class="sidebar-item {% if active_page == 'my_jobs' %}active{% endif %}">
+                <div class="sidebar-item-icon">
+                    <iconify-icon icon="lucide:briefcase" style="font-size: 18px;"></iconify-icon>
+                </div>
+                <span>My Jobs</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-section-label">Finance</div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'influencers:wallet' %}" class="sidebar-item {% if active_page == 'wallet' %}active{% endif %}">
+                <div class="sidebar-item-icon">
+                    <iconify-icon icon="lucide:wallet" style="font-size: 18px;"></iconify-icon>
+                </div>
+                <span>Wallet</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-section-label">Account</div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'influencers:profile' %}" class="sidebar-item {% if active_page == 'profile' %}active{% endif %}">
+                <div class="sidebar-item-icon">
+                    <iconify-icon icon="lucide:user-check" style="font-size: 18px;"></iconify-icon>
+                </div>
+                <span>Profile &amp; Verification</span>
+            </a>
+            <a href="#" class="sidebar-item {% if active_page == 'settings' %}active{% endif %}">
+                <div class="sidebar-item-icon">
+                    <iconify-icon icon="lucide:settings" style="font-size: 18px;"></iconify-icon>
+                </div>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-spacer"></div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main">
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="toggle-btn" id="sidebarToggle">
+                    <iconify-icon icon="lucide:menu" style="font-size: 18px;"></iconify-icon>
+                </button>
+                <div class="breadcrumb">
+                    Push-it <span>/</span>
+                    <span class="breadcrumb-current">{% block breadcrumb %}Dashboard{% endblock %}</span>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="theme-toggle-btn" id="themeToggle" title="Toggle theme">
+                    <i class="bi bi-sun-fill icon-sun"></i>
+                    <i class="bi bi-moon-fill icon-moon"></i>
+                </button>
+                <div style="position: relative;">
+                    <button class="topbar-icon-btn" id="notificationBtn" style="position: relative;">
+                        <iconify-icon icon="lucide:bell" style="font-size: 18px;"></iconify-icon>
+                        <span id="notificationBadge" style="display: none; position: absolute; top: -4px; right: -4px; background: var(--destructive); color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center;">0</span>
+                    </button>
+                    <!-- Notification Dropdown -->
+                    <div id="notificationDropdown" style="display: none; position: absolute; top: calc(100% + 8px); right: 0; width: 360px; max-height: 500px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); z-index: 1000; overflow: hidden;">
+                        <div style="padding: 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                            <h3 style="margin: 0; font-size: 16px; font-weight: 600; color: var(--foreground) !important;">Notifications</h3>
+                            <button id="closeNotifications" style="background: none; border: none; color: var(--muted-foreground); cursor: pointer; padding: 4px;">
+                                <iconify-icon icon="lucide:x" style="font-size: 18px;"></iconify-icon>
+                            </button>
+                        </div>
+                        <div id="notificationsList" style="max-height: 400px; overflow-y: auto;">
+                            <div style="padding: 40px 20px; text-align: center; color: var(--muted-foreground) !important;">
+                                <iconify-icon icon="lucide:loader-2" style="font-size: 24px; animation: spin 1s linear infinite;"></iconify-icon>
+                                <p style="margin-top: 12px; font-size: 13px;">Loading notifications...</p>
+                            </div>
+                        </div>
+                        <div style="padding: 12px; border-top: 1px solid var(--border); text-align: center;">
+                            <a href="#" id="viewAllNotifications" style="font-size: 13px; color: var(--primary) !important; text-decoration: none; font-weight: 500;">View all notifications</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- User Profile Section -->
+                <div style="display: flex; align-items: center; gap: 12px; margin-left: 12px; padding-left: 12px; border-left: 1px solid var(--border);">
+                    <div class="user-avatar" style="width: 36px; height: 36px; border-radius: 50%; background-color: var(--brand-cyan); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 13px; flex-shrink: 0;">
+                        {{ request.user.first_name|slice:":1"|upper }}{{ request.user.last_name|slice:":1"|upper }}
+                    </div>
+                    <div style="font-size: 13px;">
+                        <div style="font-weight: 500; color: var(--foreground);">{{ request.user.first_name }} {{ request.user.last_name }}</div>
+                        <div style="color: var(--muted-foreground); font-size: 11px;">Influencer</div>
+                    </div>
+                    <form method="post" action="{% url 'accounts:logout' %}" style="margin: 0;">
+                        {% csrf_token %}
+                        <button type="submit" style="background: none; border: none; color: var(--muted-foreground); cursor: pointer; padding: 6px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-md); transition: all 0.2s; margin-left: 4px;" title="Logout" onmouseover="this.style.background='var(--destructive)'; this.style.color='white';" onmouseout="this.style.background='none'; this.style.color='var(--muted-foreground)';">
+                            <iconify-icon icon="lucide:log-out" style="font-size: 18px;"></iconify-icon>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="content">
+            {% block inf_content %}{% endblock %}
+        </main>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') {
+        html.classList.add('light');
+    }
+    
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            html.classList.toggle('light');
+            const isLight = html.classList.contains('light');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        });
+    }
+
+    // Notification System
+    const notificationBtn = document.getElementById('notificationBtn');
+    const notificationDropdown = document.getElementById('notificationDropdown');
+    const notificationBadge = document.getElementById('notificationBadge');
+    const notificationsList = document.getElementById('notificationsList');
+    const closeNotifications = document.getElementById('closeNotifications');
+    
+    let notificationsLoaded = false;
+    
+    function loadNotifications() {
+        if (notificationsLoaded) return;
+        
+        fetch('/ops/notifications/')
+            .then(response => response.json())
+            .then(data => {
+                notificationsLoaded = true;
+                updateNotificationBadge(data.unread_count);
+                renderNotifications(data.notifications);
+            })
+            .catch(error => {
+                console.error('Error loading notifications:', error);
+                notificationsList.innerHTML = '<div style="padding: 40px 20px; text-align: center; color: var(--muted-foreground) !important;"><p style="font-size: 13px;">Failed to load notifications</p></div>';
+            });
+    }
+    
+    function updateNotificationBadge(count) {
+        if (count > 0) {
+            notificationBadge.textContent = count > 99 ? '99+' : count;
+            notificationBadge.style.display = 'flex';
+        } else {
+            notificationBadge.style.display = 'none';
+        }
+    }
+    
+    function renderNotifications(notifications) {
+        if (notifications.length === 0) {
+            notificationsList.innerHTML = '<div style="padding: 40px 20px; text-align: center; color: var(--muted-foreground) !important;"><iconify-icon icon="lucide:bell-off" style="font-size: 32px; opacity: 0.3; margin-bottom: 12px;"></iconify-icon><p style="margin-top: 12px; font-size: 13px;">No notifications</p></div>';
+            return;
+        }
+        
+        let html = '';
+        notifications.forEach(notif => {
+            const unreadClass = notif.is_read ? '' : 'style="background: rgba(16, 183, 214, 0.05);"';
+            html += `
+                <div class="notification-item" ${unreadClass} data-id="${notif.id}" data-read="${notif.is_read}">
+                    <div style="padding: 12px 16px; cursor: pointer; ${notif.link ? '' : 'cursor: default;'}" ${notif.link ? `onclick="window.location.href='${notif.link}'"` : ''}>
+                        <div style="display: flex; gap: 12px;">
+                            <div style="flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; background: ${notif.is_read ? 'transparent' : 'var(--primary)'}; margin-top: 6px;"></div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 13px; font-weight: 600; color: var(--foreground) !important; margin-bottom: 4px;">${notif.title}</div>
+                                <div style="font-size: 12px; color: var(--muted-foreground) !important; line-height: 1.4;">${notif.message}</div>
+                                <div style="font-size: 11px; color: var(--muted-foreground) !important; margin-top: 6px;">${notif.time_ago}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        notificationsList.innerHTML = html;
+        
+        // Add click handlers to mark as read
+        document.querySelectorAll('.notification-item').forEach(item => {
+            if (item.dataset.read === 'false') {
+                item.addEventListener('click', function() {
+                    markAsRead(item.dataset.id);
+                });
+            }
+        });
+    }
+    
+    function markAsRead(notificationId) {
+        fetch(`/ops/notifications/${notificationId}/read/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const item = document.querySelector(`[data-id="${notificationId}"]`);
+                if (item) {
+                    item.style.background = '';
+                    item.dataset.read = 'true';
+                    const dot = item.querySelector('div[style*="border-radius: 50%"]');
+                    if (dot) dot.style.background = 'transparent';
+                    
+                    // Update badge count
+                    const currentCount = parseInt(notificationBadge.textContent) || 0;
+                    updateNotificationBadge(Math.max(0, currentCount - 1));
+                }
+            }
+        })
+        .catch(error => console.error('Error marking notification as read:', error));
+    }
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    // Toggle dropdown
+    if (notificationBtn && notificationDropdown) {
+        notificationBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isVisible = notificationDropdown.style.display === 'block';
+            notificationDropdown.style.display = isVisible ? 'none' : 'block';
+            if (!isVisible) {
+                loadNotifications();
+            }
+        });
+        
+        if (closeNotifications) {
+            closeNotifications.addEventListener('click', function(e) {
+                e.stopPropagation();
+                notificationDropdown.style.display = 'none';
+            });
+        }
+        
+        // Close when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
+                notificationDropdown.style.display = 'none';
+            }
+        });
+        
+        // Load notifications on page load to update badge
+        loadNotifications();
+        
+        // Refresh notifications every 30 seconds
+        setInterval(loadNotifications, 30000);
+    }
+    
+    // Sidebar Toggle
+    const sidebar = document.getElementById('infSidebar');
+    const toggle = document.getElementById('sidebarToggle');
+    
+    if (localStorage.getItem('infSidebarCollapsed') === 'true') {
+        sidebar.classList.add('collapsed');
+    }
+    
+    if (toggle) {
+        toggle.addEventListener('click', function() {
+            sidebar.classList.toggle('collapsed');
+            localStorage.setItem('infSidebarCollapsed', sidebar.classList.contains('collapsed'));
+        });
+    }
+});
+</script>
+{% endblock %}

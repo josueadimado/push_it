@@ -1,0 +1,674 @@
+{% extends "operations/base_admin.html" %}
+{% load static %}
+
+{% block title %}Submissions · Admin · Push-it{% endblock %}
+
+{% block breadcrumb %}Submissions{% endblock %}
+
+{% block admin_extra_styles %}
+<style>
+/* Page Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.page-title h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: var(--foreground) !important;
+}
+
+.page-title p {
+    margin: 0;
+    color: var(--muted-foreground) !important;
+    font-size: 14px;
+}
+
+.page-header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Stats Row */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 110px;
+    gap: 8px;
+}
+
+.stat-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted-foreground) !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--foreground) !important;
+    line-height: 1.2;
+    margin: 4px 0;
+}
+
+.stat-trend {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--muted-foreground) !important;
+}
+
+.trend-up {
+    color: var(--success-foreground) !important;
+}
+
+.trend-neutral {
+    color: var(--muted-foreground) !important;
+}
+
+.trend-alert {
+    color: var(--warning-foreground) !important;
+}
+
+/* Table Section */
+.table-container {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.toolbar {
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    background-color: var(--card);
+}
+
+.toolbar-left {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex: 1;
+}
+
+.tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--secondary);
+    padding: 4px;
+    border-radius: var(--radius-md);
+}
+
+.tab {
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted-foreground) !important;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    background: transparent;
+}
+
+.tab-active {
+    background: var(--card) !important;
+    color: var(--foreground) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.search-input-wrapper {
+    position: relative;
+    width: 280px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted-foreground);
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+    height: 36px;
+    padding-left: 36px;
+    padding-right: 12px;
+    border-radius: 50px;
+    border: 1px solid var(--input);
+    font-size: 13px;
+    color: var(--foreground) !important;
+    outline: none;
+    background: var(--card);
+    transition: border-color 0.2s ease;
+}
+
+.search-input:focus {
+    border-color: var(--brand-cyan);
+}
+
+/* Table Styles - Matching verification pattern */
+.table-shell {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    table-layout: fixed;
+}
+
+.table-shell tbody tr td {
+    vertical-align: middle !important;
+}
+
+.table-shell th {
+    background-color: var(--brand-cyan) !important;
+    color: #ffffff !important;
+    font-weight: 500;
+    text-align: left;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+html.light .table-shell th {
+    color: #0f172a !important;
+}
+
+.table-shell th:last-child {
+    text-align: right;
+}
+
+.table-shell td {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--foreground) !important;
+    vertical-align: middle;
+    background-color: var(--card);
+    overflow: visible;
+    box-sizing: border-box;
+    line-height: 1.5;
+}
+
+.table-shell td:last-child {
+    text-align: right;
+}
+
+.table-shell tbody tr {
+    height: auto;
+    vertical-align: middle;
+}
+
+.table-shell td > div,
+.table-shell td > span {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.table-shell tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-shell tbody tr:hover td {
+    background-color: var(--secondary);
+}
+
+.user-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    vertical-align: middle;
+}
+
+.user-avatar-sm {
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    background-color: var(--muted);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 2px;
+}
+
+.user-name-cell {
+    font-weight: 500;
+    color: var(--foreground) !important;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-role-cell {
+    color: var(--muted-foreground) !important;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.campaign-link {
+    color: var(--foreground) !important;
+    text-decoration: none;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+    font-size: 13px;
+}
+
+.campaign-link:hover {
+    text-decoration: underline;
+}
+
+.campaign-brand {
+    color: var(--muted-foreground) !important;
+    font-size: 12px;
+}
+
+.platform-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: var(--secondary);
+    border-radius: 50px;
+    color: var(--foreground);
+    flex-shrink: 0;
+}
+
+.proof-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--brand-cyan) !important;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.proof-link:hover {
+    text-decoration: underline;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    vertical-align: middle;
+    min-height: 28px;
+    box-sizing: border-box;
+}
+
+.status-pending {
+    background: var(--warning);
+    color: var(--warning-foreground) !important;
+}
+
+.status-approved {
+    background: var(--success);
+    color: var(--success-foreground) !important;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #b91c1c !important;
+}
+
+html:not(.light) .status-rejected {
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5 !important;
+}
+
+.status-disputed {
+    background: var(--secondary);
+    color: var(--muted-foreground) !important;
+}
+
+.status-verified {
+    background: var(--success);
+    color: var(--success-foreground) !important;
+}
+
+.status-needs-reupload {
+    background: var(--warning);
+    color: var(--warning-foreground) !important;
+}
+
+.action-cell {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    align-items: center;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.btn-xs {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 50px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--card);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    color: var(--foreground) !important;
+    height: 32px;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.btn-xs.btn-primary {
+    background: var(--primary) !important;
+    color: var(--primary-foreground) !important;
+    border-color: var(--primary);
+}
+
+.btn-xs.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-danger-ghost {
+    color: var(--destructive) !important;
+    border-color: transparent;
+    background: transparent;
+}
+
+.btn-danger-ghost:hover {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.btn-success-ghost {
+    color: var(--success-foreground) !important;
+    border-color: transparent;
+    background: transparent;
+}
+
+.btn-success-ghost:hover {
+    background: var(--success);
+}
+
+.pagination {
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    background-color: var(--card);
+}
+
+.page-info {
+    font-size: 12px;
+    color: var(--muted-foreground) !important;
+}
+
+.page-nav {
+    display: flex;
+    gap: 8px;
+}
+
+.page-btn {
+    padding: 6px 12px;
+    border-radius: 50px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--foreground) !important;
+    font-weight: 500;
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-btn:hover:not(:disabled) {
+    background: var(--secondary);
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .page-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block admin_content %}
+<div class="page-header">
+    <div class="page-title">
+        <h1>Submission Review</h1>
+        <p>Review and approve video proofs submitted by influencers.</p>
+    </div>
+    <div class="page-header-actions">
+        <button class="btn-xs">
+            <iconify-icon icon="lucide:filter" style="font-size: 14px;"></iconify-icon>
+            Filters
+        </button>
+        <button class="btn-xs">
+            <iconify-icon icon="lucide:download" style="font-size: 14px;"></iconify-icon>
+            Export CSV
+        </button>
+    </div>
+</div>
+
+<!-- Stats Row -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-label">
+            New Submissions
+            <iconify-icon icon="lucide:inbox" style="font-size: 16px;"></iconify-icon>
+        </div>
+        <div class="stat-value">{{ stats.new_submissions|default:34 }}</div>
+        <div class="stat-trend trend-neutral">
+            <iconify-icon icon="lucide:clock" style="font-size: 12px;"></iconify-icon>
+            Awaiting review
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">
+            In Review
+            <iconify-icon icon="lucide:eye" style="font-size: 16px; color: var(--brand-cyan);"></iconify-icon>
+        </div>
+        <div class="stat-value">{{ stats.in_review|default:12 }}</div>
+        <div class="stat-trend trend-neutral">
+            <span style="color: var(--muted-foreground) !important;">Being verified</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">
+            Verified
+            <iconify-icon icon="lucide:check-circle" style="font-size: 16px; color: var(--success-foreground);"></iconify-icon>
+        </div>
+        <div class="stat-value">{{ stats.verified|default:128 }}</div>
+        <div class="stat-trend trend-up">
+            <span style="color: var(--success-foreground) !important;">+12% vs yesterday</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">
+            Needs Re-upload
+            <iconify-icon icon="lucide:refresh-cw" style="font-size: 16px; color: var(--warning-foreground);"></iconify-icon>
+        </div>
+        <div class="stat-value">{{ stats.needs_reupload|default:5 }}</div>
+        <div class="stat-trend trend-alert">
+            <span style="color: var(--warning-foreground) !important;">Action required</span>
+        </div>
+    </div>
+</div>
+
+<!-- Table Card -->
+<div class="table-container">
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <div class="tabs">
+                <div class="tab tab-active">New ({{ stats.new_submissions|default:34 }})</div>
+                <div class="tab">In Review ({{ stats.in_review|default:12 }})</div>
+                <div class="tab">Verified ({{ stats.verified|default:128 }})</div>
+                <div class="tab">Needs Re-upload ({{ stats.needs_reupload|default:5 }})</div>
+            </div>
+        </div>
+        <div class="search-input-wrapper">
+            <iconify-icon icon="lucide:search" class="search-icon" style="font-size: 16px;"></iconify-icon>
+            <input type="text" class="search-input" placeholder="Search campaign or influencer...">
+        </div>
+    </div>
+
+    <table class="table-shell">
+        <thead>
+            <tr>
+                <th style="width: 18%;">Influencer</th>
+                <th style="width: 22%;">Campaign</th>
+                <th style="width: 10%;">Platform</th>
+                <th style="width: 18%;">Post URL</th>
+                <th style="width: 12%;">Submitted</th>
+                <th style="width: 10%;">Status</th>
+                <th style="width: 10%; text-align: right;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for submission in submissions %}
+            <tr>
+                <td>
+                    <div class="user-cell">
+                        <div class="user-avatar-sm" style="background-color: var(--muted); display: flex; align-items: center; justify-content: center; color: var(--muted-foreground); font-weight: 600; font-size: 12px;">
+                            {% with name=submission.influencer.user.get_full_name|default:submission.influencer.user.username %}
+                                {% if " " in name %}{{ name|first }}{{ name|slice:"1:"|truncatewords:1|first }}{% else %}{{ name|slice:":2"|upper }}{% endif %}
+                            {% endwith %}
+                        </div>
+                        <div class="user-details">
+                            <span class="user-name-cell">{{ submission.influencer.user.get_full_name|default:submission.influencer.user.username }}</span>
+                            <span class="user-role-cell">{{ submission.influencer.get_tier_display|default:"N/A" }}</span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="user-details">
+                        <a href="{% url 'operations:campaign_detail' submission.campaign.id %}" class="campaign-link">{{ submission.campaign.name }}</a>
+                        <span class="campaign-brand">{{ submission.campaign.brand.company_name }}</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="platform-icon" style="background: {% if submission.campaign.platform == 'tiktok' %}#000{% elif submission.campaign.platform == 'instagram' %}linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%){% elif submission.campaign.platform == 'youtube' %}#ff0000{% else %}#666{% endif %}; color: #fff;">
+                        <iconify-icon icon="{% if submission.campaign.platform == 'tiktok' %}lucide:music-2{% elif submission.campaign.platform == 'instagram' %}lucide:instagram{% elif submission.campaign.platform == 'youtube' %}lucide:youtube{% else %}lucide:video{% endif %}" style="font-size: 14px;"></iconify-icon>
+                    </div>
+                </td>
+                <td>
+                    <a href="{{ submission.proof_link }}" class="proof-link" target="_blank">
+                        {% if submission.proof_type == 'file' %}
+                            <iconify-icon icon="lucide:file-video" style="font-size: 14px;"></iconify-icon>
+                            {{ submission.proof_link|truncatechars:20 }}
+                        {% else %}
+                            <iconify-icon icon="lucide:external-link" style="font-size: 14px;"></iconify-icon>
+                            {{ submission.proof_link|truncatechars:25 }}
+                        {% endif %}
+                    </a>
+                </td>
+                <td>
+                    <span style="color: var(--muted-foreground) !important; font-size: 12px;">
+                        {% if submission.submitted_at %}{{ submission.submitted_at|timesince }} ago{% else %}N/A{% endif %}
+                    </span>
+                </td>
+                <td>
+                    <span class="status-badge {% if submission.status == 'new' %}status-new{% elif submission.status == 'in_review' %}status-pending{% elif submission.status == 'verified' %}status-verified{% elif submission.status == 'flagged' %}status-disputed{% elif submission.status == 'needs_reupload' %}status-needs-reupload{% else %}status-pending{% endif %}">
+                        {{ submission.get_status_display }}
+                    </span>
+                </td>
+                <td class="action-cell">
+                    {% if submission.status != 'verified' %}
+                        <form method="post" action="{% url 'operations:approve_submission' submission.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-xs btn-success-ghost" title="Mark as Verified">
+                                <iconify-icon icon="lucide:check" style="font-size: 16px;"></iconify-icon>
+                            </button>
+                        </form>
+                        <form method="post" action="{% url 'operations:flag_submission' submission.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-xs" title="Flagged" style="color: var(--warning-foreground) !important; border-color: transparent; background: transparent;">
+                                <iconify-icon icon="lucide:flag" style="font-size: 16px;"></iconify-icon>
+                            </button>
+                        </form>
+                        <form method="post" action="{% url 'operations:reject_submission' submission.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-xs btn-danger-ghost" title="Needs Re-upload">
+                                <iconify-icon icon="lucide:refresh-cw" style="font-size: 16px;"></iconify-icon>
+                            </button>
+                        </form>
+                    {% else %}
+                        <button class="btn-xs" title="View Details">
+                            <iconify-icon icon="lucide:eye" style="font-size: 16px;"></iconify-icon>
+                        </button>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" style="text-align: center; padding: 40px; color: var(--muted-foreground) !important;">
+                    No submissions found.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <div class="page-info">Showing 1-5 of {{ stats.new_submissions|default:34 }} new submissions</div>
+        <div class="page-nav">
+            <button class="page-btn" disabled>Previous</button>
+            <button class="page-btn">Next</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Verification Pending · Brand · Push-it{% endblock %}
+
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block extra_head %}
+<script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
+<style>
+/* Theme Variables */
+:root {
+    --bg-primary: hsl(222 47% 5%);
+    --bg-secondary: hsl(222 47% 8%);
+    --bg-tertiary: hsl(222 47% 10%);
+    --bg-card: hsl(222 47% 12%);
+    --border-color: hsl(222 47% 15%);
+    --border-hover: hsl(222 47% 20%);
+    --text-primary: #f1f5f9;
+    --text-secondary: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-dimmed: #64748b;
+    --brand-orange: #ff7505;
+    --brand-orange-hover: #e66a00;
+    --brand-cyan: #10b7d6;
+    --warning: #f59e0b;
+}
+
+html.light {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f1f5f9;
+    --bg-card: #ffffff;
+    --border-color: #e2e8f0;
+    --border-hover: #cbd5e1;
+    --text-primary: #0f172a;
+    --text-secondary: #1e293b;
+    --text-muted: #64748b;
+    --text-dimmed: #94a3b8;
+}
+
+body, html {
+    color: var(--text-primary);
+    background: var(--bg-primary);
+}
+
+.verification-page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-primary);
+    padding: 20px;
+}
+
+.verification-container {
+    width: 100%;
+    max-width: 600px;
+    background: var(--bg-secondary);
+    border-radius: 24px;
+    padding: 48px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.verification-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 24px;
+    background: var(--bg-card);
+    border: 2px solid var(--warning);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--warning);
+    font-size: 40px;
+}
+
+.verification-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary) !important;
+    margin-bottom: 12px;
+}
+
+.verification-header p {
+    color: var(--text-muted) !important;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+.verification-info {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+    text-align: left;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.info-item:last-child {
+    margin-bottom: 0;
+}
+
+.info-item iconify-icon {
+    color: var(--brand-cyan);
+    font-size: 20px;
+}
+
+.info-item span {
+    color: var(--text-secondary) !important;
+    font-size: 14px;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-primary {
+    width: 100%;
+    height: 50px;
+    background: var(--brand-orange);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary:hover {
+    background: var(--brand-orange-hover);
+}
+
+.btn-secondary {
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    color: var(--text-secondary) !important;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-secondary:hover {
+    background: var(--bg-card);
+    border-color: var(--border-hover);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="verification-page-wrapper">
+    <div class="verification-container">
+        <div class="verification-icon">
+            <iconify-icon icon="lucide:clock"></iconify-icon>
+        </div>
+        
+        <div class="verification-header">
+            <h1>Profile Complete!</h1>
+            <p>Your brand profile has been submitted. You can start creating campaigns right away! Top up your wallet to get started.</p>
+        </div>
+
+        <div class="verification-info">
+            <div class="info-item">
+                <iconify-icon icon="lucide:building-2"></iconify-icon>
+                <span><strong>Company:</strong> {{ brand.company_name|default:"Not set" }}</span>
+            </div>
+            <div class="info-item">
+                <iconify-icon icon="lucide:briefcase"></iconify-icon>
+                <span><strong>Industry:</strong> {% if brand.industry %}{{ brand.industry }}{% else %}Not set{% endif %}</span>
+            </div>
+            <div class="info-item">
+                <iconify-icon icon="lucide:check-circle"></iconify-icon>
+                <span><strong>Status:</strong> Profile submitted (verification in progress)</span>
+            </div>
+            <div class="info-item">
+                <iconify-icon icon="lucide:info"></iconify-icon>
+                <span>You can complete your profile details anytime from your dashboard.</span>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="{% url 'brands:wallet' %}" class="btn-primary">
+                <iconify-icon icon="lucide:wallet" style="font-size: 18px; margin-right: 8px;"></iconify-icon>
+                Top Up Wallet & Start Creating Campaigns
+            </a>
+            <a href="{% url 'brands:profile' %}" class="btn-secondary">
+                <iconify-icon icon="lucide:edit" style="font-size: 18px; margin-right: 8px;"></iconify-icon>
+                Complete Profile
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Theme toggle
+(function() {
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') {
+        html.classList.add('light');
+    }
+})();
+</script>
+{% endblock %}
+

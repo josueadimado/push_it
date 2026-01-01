@@ -1,0 +1,578 @@
+// Feedback Block One
+.feedback-block-one {
+    padding: 50px 5vw 45px;
+    .icon {
+        width: 58px;
+        height: 58px;
+        background: #212121;
+    }
+    blockquote {
+        font-family: $font-Montserrat;
+        font-size: 44px;
+        line-height: 1.2107em;
+        font-style: italic;
+        color: #000;
+        text-transform: uppercase;
+        margin: 60px 0 65px;
+    }
+    .rating {
+        li {
+            color: #000;
+            margin-left: 3px;
+            font-size: 17px;
+        }
+    }
+}
+
+// Feedback Block Two
+.feedback-block-two {
+    padding: 40px 50px 35px;
+    background: #FFFFFF;
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.03);
+    border-radius: 20px;
+    blockquote {
+        font-family: $font-manrope;
+        font-weight: 600;
+        font-size: 28px;
+        line-height: 1.71428em;
+        letter-spacing: -1px;
+        color: #000;
+        margin-bottom: 65px;
+    }
+    h6 {
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+    .client-avatar {
+        width: 65px;
+        height: 65px;
+    }
+}
+// Feedback Block Three
+.feedback-block-three {
+    blockquote {
+        font-size: 36px;
+        line-height: 1.5555em;
+        color: #000;
+        font-weight: 500;
+        margin-bottom: 65px;
+    }
+    .client-info {
+        position: relative;
+        padding-left: 32px;
+        letter-spacing: -0.1px;
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top:50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 2px;
+            background: #000;
+        }
+        span {
+            font-weight: 500;
+        }
+    }
+}
+// Feedback Block Four
+.feedback-block-four {
+    background: #fff;
+    padding: 40px 60px 50px;
+    .logo {
+        height: 50px;
+    }
+    blockquote {
+        font-size: 36px;
+        line-height: 1.3888em;
+        color: #000;
+        font-weight: 500;
+        margin: 45px 0 98px;
+    }
+    .rating li {
+        color: #00B976;
+        margin-left: 3px;
+    }
+}
+
+// Feedback Block Five
+.feedback-block-five { 
+    background: #FFFFFF;
+    box-shadow: 0px 30px 70px rgba(0, 0, 0, 0.03);
+    border-radius: 20px;
+    margin-bottom: 80px;
+    padding: 45px 60px 40px;
+    .rating li {
+        font-size: 18px;
+        margin-right: 9px;
+    }
+    blockquote {
+        font-family: $font-manrope;
+        font-size: 24px;
+        line-height: 1.5416em;
+        font-weight: 700;
+        color: #000;
+        margin: 30px 0 55px;
+    }
+    .name {
+        color: rgba($color: #000000, $alpha: 0.4);
+    }
+    
+}
+
+// Feedback Section Two
+.feedback-section-two {
+    background: $color-two;
+    font-family: $font-manrope;
+    .upper-text {
+        font-size: 24px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        color: rgba($color: #fff, $alpha: 0.6);
+    }
+    h2 {
+        font-size: 96px;
+        font-weight: 700;
+        line-height: 1.09375em;
+        letter-spacing: -2.33px;
+        color: #fff;
+    }
+    .feedback-card:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 20%;
+        top:0;
+        left: 0;
+        background: linear-gradient(180deg, #8726FF 0%, rgba(255, 255, 255, 0) 100%);
+    }
+    .feedback-card:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 20%;
+        bottom:0;
+        left: 0;
+        background: linear-gradient(0deg, #8726FF 0%, rgba(255, 255, 255, 0) 100%);
+    }
+}
+// Feedback Section Three 
+.feedback-section-three {
+    h3 {
+        font-size: 130px;
+    }
+    .text1 {
+        font-size: 28px;
+        color: rgba($color: #000000, $alpha: 0.5);
+    }
+    .avatar-group {
+        width: 70px;
+        height: 70px;
+        margin-right: 7px;
+    }
+    .shape_01 {
+        right: -43%;
+        top:-79%;
+    }
+    .slider-wrapper {
+        width: 95vw;
+    }
+}
+// Feedback Section Four
+.feedback-section-four {
+    .title {
+        h2 {
+            font-family: $font-Playfair;
+            font-size: 100px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+    }
+    .slick-dots {
+        position: absolute;
+        right: 10px;
+        bottom: 0;
+        button {
+            width: 12px;
+            height: 12px;
+            background: transparent;
+            border: 1px solid #000;
+            margin-left: 3px;
+        }
+        .slick-active button {
+            background: #000;
+        }
+    }
+    .rating {
+        li {
+            margin-right: 2px;
+            i {
+                font-size: 22px;
+                color: #000;
+            }
+            span {
+                font-size: 22px;
+                display: block;
+                margin-left: 10px;
+                color: #000;
+                strong {
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+    .card-wrapper {
+        max-width: 580px;
+        margin: 25px auto 0;
+        border: 2px solid #000;
+        border-radius: 15px;
+        padding: 25px 30px;
+        h2 {
+            font-weight: 700;
+            font-size: 52px;
+            margin-bottom: -8px;
+        }
+    }
+}
+// Feedback Section Five
+.feedback-section-five {
+    background: #171417;
+    &:before {
+        content: '';
+        position: absolute;
+        width: 33.333%;
+        height: 100%;
+        border-left: 1px solid rgba($color: #fff, $alpha: 0.05);
+        border-right: 1px solid rgba($color: #fff, $alpha: 0.05);
+        top:0;
+        left: 33.333%;
+        z-index: -1; 
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        top:0;
+        left: 50%;
+        background: rgba($color: #fff, $alpha: 0.05);
+        z-index: -1;
+    }
+    .wrapper:before {
+        content: '';
+        position: absolute;
+        width: 66.666%;
+        height: 100%;
+        border-left: 1px solid rgba($color: #fff, $alpha: 0.05);
+        border-right: 1px solid rgba($color: #fff, $alpha: 0.05);
+        top:0;
+        left: 16.6666%;
+        z-index: -1;
+    }
+    .feedback-wrapper {
+        max-width: 720px;
+        margin-left: auto;
+        .feedback-block {
+            position: relative;
+            border-radius: 40px;
+            padding: 40px 40px 60px;
+            z-index: 3;
+            @include transition(0.1s);
+            .logo {
+                height: 50px;
+            }
+            blockquote {
+                font-size: 32px;
+                font-weight: 500;
+                color: #000;
+                font-style: italic;
+                line-height: 1.75em;
+                margin: 38px 0 40px;
+            }
+            .rating {
+                font-weight: 500;
+                font-size: 24px;
+                color: #000;
+            }
+            li {
+                font-size: 18px;
+                color: #000;
+                margin-left: 2px;
+            }
+            &:nth-child(1) {
+                margin-bottom: -240px;
+                z-index: 1;
+            }
+            &:nth-child(2) {
+                margin-bottom: -240px;
+                z-index: 2;
+            }
+            &:hover {
+                z-index: 99 !important;
+            }
+        }
+    }
+    .shape_01 {
+        top:16%;
+        left: 39%;
+        max-width: 5%;
+    }
+    .shape_02 {
+        bottom:13%;
+        left: 39%;
+        max-width: 5%;
+    }
+}
+// Feedback Section Six
+.feedback-section-six { 
+    blockquote {
+        font-weight: 500;
+        font-size: 82px;
+        line-height: 1.2195em;
+        letter-spacing: -2px;
+        color: #000;
+        margin-bottom: 55px;
+        span {
+            color: $color-seven;
+        }
+    }
+    h6 {
+        font-size: 20px;
+        font-style: italic;
+    }
+    .slick-dots {
+        justify-content: center;
+        margin: 50px 0 0;
+        padding: 0;
+        button {
+            width: 10px;
+            height: 10px;
+            background: #D9D9D9;
+        }
+        .slick-active {
+            button {
+                background: #000;
+            }
+        }
+    }
+    .shape_01 {
+        top:44%;
+        left: 50%;
+        transform: translate(-50% , -50%);
+        max-width: 50%;
+    }
+    .shape_02 {
+        right: 0;
+        top:40%;
+        max-width: 8%;
+    }
+    .shape_03 {
+        left: 0;
+        top:40%;
+        max-width: 8%;
+    }
+}
+// Feedback Section Seven
+.feedback-section-seven {  
+    blockquote {
+        font-size: 62px;
+        line-height: 1.290em;
+        letter-spacing: -4px;
+        color: #000;
+        text-transform: uppercase;
+        margin: 80px 0 70px;
+    }
+    .slick-dots {
+        position: absolute;
+        right: 27%;
+        bottom: 23px;
+        margin: 0;
+        padding: 0;
+        button {
+            width: 13px;
+            height: 13px;
+            background: #fff;
+            border: 2px solid #000;
+        }
+        .slick-active {
+            button {
+                background: #000;
+            }
+        }
+    }
+    .img-box {
+        .rating-card {
+            border: 2px solid #000;
+            background: #FFCF25;
+            border-radius: 10px;
+            position: absolute;
+            left: 0;
+            bottom: 3%;
+            padding: 20px 30px;
+            box-shadow: 8px 8px 0 #000;
+            li {
+                font-size: 22px;
+                margin-right: 5px;
+                color: #000;
+                &:last-child {
+                    font-size: 20px;
+                    margin-left: 10px;
+                }
+            }
+        }
+    }
+    .shape_01 {
+        top:-7%;
+        right: 10%;
+    }
+}
+// Feedback Section Eight
+.feedback-section-eight {
+    &:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: url(../images/assets/bg_16.svg) no-repeat center;
+        background-size: cover;
+        z-index: -1;
+    }
+    .wrapper {
+        background: #FF9217;
+        border-radius: 50px;
+        padding: 50px 50px;
+    }
+    blockquote {
+        font-size: 52px;
+        font-weight: 500;
+        font-style: italic;
+        line-height: 1.1923em;
+        color: #000;
+        margin: 35px 0 50px;
+    }
+    .name {
+        margin-bottom: 65px;
+        h6 {
+            font-size: 24px;
+            margin-bottom: 0;
+        }
+        span {
+            color: rgba($color: #000000, $alpha: 0.5);
+        }
+    }
+    .rating {
+        li {
+            font-size: 20px;
+            color: #000;
+            margin-right: 7px;
+            &:last-child {
+                margin-left: 15px;
+            }
+        }
+    }
+    .slick-dots {
+        position: absolute;
+        right: 7%;
+        bottom: 10px;
+        margin: 0;
+        padding: 0;
+        button {
+            width: 13px;
+            height: 13px;
+            background: #fff;
+            border: 2px solid #000;
+        }
+        .slick-active {
+            button {
+                background: #000;
+            }
+        }
+    }
+}
+// Feedback Section Nine
+.feedback-section-nine { 
+    background: #481938;
+    .wrapper {
+        width: 130vw;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    h2 {
+        font-family: $font-Playfair;
+        font-size: 130px;
+        color: #fff;
+        margin: 0;
+    }
+    .feedback-block {
+        border: 3px solid rgba($color: #fff, $alpha: 0.08);
+        border-radius: 30px;
+        padding: 40px 45px 50px;
+        @include transition(0.3s);
+        blockquote {
+            font-size: 36px;
+            font-weight: 500;
+            line-height: 1.3888em;
+            color: #fff;
+            margin: 50px 0 100px;
+        }
+        .logo {
+            height: 40px;
+        }
+    }
+    .slick-center {
+        .feedback-block {
+            background: rgba($color: #fff, $alpha: 0.08);
+        }
+    }
+    .slider-arrows {
+        li {
+            width: 58px;
+            height: 58px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            color: #fff;
+            margin: 0 8px;
+            font-size: 22px;
+            text-align: center;
+            line-height: 54px;
+            @include transition(0.3s);
+            cursor: pointer;
+            &:hover {
+                background: rgba($color: #fff, $alpha: 0.08);
+            }
+        }
+    }
+    .shape_01 {
+        top:19%;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 80%;
+    }
+}
+// Feedback Section Ten
+.feedback-section-ten { 
+    .bg-wrapper {
+        background: url(../images/media/img_24.jpg) no-repeat center bottom;
+        background-size: cover;
+    }
+}
+// Feedback Section Eleven
+.feedback-section-eleven {  
+    .wrapper {
+        width: 120vw;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .bg-shape {
+        width: 100%;
+        left: 50%;
+        bottom: 3%;
+        transform: translateX(-50%);
+    }
+}

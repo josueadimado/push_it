@@ -1,0 +1,301 @@
+.grid-1column {
+    margin: 0 -25px;
+    .grid-sizer, .isotop-item {
+        width: 100%;
+        padding: 0 25px;
+    }
+}
+.grid-2column {
+    margin: 0 -25px;
+    .grid-sizer, .isotop-item {
+        width: 50%;
+        padding: 0 25px;
+    }
+    &.xl {
+        margin: 0 -50px;
+        .grid-sizer, .isotop-item {
+            padding: 0 50px;
+        }
+    }
+}
+.grid-3column {
+    margin: 0 -15px;
+    .grid-sizer, .isotop-item {
+        width: 33.3333%;
+        padding: 0 15px;
+    }
+}
+
+// Filter
+.filter-nav-one {
+    .isotop-menu-wrapper {
+        margin: 0 -10px;
+        li {
+            margin: 0 10px 10px;
+            line-height: 40px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            padding: 0 25px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #000;
+            cursor: pointer;
+            @include transition(0.3s);
+            &.is-checked {
+                background: #000;
+                color: #fff;
+            }
+        }
+    }
+}
+// Filter
+.filter-nav-two {
+    .isotop-menu-wrapper {
+        margin: 0 -12px;
+        li {
+            margin: 0 12px 10px;
+            line-height: 36px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            padding: 0 23px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #000;
+            border: 2px solid transparent;
+            cursor: pointer;
+            @include transition(0.3s);
+            &.is-checked {
+                border-color: $color-two;
+                color: $color-two;
+            }
+        }
+    }
+}
+// Filter
+.filter-nav-three {
+    .isotop-menu-wrapper {
+        margin: 0 -12px;
+        li {
+            margin: 0 12px 10px;
+            line-height: 36px;
+            text-transform: uppercase;
+            padding: 0 23px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #000;
+            border: 2px solid transparent;
+            cursor: pointer;
+            @include transition(0.3s);
+            &.is-checked {
+                border-color: #000;
+            }
+        }
+    }
+}
+// Project Block One
+.project-block-one {
+    border: 3px solid #000;
+    border-radius: 40px;
+    box-shadow: 0 12px 0 #000;
+    .text-meta {
+        padding: 50px 100px 65px 50px;
+        position: relative;
+        z-index: 1;
+        border-right: 3px solid #000;
+        .num {
+            font-size: 36px;
+            color: #000;
+        }
+        .title {
+            font-size: 52px;
+            line-height: 1.2307em;
+            color: #000;
+            margin: 100px 0 20px;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        p {
+            margin-bottom: 140px;
+        }
+        li a {
+            line-height: 50px;
+            padding: 0 32px;
+            border-radius: 30px;
+            font-size: 15px;
+            text-transform: uppercase;
+            color: #fff;
+            font-weight: 500;
+            background: #000;
+            letter-spacing: 1px;
+            margin: 10px 12px 0 0;
+            @include transition(0.3s);
+            &:hover {
+                background: $color-four;
+                color: #000;
+            }
+        }
+        .arow-icon {
+            width: 70px;
+            height: 70px;
+            border: 2px solid #000;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 66px;
+            color: #000;
+            box-shadow: 4px 0 0 #000;
+            position: absolute;
+            right: 40px;
+            top:40px;
+            font-size: 35px;
+            @include transition(0.3s);
+            &:hover {
+                background: $color-four;
+                color: #000;
+            }
+        }
+    }
+}
+// Project Block Two
+.project-block-two { 
+    border-radius: 30px;
+    overflow: hidden;
+    background: #000;
+    &:hover {
+        .media-img {
+            opacity: 0.6;
+        }
+        .btn-one {
+            opacity: 1;
+        }
+    }
+    .btn-one {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        line-height: 80px;
+        font-size: 30px;
+        top:50%;
+        left: 50%;
+        text-align: center;
+        padding: 0;
+        transform: translate(-50% , -50%);
+        z-index: 1;
+        opacity: 0;
+        &::before,&:after {
+            border-radius: 50%;
+        }
+    }
+}
+
+// Project Block Three
+.project-block-three { 
+    .media-img {
+        border-radius: 30px;
+    }
+    h6 {
+        font-size: 24px;
+    }
+    &:hover {
+        h6 {
+            text-decoration: underline;
+        }
+    }
+    li {
+        line-height: 22px;
+        border-radius: 14px;
+        border: 1px solid #000;
+        font-size: 12px;
+        text-transform: uppercase;
+        padding: 0 15px;
+        margin: 0 10px 12px 0;
+    }
+}
+
+// Project Block Four
+.project-block-four { 
+    overflow: hidden;
+    background: #000;
+    &:hover {
+        .media-img {
+            opacity: 0.5;
+        }
+        .btn-round {
+            opacity: 1;
+        }
+    }
+    .btn-round {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        line-height: 56px;
+        border: 2px solid #000;
+        font-size: 28px;
+        top:50%;
+        left: 50%;
+        text-align: center;
+        background: $color-ten;
+        transform: translate(-50% , -50%);
+        z-index: 1;
+        opacity: 0;
+        @include transition(0.3s);
+        &:hover {
+            background: #000;
+            color: #fff;
+        }
+    }
+}
+// Project Block Five
+.project-block-five { 
+    text-align: center;
+    .media-img {
+        border-radius: 30px;
+        margin-bottom: 35px;
+    }
+    span {
+        font-size: 17px;
+        letter-spacing: 3px;
+        color: #B2B2B2;
+        text-transform: uppercase;
+    }
+    h4 {
+        font-size: 42px;
+        margin: 15px 0 0;
+        letter-spacing: -1px;
+    }
+    &:hover {
+        h4 {
+            text-decoration: underline;
+        }
+    }
+}
+
+
+// Project Section Six
+.project-section-six {
+    .wrapper {
+        width: 145vw;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .slider-arrows {
+        position: absolute;
+        top:0;
+        right: 15%;
+        li {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 70px;
+            font-size: 25px;
+            cursor: pointer;
+            @include transition(0.3s);
+            &:hover {
+                background: #000;
+                color: #fff;
+            }
+        }
+    }
+}

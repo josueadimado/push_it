@@ -1,0 +1,339 @@
+// Card Style One
+.card-style-one {
+    padding: 65px 25px 60px;
+    .icon {
+        width: 110px;
+        height: 110px;
+        background: #000;
+    }
+    h3 {
+        font-family: $font-Montserrat;
+        font-size: 24px;
+        font-style: italic;
+        text-transform: uppercase;
+        margin: 55px 0 45px;
+        min-height: 58px;
+    }
+    p {
+        line-height: 1.65em;
+    }
+}
+
+// Card Style Two
+.card-style-two {
+    background: linear-gradient(to bottom, #FF4BD8, #8726FF);
+    padding: 2px;
+    border-radius: 20px;
+    .wrapper {
+        background: #fff;
+        padding: 25px 25px 25px 45px;
+        border-radius: 20px;
+        h3 {
+            font-family: $font-manrope;
+            font-size: 40px;
+            font-weight: 600;
+            letter-spacing: -0.84px;
+        }
+        .icon {
+            width: 60px;
+            height: 60px;
+            background: #F3F5F6;
+        }
+        p {
+            font-size: 22px;
+            line-height: 1.7272em;
+        }
+        .pointer {
+            right: 18%;
+            bottom:-110%;
+        }
+    }
+    &:hover {
+        background: $color-two;
+        .wrapper {
+            background: transparent;
+            h3,p {
+                color: #fff;
+            }
+            .icon {
+                background: #fff;
+            }
+        }
+    }
+}
+// Card Style Three
+.card-style-three {
+    background: #FFFFFF;
+    box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.03);
+    border-radius: 40px;
+    padding: 40px 45px 50px;
+    font-family: $font-manrope;
+    .main-count {
+        font-size: 95px;
+        color: #000;
+        letter-spacing: -3px;
+        margin-bottom: -5px;
+        margin-top: 50px;
+    }
+    .shape_01 {
+        top:40px;
+        right: 40px;
+    }
+    .logo {
+        height: 50px;
+    }
+}
+// Card Style Four
+.card-style-four {
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 30px;
+    padding: 40px 35px 50px;
+    .main-count {
+        font-family: $font-manrope;
+        font-weight: 600;
+        font-size: 100px;
+        letter-spacing: -1px;
+        color: #000;
+        margin: 80px 0;
+    }
+}
+// Card Style Five
+.card-style-five {
+    .icon {
+        width: 52px;
+        height: 52px;
+        background: #000;
+        margin: 0 auto;
+    }
+    span {
+        font-family: $font-manrope;
+        text-transform: uppercase;
+        font-size: 15px;
+        color: rgba($color: #000000, $alpha: 0.3);
+        letter-spacing: 1px;
+        display: block;
+        margin: 30px 0 5px;
+    }
+}
+// Card Style Six
+.card-style-six {
+    position: relative;
+    padding-bottom: 10px;
+    &.border-line::before {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        background: #000;
+        top:0;
+        right: -57%;
+    }
+    .icon {
+        height: 210px;
+        img {
+            max-height: 100%;
+        }
+    }
+    h4 {
+        font-family: $font-Playfair;
+        font-size: 32px;
+        font-weight: 700;
+        margin: 50px 0 25px;
+    }
+}
+// Card Style Seven
+.card-style-seven {
+    &:before {
+        content: '';
+        position: absolute;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #000;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+    }
+    .icon {
+        height: 75px;
+    }
+    h4 {
+        margin: 45px 0 0;
+    }
+}
+// Card Style Eight
+.card-style-eight {
+    background: #FFFFFF;
+    box-shadow: 0px 25px 60px rgba(0, 0, 0, 0.01);
+    border-radius: 40px;
+    padding: 50px 35px 45px;
+    .icon {
+        max-height: 212px;
+    }
+    h5 {
+        font-size: 28px;
+        margin: 50px 0 32px;
+    }
+}
+// Card Style Nine
+.card-style-nine {
+    padding:25px 35px 140px ;
+    border: 2px solid #000;
+    border-radius: 30px;
+    box-shadow: 8px 8px 0 #000;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 15px;
+    .num {
+        font-size: 23px;
+        color: #000;
+        border-bottom: 1px solid #000;
+        padding-bottom: 15px;
+    }
+    .title {
+        font-size: 18px;
+        letter-spacing: 1.5px;
+        color: #000;
+        margin: 70px 0 25px;
+    }
+    .service-heading {
+        font-size: 36px;
+        line-height: 1.1666em;
+        color: #000;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    .illustration {
+        right: 8%;
+        bottom: 0;
+    }
+}
+// Card Style Ten
+.card-style-ten { 
+    background: #ECF8F6;
+    border-radius: 30px;
+    padding: 45px 50px 55px;
+    text-align: center;
+    .icon {
+        height: 154px;
+        img {
+            max-height: 100%;
+        }
+    }
+    h4 {
+        font-size: 28px;
+        line-height: 1.357em;
+        margin: 60px 0 0;
+    }
+}
+// Card Style Eleven
+.card-style-eleven { 
+    background: #FFFFFF;
+    box-shadow: 0px -25px 50px 20px rgba(0, 0, 0, 0.02);
+    border-radius: 30px;
+    padding: 30px 40px 24px;
+    position: relative;
+    h4 {
+        font-size: 28px;
+        margin: 29px 0 8px;
+    }
+}
+// Card Style Twelve
+.card-style-twelve { 
+    h4 {
+        font-size: 24px;
+        margin: 25px 0;
+    }
+
+}
+// Card Style Thirteen
+.card-style-thirteen { 
+    .icon {
+        width: 60px;
+        height: 60px;
+    }
+    .text {
+        width: calc(100% - 60px);
+        padding-left: 25px;
+        h6 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+    }
+}
+// Card Style Fourteen
+.card-style-fourteen { 
+    border: 2px solid #000;
+    padding: 100px 40px;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    .icon {
+        height: 125px;
+    }
+    h4 {
+        font-size: 28px;
+        line-height: 1.428em;
+        margin-top: 90px;
+    }
+    .cta-btn {
+        width: 55px;
+        height: 55px;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        &:hover {
+            background: $color-ten;
+        }
+    }
+}
+// Card Style Fifteen
+.card-style-fifteen { 
+    .icon {
+        width: 75px;
+        height: 75px;
+        margin: 0 auto;
+    }
+    h6 {
+        font-size: 24px;
+        margin: 35px 0 24px;
+    }
+}
+// Card Style Sixteen
+.card-style-sixteen { 
+    background: #fff;
+    border-radius: 40px;
+    padding: 50px 45px 30px;
+    h6 {
+        font-family: $font-manrope;
+        font-weight: 600;
+        font-size: 32px;
+        letter-spacing: -1px;
+    }
+    p {
+        padding: 25px 0 28px;
+    }
+    a {
+        font-weight: 500;
+        color: #000;
+        .icon {
+            width: 55px;
+            height: 55px;
+            background: #F3F5F6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            @include transition(0.3s);
+        }
+        &:hover {
+            .icon {
+                background: $color-two;
+                color: #fff;
+            }
+        }
+    }
+}
