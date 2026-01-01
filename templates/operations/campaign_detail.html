@@ -1,0 +1,290 @@
+{% extends "operations/base_admin.html" %}
+{% load static %}
+
+{% block title %}{{ campaign.name }} · Campaign · Admin · Push-it{% endblock %}
+
+{% block breadcrumb %}Campaigns / {{ campaign.name }}{% endblock %}
+
+{% block admin_extra_styles %}
+<style>
+.campaign-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 16px;
+}
+
+.campaign-header-left h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: var(--foreground);
+}
+
+.campaign-header-left p {
+    margin: 0;
+    color: var(--muted-foreground);
+    font-size: 14px;
+}
+
+.badge-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badge-status-active {
+    background: var(--success);
+    color: var(--success-foreground);
+}
+
+.badge-status-risk {
+    background: var(--warning);
+    color: var(--warning-foreground);
+}
+
+.campaign-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: var(--card);
+    border-radius: var(--radius-lg);
+    padding: 16px 16px 14px;
+    border: 1px solid var(--border);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.card-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted-foreground);
+}
+
+.card-metric-value {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.summary-item-label {
+    font-size: 12px;
+    color: var(--muted-foreground);
+}
+
+.summary-item-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.key-value {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.key-value span:last-child {
+    color: var(--foreground);
+    font-weight: 500;
+}
+
+.progress-track {
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    background-color: var(--muted);
+    overflow: hidden;
+    margin-top: 6px;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    background-color: var(--primary);
+}
+
+.creator-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    table-layout: fixed;
+}
+
+.creator-table th,
+.creator-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.creator-table th {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted-foreground);
+    text-align: left;
+}
+
+.creator-table td {
+    color: var(--foreground);
+}
+
+.status-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--secondary);
+    color: var(--secondary-foreground);
+}
+
+@media (max-width: 1024px) {
+    .campaign-layout {
+        grid-template-columns: 1fr;
+    }
+    .summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block admin_content %}
+<div class="campaign-header">
+    <div class="campaign-header-left">
+        <h1>{{ campaign.name }}</h1>
+        <p>{{ campaign.brand }} · {{ campaign.platform }} · {{ campaign.niche }}</p>
+    </div>
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <span class="badge-status badge-status-active">
+            Status: {{ campaign.status }}
+        </span>
+        <span class="badge-status badge-status-risk">
+            Risk: {{ campaign.risk_level }}
+        </span>
+    </div>
+</div>
+
+<div class="card" style="margin-bottom: 16px;">
+    <div class="summary-grid">
+        <div>
+            <div class="summary-item-label">Videos ordered</div>
+            <div class="summary-item-value">{{ campaign.package_videos }}</div>
+        </div>
+        <div>
+            <div class="summary-item-label">Videos delivered</div>
+            <div class="summary-item-value">{{ campaign.videos_delivered }}</div>
+        </div>
+        <div>
+            <div class="summary-item-label">Creators assigned</div>
+            <div class="summary-item-value">{{ creators|length }}</div>
+        </div>
+        <div>
+            <div class="summary-item-label">Budget</div>
+            <div class="summary-item-value">${{ campaign.budget|floatformat:0 }}</div>
+        </div>
+    </div>
+    {% with pct=campaign.videos_delivered|divisibleby:campaign.package_videos %}
+    {% endwith %}
+    <div class="key-value">
+        <span class="summary-item-label">Delivery progress</span>
+        <span>{{ campaign.videos_delivered }} / {{ campaign.package_videos }} videos</span>
+    </div>
+    {% with pct=campaign.videos_delivered|floatformat:0 %}
+    <div class="progress-track">
+        <div class="progress-fill" style="width: {{ campaign.videos_delivered|floatformat:0|add:''|floatformat }}%;"></div>
+    </div>
+    {% endwith %}
+</div>
+
+<div class="campaign-layout">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Brief & timing</div>
+        </div>
+        <p style="font-size: 14px; line-height: 1.6; color: var(--foreground); margin-bottom: 12px;">
+            {{ campaign.brief }}
+        </p>
+        <div class="key-value">
+            <span class="summary-item-label">Start date</span>
+            <span>{{ campaign.start_date }}</span>
+        </div>
+        <div class="key-value">
+            <span class="summary-item-label">End date</span>
+            <span>{{ campaign.end_date }}</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Notes</div>
+        </div>
+        <p style="font-size: 14px; color: var(--muted-foreground); margin: 0;">
+            This is a placeholder for internal notes, links to brand assets, and attachments.
+            Later we can add a simple rich-text field and file upload for briefing decks.
+        </p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">Assigned creators</div>
+    </div>
+
+    <table class="creator-table">
+        <thead>
+            <tr>
+                <th>Creator</th>
+                <th>Platform</th>
+                <th>Videos</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in creators %}
+            <tr>
+                <td>{{ c.handle }}</td>
+                <td>{{ c.platform }}</td>
+                <td>{{ c.videos_delivered }} / {{ c.videos_ordered }}</td>
+                <td>
+                    <span class="status-chip">{{ c.status }}</span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+

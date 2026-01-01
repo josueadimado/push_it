@@ -1,0 +1,444 @@
+{% extends "operations/base_admin.html" %}
+{% load static %}
+
+{% block title %}Review Influencer · Admin · Push-it{% endblock %}
+
+{% block breadcrumb %}
+<a href="{% url 'operations:verification' %}">Verification</a> / Review Influencer
+{% endblock %}
+
+{% block admin_extra_styles %}
+<style>
+.review-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.review-header {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user-avatar-lg {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.user-details h2 {
+    margin: 0 0 4px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--foreground) !important;
+}
+
+.user-details p {
+    margin: 0;
+    color: var(--muted-foreground) !important;
+    font-size: 14px;
+}
+
+.risk-badge {
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.risk-high {
+    background: var(--destructive);
+    color: var(--destructive-foreground);
+}
+
+.risk-medium {
+    background: var(--warning);
+    color: var(--warning-foreground);
+}
+
+.risk-low {
+    background: var(--success);
+    color: var(--success-foreground);
+}
+
+.review-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    color: var(--foreground) !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted-foreground) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 14px;
+    color: var(--foreground) !important;
+    font-weight: 500;
+}
+
+.platform-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.platform-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background: var(--background-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+
+.platform-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.platform-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.platform-details h4 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--foreground) !important;
+}
+
+.platform-details p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted-foreground) !important;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-verified {
+    background: var(--success);
+    color: var(--success-foreground);
+}
+
+.status-pending {
+    background: var(--warning);
+    color: var(--warning-foreground);
+}
+
+.status-rejected {
+    background: var(--destructive);
+    color: var(--destructive-foreground);
+}
+
+.action-bar {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    bottom: 0;
+    margin-top: 24px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+}
+
+.btn-success {
+    background: var(--success);
+    color: var(--success-foreground);
+}
+
+.btn-danger {
+    background: var(--destructive);
+    color: var(--destructive-foreground);
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: var(--secondary-foreground);
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.back-link {
+    color: var(--muted-foreground) !important;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.back-link:hover {
+    color: var(--foreground) !important;
+}
+</style>
+{% endblock %}
+
+{% block admin_content %}
+<div class="review-container">
+    <a href="{% url 'operations:verification' %}" class="back-link">
+        <iconify-icon icon="lucide:arrow-left"></iconify-icon>
+        Back to Verification Queue
+    </a>
+
+    <div class="review-header">
+        <div class="user-info">
+            <div class="user-avatar-lg">
+                {% with name=influencer.user.get_full_name|default:influencer.user.username %}
+                    {% if name|length >= 2 %}
+                        {{ name|first|upper }}{{ name|slice:"1:"|first|upper }}
+                    {% else %}
+                        {{ name|first|upper }}{{ name|first|upper }}
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <div class="user-details">
+                <h2>{{ influencer.user.get_full_name|default:influencer.user.username }}</h2>
+                <p>{{ influencer.user.email }}</p>
+                <p style="margin-top: 4px;">
+                    <strong>Status:</strong> {{ influencer.get_verification_status_display }}
+                    {% if influencer.is_paused %}
+                        <span class="status-badge status-rejected" style="margin-left: 8px;">Paused</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div>
+            <span class="risk-badge risk-{{ risk_level }}">
+                {% if risk_level == 'high' %}High Risk
+                {% elif risk_level == 'medium' %}Medium Risk
+                {% else %}Low Risk{% endif %}
+            </span>
+        </div>
+    </div>
+
+    <!-- Profile Information -->
+    <div class="review-section">
+        <h3 class="section-title">
+            <iconify-icon icon="lucide:user"></iconify-icon>
+            Profile Information
+        </h3>
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">Full Name</span>
+                <span class="info-value">{{ influencer.user.get_full_name|default:"Not provided" }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Email</span>
+                <span class="info-value">{{ influencer.user.email }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Email Verified</span>
+                <span class="info-value">
+                    {% if influencer.user.is_email_verified %}
+                        <span style="color: var(--success-foreground);">✓ Yes</span>
+                    {% else %}
+                        <span style="color: var(--destructive);">✗ No</span>
+                    {% endif %}
+                </span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Account Created</span>
+                <span class="info-value">{{ influencer.created_at|date:"M d, Y" }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Primary Platform</span>
+                <span class="info-value">
+                    {% if influencer.primary_platform %}
+                        {% with platform=influencer.primary_platform %}
+                            {% if platform == 'tiktok' %}TikTok
+                            {% elif platform == 'instagram' %}Instagram
+                            {% elif platform == 'youtube' %}YouTube
+                            {% else %}{{ platform|title }}
+                            {% endif %}
+                        {% endwith %}
+                    {% else %}
+                        Not set
+                    {% endif %}
+                </span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Niche</span>
+                <span class="info-value">{{ influencer.niche.name|default:"Not set" }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Onboarding Completed</span>
+                <span class="info-value">
+                    {% if influencer.onboarding_completed %}
+                        <span style="color: var(--success-foreground);">✓ Yes</span>
+                    {% else %}
+                        <span style="color: var(--destructive);">✗ No</span>
+                    {% endif %}
+                </span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Total Followers</span>
+                <span class="info-value">{{ influencer.total_followers|floatformat:0|default:"0" }}</span>
+            </div>
+        </div>
+        {% if influencer.admin_notes %}
+        <div style="margin-top: 16px; padding: 12px; background: var(--background-secondary); border-radius: var(--radius-md);">
+            <span class="info-label">Admin Notes</span>
+            <p style="margin: 8px 0 0 0; color: var(--foreground) !important;">{{ influencer.admin_notes }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Platform Connections -->
+    <div class="review-section">
+        <h3 class="section-title">
+            <iconify-icon icon="lucide:link"></iconify-icon>
+            Platform Connections
+        </h3>
+        {% if platform_connections %}
+            <div class="platform-list">
+                {% for conn in platform_connections %}
+                <div class="platform-item">
+                    <div class="platform-info">
+                        <div class="platform-icon" style="background: {% if conn.platform == 'tiktok' %}#000000{% elif conn.platform == 'instagram' %}#E4405F{% elif conn.platform == 'youtube' %}#FF0000{% else %}#666666{% endif %};">
+                            <iconify-icon icon="{% if conn.platform == 'tiktok' %}lucide:music-2{% elif conn.platform == 'instagram' %}lucide:instagram{% elif conn.platform == 'youtube' %}lucide:youtube{% else %}lucide:link{% endif %}" style="color: white; font-size: 20px;"></iconify-icon>
+                        </div>
+                        <div class="platform-details">
+                            <h4>{{ conn.get_platform_display }}</h4>
+                            <p>@{{ conn.handle }} • {{ conn.followers_count|floatformat:0 }} followers
+                                {% if conn.verified_followers_count %}
+                                    (Verified: {{ conn.verified_followers_count|floatformat:0 }})
+                                {% endif %}
+                            </p>
+                            {% if conn.sample_post_url %}
+                            <p style="margin-top: 4px;">
+                                <a href="{{ conn.sample_post_url }}" target="_blank" style="color: var(--primary); text-decoration: none; font-size: 12px;">
+                                    View Sample Post →
+                                </a>
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <span class="status-badge status-{{ conn.verification_status }}">
+                        {{ conn.get_verification_status_display }}
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="color: var(--muted-foreground) !important;">No platforms connected yet.</p>
+        {% endif %}
+    </div>
+
+    <!-- Action Bar -->
+    <div class="action-bar">
+        <div>
+            <p style="margin: 0; color: var(--muted-foreground) !important; font-size: 13px;">
+                Review all information before making a decision
+            </p>
+        </div>
+        <div class="action-buttons">
+            <form method="post" action="{% url 'operations:reject_influencer' influencer.id %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to reject this influencer?');">
+                    <iconify-icon icon="lucide:x"></iconify-icon>
+                    Reject
+                </button>
+            </form>
+            <form method="post" action="{% url 'operations:approve_influencer' influencer.id %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">
+                    <iconify-icon icon="lucide:check"></iconify-icon>
+                    Approve
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

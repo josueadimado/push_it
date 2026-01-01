@@ -1,0 +1,346 @@
+{% extends "brands/base_brand.html" %}
+{% load static %}
+
+{% block title %}Create Campaign · Brand Dashboard · Push-it{% endblock %}
+
+{% block breadcrumb %}Create Campaign{% endblock %}
+
+{% block brand_extra_styles %}
+<style>
+.campaign-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.section-header {
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: var(--foreground);
+}
+
+.section-desc {
+    color: var(--muted-foreground);
+    font-size: 14px;
+    margin: 0;
+}
+
+.card-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.wallet-info {
+    background: linear-gradient(135deg, var(--primary) 0%, #4338ca 100%);
+    color: var(--primary-foreground);
+    border: none;
+    margin-bottom: 32px;
+}
+
+.wallet-info-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wallet-label {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 4px;
+}
+
+.wallet-amount {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.wallet-link {
+    color: var(--primary-foreground);
+    text-decoration: underline;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.wallet-link:hover {
+    opacity: 1;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--foreground);
+}
+
+.form-label .required {
+    color: var(--destructive);
+    margin-left: 4px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--background);
+    font-size: 14px;
+    color: var(--foreground);
+    outline: none;
+    min-height: 40px;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(255, 117, 5, 0.1);
+}
+
+.form-input textarea {
+    display: block;
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-input select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+    cursor: pointer;
+}
+
+.form-help-text {
+    font-size: 12px;
+    color: var(--muted-foreground);
+    margin-top: 4px;
+}
+
+.form-errors {
+    color: var(--destructive);
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: var(--secondary-foreground);
+    border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    background: var(--border);
+}
+
+.budget-warning {
+    background: var(--warning);
+    color: var(--warning-foreground);
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    margin-bottom: 24px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.budget-warning iconify-icon {
+    font-size: 18px;
+}
+</style>
+{% endblock %}
+
+{% block brand_content %}
+<div class="campaign-form-container">
+    <!-- Wallet Balance Info -->
+    <div class="card-panel wallet-info">
+        <div class="wallet-info-content">
+            <div>
+                <div class="wallet-label">Available Wallet Balance</div>
+                <div class="wallet-amount">{{ currency_symbol }}{{ wallet_balance|floatformat:2 }}</div>
+            </div>
+            <div>
+                <a href="{% url 'brands:wallet' %}" class="wallet-link">Top Up Wallet</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Campaign Form -->
+    <div class="card-panel">
+        <div class="section-header">
+            <h2 class="section-title">Campaign Details</h2>
+            <p class="section-desc">Create a new campaign to connect with influencers.</p>
+        </div>
+
+        {% if wallet_balance <= 0 %}
+        <div class="budget-warning">
+            <iconify-icon icon="lucide:alert-triangle"></iconify-icon>
+            <span>Your wallet balance is zero. Please top up your wallet before creating a campaign.</span>
+        </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'brands:create_campaign' %}">
+            {% csrf_token %}
+
+            <!-- Campaign Name -->
+            <div class="form-group">
+                <label class="form-label">
+                    Campaign Name
+                    <span class="required">*</span>
+                </label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="form-errors">{{ form.name.errors }}</div>
+                {% endif %}
+                <div class="form-help-text">Give your campaign a clear, descriptive name.</div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label class="form-label">Description</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <div class="form-errors">{{ form.description.errors }}</div>
+                {% endif %}
+                <div class="form-help-text">Describe your campaign goals, requirements, and what you're looking for.</div>
+            </div>
+
+            <!-- Platform -->
+            <div class="form-group">
+                <label class="form-label">
+                    Platform
+                    <span class="required">*</span>
+                </label>
+                {{ form.platform }}
+                {% if form.platform.errors %}
+                    <div class="form-errors">{{ form.platform.errors }}</div>
+                {% endif %}
+                <div class="form-help-text">Select the social media platform for this campaign.</div>
+            </div>
+
+            <!-- Niche -->
+            <div class="form-group">
+                <label class="form-label">
+                    Niche/Category
+                    <span class="required">*</span>
+                </label>
+                {{ form.niche }}
+                {% if form.niche.errors %}
+                    <div class="form-errors">{{ form.niche.errors }}</div>
+                {% endif %}
+                <div class="form-help-text">Select the niche/category that best matches your campaign.</div>
+            </div>
+
+            <!-- Package Videos -->
+            <div class="form-group">
+                <label class="form-label">
+                    Number of Videos
+                    <span class="required">*</span>
+                </label>
+                {{ form.package_videos }}
+                {% if form.package_videos.errors %}
+                    <div class="form-errors">{{ form.package_videos.errors }}</div>
+                {% endif %}
+                <div class="form-help-text">How many videos do you want to order for this campaign?</div>
+            </div>
+
+            <!-- Budget -->
+            <div class="form-group">
+                <label class="form-label">
+                    Budget ({{ currency_code }})
+                    <span class="required">*</span>
+                </label>
+                {{ form.budget }}
+                {% if form.budget.errors %}
+                    <div class="form-errors">{{ form.budget.errors }}</div>
+                {% endif %}
+                <div class="form-help-text">
+                    Total budget for this campaign. This amount will be deducted from your wallet immediately.
+                    {% if wallet_balance > 0 %}
+                        <strong>Available: {{ currency_symbol }}{{ wallet_balance|floatformat:2 }}</strong>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Start Date -->
+            <div class="form-group">
+                <label class="form-label">Start Date</label>
+                {{ form.start_date }}
+                {% if form.start_date.errors %}
+                    <div class="form-errors">{{ form.start_date.errors }}</div>
+                {% endif %}
+                <div class="form-help-text">When should this campaign start? (Optional)</div>
+            </div>
+
+            <!-- Due Date -->
+            <div class="form-group">
+                <label class="form-label">Due Date</label>
+                {{ form.due_date }}
+                {% if form.due_date.errors %}
+                    <div class="form-errors">{{ form.due_date.errors }}</div>
+                {% endif %}
+                <div class="form-help-text">When should all videos be delivered? (Optional)</div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <a href="{% url 'brands:campaigns' %}" class="btn btn-secondary">
+                    <iconify-icon icon="lucide:x"></iconify-icon>
+                    Cancel
+                </a>
+                <button type="submit" class="btn btn-primary" {% if wallet_balance <= 0 %}disabled{% endif %}>
+                    <iconify-icon icon="lucide:check"></iconify-icon>
+                    Create Campaign
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

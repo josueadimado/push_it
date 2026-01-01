@@ -1,0 +1,980 @@
+// Hero Banner One
+.hero-banner-one {
+    .hero-heading {
+        font-family: $font-Montserrat;
+        font-size: 90px;
+        line-height: 1.1666em;
+        text-transform: uppercase;
+        font-style: italic;
+    }
+    .client-logo-wrapper {
+        position: absolute;
+        right: 0;
+        bottom: 105px;
+        width: 60%;
+    }
+    .illustration {
+        right: 0;
+        top:7%;
+        max-width: 50%;
+    }
+}
+// Hero Banner Two
+.hero-banner-two {
+    .hero-heading {
+        font-size: 105px;
+        font-weight: 700;
+        letter-spacing: -4.2px;
+        line-height: 1.0952em;
+    }
+    .shape_01 {
+        left: 5%;
+        top:3%;
+        max-width: 10%;
+    }
+    .shape_02 {
+        right: 5%;
+        top:2%;
+        max-width: 10%;
+    }
+}
+// Hero Banner Three
+.hero-banner-three {
+    &:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top:0;
+        left: 0;
+        background: url(../images/assets/bg_01.png) no-repeat center;
+        background-size: cover;
+        z-index: -1;
+        opacity: 0.8;
+    }
+    .hero-heading {
+        font-size: 94px;
+        font-weight: 500;
+        line-height: 1.0952em;
+        letter-spacing: -2.5px;
+    }
+    form {
+        max-width: 658px;
+        height: 80px;
+        input {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            padding: 0 170px 0 25px;
+            color: #000;
+            font-style: italic;
+            border: 1px solid #000;
+            border-radius: 12px;
+        }
+        button {
+            position: absolute;
+            right: 0;
+            top:0;
+            bottom: 0;
+            width: 165px;
+            font-weight: 500;
+            color: #fff;
+            background: #000;
+            border-radius: 0 12px 12px 0;
+            &:hover {
+                background: $color-two;
+            }
+        }
+    }
+    .media {
+       .card_01 {
+        right: 0;
+        bottom: -28%;
+        z-index: 1;
+        max-width: 25.34%;
+        animation: jumpThree 5s infinite linear;
+       }
+       .card_02 {
+        left: 0;
+        bottom: -25%;
+        z-index: 1;
+        max-width: 25.8%;
+        animation: jumpTwo 5s infinite linear;
+       }
+    }
+    .shape_01 {
+        right: 0;
+        top:15%;
+        max-width: 16%;
+    }
+    .shape_02 {
+        left: 0;
+        top:14%;
+        max-width: 16%;
+    }
+}
+// Hero Banner Four
+.hero-banner-four {
+    .wrapper {
+        padding: 190px 20px 90px;
+    }
+    .hero-heading {
+        font-size: 110px;
+        line-height: 1.0454em;
+        font-weight: 700;
+
+    }
+    form {
+        max-width: 596px;
+        height: 80px;
+        input {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            padding: 0 170px 0 25px;
+            color: #000;
+            font-style: italic;
+            border: 1px solid #000;
+            border-radius: 10px;
+        }
+        button {
+            position: absolute;
+            right: 0;
+            top:0;
+            bottom: 0;
+            width: 165px;
+            font-weight: 500;
+            color: #fff;
+            background: #000;
+            border-radius: 0 10px 10px 0;
+            &:hover {
+                background: $color-two;
+            }
+        }
+    }
+    .illustration {
+        position: absolute;
+        right: 2%;
+        top:15%;
+        max-width: 42%;
+    }
+}
+
+// Hero Banner Five
+.hero-banner-five {
+    background: #171417;
+    &:before {
+        content: '';
+        position: absolute;
+        width: 33.333%;
+        height: 100%;
+        border-left: 1px solid rgba($color: #fff, $alpha: 0.05);
+        border-right: 1px solid rgba($color: #fff, $alpha: 0.05);
+        top:0;
+        left: 33.333%;
+        z-index: -1; 
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        top:0;
+        left: 50%;
+        background: rgba($color: #fff, $alpha: 0.05);
+        z-index: -1;
+    }
+    .wrapper:before {
+        content: '';
+        position: absolute;
+        width: 66.666%;
+        height: 100%;
+        border-left: 1px solid rgba($color: #fff, $alpha: 0.05);
+        border-right: 1px solid rgba($color: #fff, $alpha: 0.05);
+        top:0;
+        left: 16.6666%;
+        z-index: -1;
+    }
+    .badge-tag {
+        font-family: $font-manrope;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+        color: #000;
+        display: inline-block;
+        background: #fff;
+        padding: 2px 20px;
+        border-radius: 30px;
+    }
+    .hero-heading {
+        font-weight: 700;
+        font-size: 180px;
+        color: #fff;
+        letter-spacing: -10px;
+        line-height: 0.84em;
+        span {
+            font-family: $font-Pacifico;
+            font-weight: normal;
+            color: $color-six;
+            display: block;
+            position: relative;
+            z-index: 1;
+            margin-top: -25px;
+        }
+    }
+    p {
+        color: rgba($color: #fff, $alpha: 0.7);
+    }
+    .illustration {
+        position: absolute;
+        max-width: 52%;
+        right: 0;
+        top:13%;
+    }
+    .fact-feature {
+        width: 28%;
+        .icon {
+            width: 65px;
+            height: 65px;
+            border-width: 3px;
+            border-style: solid;
+            font-size: 40px;
+        }
+        h3 {
+            width: calc(100% - 65px);
+            padding-left: 30px;
+            margin: 0;
+            color: #fff;
+            font-size: 28px;
+        }
+    }
+}
+// Hero Banner Six
+.hero-banner-six {
+    .hero-heading {
+        font-size: 100px;
+        line-height: 1em;
+        font-weight: 700;
+        letter-spacing: -3px;
+        span {
+            color: $color-seven;
+        }
+    }
+    .rating {
+        border-left: 1px solid rgba($color: #000000, $alpha: 0.2);
+        margin-left: 15px;
+        padding-left: 15px;
+        li {
+            color: #FFB949;
+            margin-right: 5px;
+        }
+    }
+    .illustration {
+        position: absolute;
+        right: 0;
+        top:18%;
+        z-index: 1;
+        padding-left: 12%;
+        max-width: 58%;
+        .shape_01 {
+            left: 0;
+            bottom: 0;
+            max-width: 22%;
+            z-index: 0;
+            box-shadow: 0px 50px 100px rgba(0, 0, 0, 0.09);
+            border-radius: 30px;
+        }
+        .shape_02 {
+            top:23%;
+            left: 15%;
+            max-width: 43%;
+            z-index: 0;
+            animation: jumpThree 5s infinite linear;
+        }
+        .shape_03 {
+            bottom:0%;
+            right: 4%;
+            max-width: 51%;
+            z-index: 0;
+            animation: jumpTwo 5s infinite linear;
+        }
+    }
+    .bg-shape {
+        right: 0;
+        top:17%;
+        max-width: 60%;
+    }
+}
+// Hero Banner Seven
+.hero-banner-seven {
+    .container {
+        max-width: 1500px;
+        padding: 0 12px;
+    }
+    .hero-heading {
+        font-size: 220px;
+        font-weight: 900;
+        text-transform: uppercase;
+        line-height: 0.886em;
+        letter-spacing: -15px;
+        .shape_05 {
+            right: -8%;
+            top:-46%;
+        }
+        .shape_06 {
+            left: -9%;
+            bottom:-37%;
+        }
+        .smile_icon {
+            right: 28%;
+            top:50%;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+    }
+    .sub-heading {
+        font-size: 54px;
+        color: #000;
+        margin-bottom: -60px;
+    }
+    .quote-text {
+        font-size: 36px;
+        line-height: 1em;
+        color: #000;
+        position: absolute;
+        left: 50%;
+        top:50%;
+        transform: translate(-50% , -50%);
+        z-index: 1;
+        text-align: center;
+    }
+}
+
+// Hero Banner Eight
+.hero-banner-eight {
+    &:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: url(../images/assets/bg_13.svg) no-repeat center;
+        background-size: cover;
+        z-index: -1;
+    }
+    .hero-heading {
+        font-family: $font-Montserrat;
+        font-style: italic;
+        font-size: 110px;
+        color: #fff;
+        line-height: 0.954em;
+        letter-spacing: -1px;
+        span {
+            position: relative;
+            display: inline-block;
+            &:before {
+                content: '';
+                position: absolute;
+                width: calc(100% - 10px);
+                height: 20px;
+                background: $color-eight;
+                left: 10px;
+                bottom: 6%;
+                z-index: -1;
+            }
+        }
+    }
+    form {
+        max-width: 660px;
+        button {
+            height: 70px;
+            width: 190px;
+            background: #000;
+            color: #fff;
+            border-radius: 10px;
+            font-weight: 500;
+            @include transition(0.3s);
+            &:hover {
+                background: $color-eight;
+                color: #000;
+            }
+        }
+        input {
+            width: calc(100% - 210px);
+            height: 70px;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            background: transparent;
+            color: #fff;
+            padding: 0 25px;
+            &::placeholder {
+                color: #fff;
+            }
+        }
+    }
+    li {
+        font-size: 20px;
+        color: #fff;
+        margin: 10px 30px 0 0;
+    }
+    .illustration {
+        position: absolute;
+        max-width: 36%;
+        right: 6%;
+        bottom: 0;
+        z-index: 1;
+        .person-img {
+            bottom: 0;
+            left: 57%;
+            transform: translateX(-50%);
+            z-index: 0;
+            max-width: 93%;
+        }
+        .shape_01 {
+            z-index: 0;
+            right: -8%;
+            bottom:8%;
+            max-width: 131%;
+        }
+    }
+}
+
+// Hero Banner Nine
+.hero-banner-nine { 
+    background: #FEF3F4;
+    .hero-heading {
+        font-size: 100px;
+        line-height: 1em;
+        font-weight: 800;
+    }
+    .illustration {
+        position: absolute;
+        right: 2%;
+        top:0;
+        max-width: 51%;
+        z-index: -1;
+    }
+}
+
+// Hero Banner Ten
+.hero-banner-ten { 
+    .bg {
+        background: url(../images/media/img_21.jpg) no-repeat right top;
+        background-size: cover;
+        &:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            top:0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(270.13deg, rgba(255, 255, 255, 0) 0.53%, rgba(250, 250, 250, 0) 37.87%, #F7F7F7 60.12%, #E6E5E7 99.89%);
+        }
+    }
+    .hero-heading {
+        font-size: 72px;
+        font-style: italic;
+        line-height: 1.0714em;
+        letter-spacing: -2px;
+    }
+    .btn-group {
+        a {
+            line-height: 58px;
+            border: 2px solid #000;
+            padding: 0 30px 0 20px;
+            font-weight: 500;
+            color: #000;
+            @include transition(0.3s);
+            margin: 10px 15px 0 0;
+            display: flex;
+            align-items: center;
+            img {
+                margin-right: 12px;
+            }
+            &.active,&:hover {
+                background: $color-ten;
+            }
+        }
+    }
+    .dm-text {
+        font-size: 17px;
+        color: #000;
+        a {
+            font-weight: 500;
+            text-decoration: underline;
+        }
+    }
+
+}
+// Fancy Banner One
+.fancy-banner-one {
+    .shape_01 {
+        right: 0;
+        bottom: 7%;
+        max-width: 23%;
+    }
+    .shape_02 {
+        left: 0;
+        bottom: 1%;
+        max-width: 21%;
+    }
+}
+
+// Fancy Banner Two
+.fancy-banner-two {
+    background: $color-two;
+    h2 {
+        font-size: 78px;
+        line-height: 1.1282em;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: -0.8px;
+        margin-bottom: 55px;
+    }
+    .shape_01 {
+        right: 5%;
+        top: 25%;
+        max-width: 11%;
+    }
+    .shape_02 {
+        left: 5%;
+        top: 25%;
+        max-width: 11%;
+    }
+}
+
+// Fancy Banner Three
+.fancy-banner-three {
+    h2 {
+        font-size: 78px;
+        line-height: 1.1882em;
+        letter-spacing: -2px;
+    }
+    .shape_01 {
+        right: 0;
+        top: 25%;
+        max-width: 17%;
+    }
+    .shape_02 {
+        left: 0;
+        top: 25%;
+        max-width: 17%;
+    }
+}
+// Fancy Banner Four
+.fancy-banner-four {
+    .illustration {
+        margin: -190px auto 0;
+    }
+    .shape_01 {
+        top:93%;
+        left: -1%;
+        max-width: 8%;
+        animation: jumpTwo 5s infinite linear;
+    }
+    .shape_02 {
+        top:93%;
+        right: -1%;
+        max-width: 8%;
+        animation: jumpThree 5s infinite linear;
+    }
+}
+// Fancy Banner Five
+.fancy-banner-five {
+    background: #171417;
+    &:before {
+        content: '';
+        position: absolute;
+        width: 33.333%;
+        height: 100%;
+        border-left: 1px solid rgba($color: #fff, $alpha: 0.05);
+        border-right: 1px solid rgba($color: #fff, $alpha: 0.05);
+        top:0;
+        left: 33.333%;
+        z-index: -1; 
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        top:0;
+        left: 50%;
+        background: rgba($color: #fff, $alpha: 0.05);
+        z-index: -1;
+    }
+    .wrapper:before {
+        content: '';
+        position: absolute;
+        width: 66.666%;
+        height: 100%;
+        border-left: 1px solid rgba($color: #fff, $alpha: 0.05);
+        border-right: 1px solid rgba($color: #fff, $alpha: 0.05);
+        top:0;
+        left: 16.6666%;
+        z-index: -1;
+    }
+}
+// Fancy Banner Six
+.fancy-banner-six {
+    padding: 0 120px;
+    .wrapper {
+        background: #FFFFFF;
+        box-shadow: 0px 50px 100px rgba(0, 0, 0, 0.04);
+        border-radius: 30px;
+        padding: 60px 15px;
+        h2 {
+            font-size: 62px;
+            font-style: italic;
+            line-height: 1.1774em;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+    }
+    .shape_01 {
+        right: 0;
+        top:50%;
+        transform: translateY(-50%);
+        z-index: 0;
+        max-width: 10%;
+    }
+    .shape_02 {
+        left: 0;
+        top:50%;
+        transform: translateY(-50%);
+        z-index: 0;
+        max-width: 10%;
+    }
+    .shape_03 {
+        left: 50%;
+        top:50%;
+        transform: translate(-50% , -50%);
+        z-index: 0;
+        max-width: 13%;
+    }
+}
+// Fancy Banner Seven
+.fancy-banner-seven { 
+    .shape_01 {
+        animation: jumpThree 5s infinite linear;
+        max-width: 12%;
+    }
+    .platform-button-group a {
+        width: 190px;
+        height: 58px;
+        border: 2px solid #000;
+        border-radius: 10px;
+        padding: 0 5px 0 22px;
+        margin: 10px 10px 0;
+        background: #fff;
+        color: #000;
+        text-align: left;
+        font-size: 18px;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: -5px 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        .icon {
+            margin-right: 14px;
+        }
+        span {
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.6);
+            display: block;
+            line-height: initial;
+            margin-bottom: -3px;
+        }
+        strong {
+            font-weight: 500;
+            display: block;
+        }
+        &.ios-button {
+            background: #000;
+            border-color: #000;
+            span {
+                color: #999999;
+            }
+            strong {
+                color: #fff;
+            }
+        }
+      }
+}
+// Fancy Banner Eight
+.fancy-banner-eight {
+    .hero-heading {
+        font-size: 164px;
+        font-weight: 900;
+        text-transform: uppercase;
+        line-height: 1em;
+        letter-spacing: -12px;
+        .shape_02 {
+            width: 244px;
+        }
+        .shape_01 {
+            right: -12%;
+            top:-37%;
+        }
+        .smile_icon {
+            width: 78px;
+            right: 57%;
+            top:50%;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+    }
+}
+// Fancy Banner Nine
+.fancy-banner-nine {
+    &:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: url(../images/assets/bg_17.png) no-repeat center;
+        background-size: cover;
+        z-index: -1;
+    }
+    .hero-heading {
+        font-size: 160px;
+        font-weight: 900;
+        text-transform: uppercase;
+        line-height: 1em;
+        letter-spacing: -12px;
+        .shape_02 {
+            width: 244px;
+        }
+        .shape_01 {
+            right: -12%;
+            top:-37%;
+        }
+        .smile_icon {
+            width: 78px;
+            right: 57%;
+            top:50%;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+    }
+}
+
+// Fancy Banner Ten
+.fancy-banner-ten { 
+    .wrapper {
+        background: #F6F6F6;
+        border-radius: 50px;
+        padding: 0 80px 80px;
+        .illustration {
+            margin: 0 auto;
+            width: 100%;
+            transform: translateY(-100px);
+            border-bottom: 3px solid #000;
+        }
+        .video-btn {
+            width: 135px;
+            height: 135px;
+            border: 3px solid #000;
+            background: $color-nine;
+            font-size: 60px;
+            color: #000;
+            padding-left: 10px;
+            &:hover {
+                background: #000;
+                color: $color-nine;
+                border-color: $color-nine;
+            }
+        }
+        h2 {
+            width: calc(100% - 135px);
+            padding-left: 40px;
+            margin: 0;
+            font-family: $font-Playfair;
+            font-weight: 700;
+            font-size: 57px;
+            line-height: 1.2280em;
+        }
+    }
+}
+// Fancy Banner Eleven
+.fancy-banner-eleven { 
+    .bg-wrapper {
+        background: url(../images/media/img_21.jpg) no-repeat right top;
+        background-size: cover;
+        &:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            top:0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(270.13deg, rgba(255, 255, 255, 0) 0.53%, rgba(250, 250, 250, 0) 37.87%, #F7F7F7 60.12%, #E6E5E7 99.89%);
+        }
+    }
+}
+// Contact Banner One
+.contact-banner-one {
+    h5 {
+        font-style: italic;
+        font-size: 36px;
+        letter-spacing: -1px;
+    }
+    .icon {
+        width: 64px;
+        height: 64px;
+        background: #000;
+    }
+    .text {
+        width: calc(100% - 64px);
+        padding-left: 20px;
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+        }
+    }
+    .skew-line {
+        &:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-left: 1px solid #000;
+            border-right: 1px solid #000;
+            left: 0;
+            top:0;
+            z-index: -1;
+            transform: skew(-23deg);
+        }
+    }
+}
+
+
+// Inner Banner One
+.inner-banner-one { 
+    .bg {
+        background: url(../images/media/img_32.jpg) no-repeat right top;
+        background-size: cover;
+        &:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            top:0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(270.13deg, rgba(255, 255, 255, 0) 0.53%, rgba(250, 250, 250, 0) 37.87%, #F7F7F7 60.12%, #E6E5E7 99.89%);
+        }
+    }
+    h2 {
+        font-family: $font-Montserrat;
+        font-size: 70px;
+        letter-spacing: -2px;
+        margin-bottom: 20px;
+    }
+    ul li {
+        font-size: 22px;
+        margin-right: 4px;
+        color: #000;
+        a {
+            color: #000;
+        }
+        &:last-child {
+            font-weight: 500;
+        }
+    }
+}
+// Inner Banner Two
+.inner-banner-two { 
+    .shape_01 {
+        top:33%;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 90%;
+    }
+}
+// Inner Banner Three
+.inner-banner-three {
+    background: #171417;
+    &:before {
+        content: '';
+        position: absolute;
+        width: 33.333%;
+        height: 100%;
+        border-left: 1px solid rgba($color: #fff, $alpha: 0.05);
+        border-right: 1px solid rgba($color: #fff, $alpha: 0.05);
+        top:0;
+        left: 33.333%;
+        z-index: -1; 
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        top:0;
+        left: 50%;
+        background: rgba($color: #fff, $alpha: 0.05);
+        z-index: -1;
+    }
+    .wrapper:before {
+        content: '';
+        position: absolute;
+        width: 66.666%;
+        height: 100%;
+        border-left: 1px solid rgba($color: #fff, $alpha: 0.05);
+        border-right: 1px solid rgba($color: #fff, $alpha: 0.05);
+        top:0;
+        left: 16.6666%;
+        z-index: -1;
+    }
+    h2 {
+        font-size: 100px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 20px;
+        span {
+            font-family: $font-Pacifico;
+            color: $color-six;
+            font-weight: normal;
+        }
+    }
+    ul li {
+        font-size: 22px;
+        margin: 0 3px;
+        color: rgba($color: #fff, $alpha: 0.5);
+        a {
+            color: rgba($color: #fff, $alpha: 0.5);
+        }
+        &:last-child {
+            font-weight: 500;
+            color: #fff;
+        }
+    }
+}
+// Video Banner One
+.video-banner-one {
+    .bg-wrapper {
+        height: 800px;
+        background: url(../images/media/img_34.jpg) no-repeat center;
+        background-size: cover;
+
+        .video-btn {
+            width: 130px;
+            height: 130px;
+            background: $color-ten;
+            border: 3px solid #000;
+            font-size: 60px;
+            color: #000;
+            padding-left: 10px;
+            &:hover {
+                background: $bg-eight;
+            }
+        }
+    }
+}

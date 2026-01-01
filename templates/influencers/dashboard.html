@@ -1,0 +1,629 @@
+{% extends "influencers/base_influencer.html" %}
+{% load humanize %}
+
+{% block title %}Dashboard · Push-it{% endblock %}
+
+{% block breadcrumb %}Dashboard{% endblock %}
+
+{% block inf_extra_styles %}
+<style>
+/* Ensure all text uses theme colors */
+.content * {
+    color: inherit;
+}
+
+/* Page Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--foreground) !important;
+    margin: 0;
+}
+
+.date-display {
+    color: var(--muted-foreground) !important;
+    font-size: 14px;
+}
+
+/* Stats Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+}
+
+.stat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.stat-header iconify-icon {
+    transition: color 0.2s;
+}
+
+.stat-card:nth-child(1) .stat-header iconify-icon {
+    color: var(--brand-orange) !important;
+}
+
+.stat-card:nth-child(2) .stat-header iconify-icon {
+    color: #0ea5c0 !important; /* Darker cyan for better contrast */
+}
+
+html.light .stat-card:nth-child(2) .stat-header iconify-icon {
+    color: #0891b2 !important; /* Even darker for light mode */
+}
+
+.stat-card:nth-child(3) .stat-header iconify-icon {
+    color: var(--brand-orange) !important;
+}
+
+.stat-card:nth-child(4) .stat-header iconify-icon {
+    color: #0ea5c0 !important; /* Darker cyan for better contrast */
+}
+
+html.light .stat-card:nth-child(4) .stat-header iconify-icon {
+    color: #0891b2 !important; /* Even darker for light mode */
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--muted-foreground) !important;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--foreground) !important;
+}
+
+.stat-desc {
+    font-size: 12px;
+    color: var(--muted-foreground) !important;
+    margin-top: 4px;
+}
+
+.stat-desc.positive {
+    color: var(--success-foreground);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+
+.grid-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Section Cards */
+.section-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.section-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--foreground) !important;
+}
+
+.section-action {
+    font-size: 13px;
+    color: var(--secondary) !important; /* Cyan for links */
+    text-decoration: none;
+    font-weight: 600; /* Bolder for better visibility */
+    transition: color 0.2s;
+}
+
+/* Ensure cyan links are visible in both modes */
+.section-action {
+    color: #0ea5c0 !important; /* Darker cyan for better contrast */
+}
+
+html.light .section-action {
+    color: #0891b2 !important; /* Even darker for light mode */
+}
+
+.section-action:hover {
+    color: #0ea5c0 !important;
+    text-decoration: underline;
+}
+
+/* Job List */
+.job-list {
+    padding: 0;
+}
+
+.job-item {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.job-item:last-child {
+    border-bottom: none;
+}
+
+.job-item:hover {
+    background-color: rgba(16, 183, 214, 0.1); /* Cyan tint on hover */
+}
+
+.job-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.platform-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(16, 183, 214, 0.15); /* Cyan tint background */
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0ea5c0 !important; /* Darker cyan for better contrast */
+}
+
+html.light .platform-icon {
+    color: #0891b2 !important; /* Even darker for light mode */
+}
+
+.job-details h4 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--foreground) !important;
+}
+
+.job-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--muted-foreground) !important;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.badge-outline {
+    border: 1px solid var(--border);
+    color: var(--muted-foreground);
+}
+
+.badge-primary {
+    background: rgba(16, 183, 214, 0.2); /* Cyan tint */
+    color: #0ea5c0 !important; /* Darker cyan for better contrast */
+    border: 1px solid rgba(16, 183, 214, 0.4);
+    font-weight: 600; /* Bolder text */
+}
+
+html.light .badge-primary {
+    color: #0891b2 !important; /* Even darker cyan for light mode */
+}
+
+.job-payout {
+    text-align: right;
+}
+
+.payout-amount {
+    font-weight: 600;
+    color: var(--foreground) !important;
+    font-size: 14px;
+}
+
+.payout-label {
+    font-size: 11px;
+    color: var(--muted-foreground) !important;
+}
+
+.cta-button {
+    background-color: var(--primary); /* Orange for primary buttons */
+    color: var(--primary-foreground);
+    border: none;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.cta-button:hover {
+    background-color: var(--brand-orange-hover);
+}
+
+.cta-button.secondary {
+    background-color: var(--secondary); /* Cyan for secondary buttons */
+    color: #ffffff !important; /* Ensure white text for contrast */
+    font-weight: 600; /* Make text bolder for better visibility */
+}
+
+.cta-button.secondary:hover {
+    background-color: var(--brand-cyan-hover);
+    color: #ffffff !important;
+}
+
+/* Alert Box */
+.alert-box {
+    background: var(--warning);
+    border: 1px solid #fde047;
+    color: var(--warning-foreground);
+    padding: 16px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.alert-content h4 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--warning-foreground) !important;
+}
+
+.alert-content p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--warning-foreground) !important;
+}
+
+.alert-content a {
+    display: inline-block;
+    margin-top: 8px;
+    font-weight: 500;
+    color: inherit;
+    text-decoration: underline;
+}
+
+/* Info Snippet */
+.info-snippet {
+    padding: 24px;
+    text-align: center;
+    color: var(--muted-foreground) !important;
+    font-size: 13px;
+}
+
+.info-snippet p {
+    margin: 0 0 16px 0;
+}
+
+.info-snippet .cta-button {
+    margin-top: 8px;
+}
+
+/* Task List */
+.task-list {
+    padding: 16px 24px;
+}
+
+.task-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    cursor: pointer;
+}
+
+.task-item:last-child {
+    margin-bottom: 0;
+}
+
+.task-check {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+.task-text {
+    font-size: 13px;
+}
+
+.task-title {
+    font-weight: 500;
+    margin-bottom: 2px;
+    display: block;
+    color: var(--foreground) !important;
+}
+
+.task-sub {
+    color: var(--muted-foreground) !important;
+    font-size: 12px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block inf_content %}
+<div class="page-header">
+    <h1 class="page-title">Welcome back, {{ request.user.first_name }}!</h1>
+    <div class="date-display">{% now "M d, Y" %}</div>
+</div>
+
+<!-- Stats Grid -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-label">Job Feed</span>
+            <iconify-icon icon="lucide:rss" style="font-size: 20px;"></iconify-icon>
+        </div>
+        <div class="stat-value">{{ available_jobs_count }}</div>
+        <div class="stat-desc">Available for you</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-label">In Progress</span>
+            <iconify-icon icon="lucide:clock" style="font-size: 20px;"></iconify-icon>
+        </div>
+        <div class="stat-value">{{ in_progress_count }}</div>
+        <div class="stat-desc">Due this week</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-label">Completed</span>
+            <iconify-icon icon="lucide:check-circle" style="font-size: 20px;"></iconify-icon>
+        </div>
+        <div class="stat-value">{{ completed_count }}</div>
+        <div class="stat-desc {% if this_month_completed > 0 %}positive{% endif %}">
+            {% if this_month_completed > 0 %}
+                <iconify-icon icon="lucide:trending-up" style="font-size: 14px;"></iconify-icon>
+                +{{ this_month_completed }} this month
+            {% else %}
+                All time
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-label">Available Balance</span>
+            <iconify-icon icon="lucide:wallet" style="font-size: 20px;"></iconify-icon>
+        </div>
+        <div class="stat-value">{{ currency_symbol }}{{ available_balance|floatformat:2 }}</div>
+        <div class="stat-desc">
+            {% if pending_clearance_amount > 0 %}
+                Pending: {{ currency_symbol }}{{ pending_clearance_amount|floatformat:2 }}
+            {% else %}
+                <a href="{% url 'influencers:wallet' %}" style="color: inherit; text-decoration: none;">View wallet →</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Main Dashboard Content -->
+<div class="dashboard-grid">
+    <!-- Left Column -->
+    <div class="grid-column">
+        <!-- Active Jobs Section -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-title">Active Assignments</div>
+                <a href="{% url 'influencers:my_jobs' %}" class="section-action">View all</a>
+            </div>
+
+            <div class="job-list">
+                {% if active_submissions %}
+                    {% for submission in active_submissions %}
+                        <div class="job-item">
+                            <div class="job-info">
+                                <div class="platform-icon">
+                                    {% if submission.campaign.platform == 'tiktok' %}
+                                        <iconify-icon icon="lucide:video" style="font-size: 24px;"></iconify-icon>
+                                    {% elif submission.campaign.platform == 'instagram' %}
+                                        <iconify-icon icon="mdi:instagram" style="font-size: 24px;"></iconify-icon>
+                                    {% elif submission.campaign.platform == 'youtube' %}
+                                        <iconify-icon icon="mdi:youtube" style="font-size: 24px;"></iconify-icon>
+                                    {% else %}
+                                        <iconify-icon icon="lucide:video" style="font-size: 24px;"></iconify-icon>
+                                    {% endif %}
+                                </div>
+                                <div class="job-details">
+                                    <h4>{{ submission.campaign.name }}</h4>
+                                    <div class="job-meta">
+                                        {% if submission.campaign.due_date %}
+                                            <span>Due: {{ submission.campaign.due_date|date:"M d" }}</span>
+                                            <span>•</span>
+                                        {% endif %}
+                                        <span class="badge badge-outline">
+                                            {% if submission.status == 'new' %}Pending Proof
+                                            {% elif submission.status == 'in_review' %}In Review
+                                            {% else %}{{ submission.get_status_display }}{% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job-payout">
+                                {% with payout=submission.payout %}
+                                    {% if payout %}
+                                        <div class="payout-amount">{{ currency_symbol }}{{ payout.amount|floatformat:2 }}</div>
+                                    {% else %}
+                                        <div class="payout-amount">-</div>
+                                    {% endif %}
+                                {% endwith %}
+                                {% if submission.status == 'new' %}
+                                    <a href="{% url 'influencers:my_jobs' %}" class="cta-button" style="margin-top: 6px; padding: 6px 12px; font-size: 12px; text-decoration: none; display: inline-block;">
+                                        Submit Proof
+                                    </a>
+                                {% else %}
+                                    <div class="payout-label">In Review</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div style="text-align: center; padding: 40px 20px; color: var(--muted-foreground) !important;">
+                        <iconify-icon icon="lucide:briefcase" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px;"></iconify-icon>
+                        <p>No active assignments</p>
+                        <a href="{% url 'influencers:job_feed' %}" class="cta-button" style="margin-top: 16px; display: inline-block; text-decoration: none;">
+                            Browse Job Feed
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Available Jobs Section -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-title">New Auto-Assignments</div>
+                {% if available_jobs_count > 0 %}
+                    <span class="badge badge-primary">{{ available_jobs_count }} New</span>
+                {% endif %}
+            </div>
+            <div class="info-snippet">
+                <p>
+                    Jobs are automatically matched to your profile based on your verified platforms and follower counts.
+                    {% if eligible_platforms|length > 0 %}
+                        You're eligible for jobs on: {% for platform in eligible_platforms %}{{ platform|title }}{% if not forloop.last %}, {% endif %}{% endfor %}.
+                    {% endif %}
+                </p>
+                <a href="{% url 'influencers:job_feed' %}" class="cta-button">Go to Job Feed</a>
+            </div>
+        </div>
+        
+        <!-- Profile Stats Section -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-title">Profile Stats</div>
+            </div>
+            <div style="padding: 16px 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <div>
+                        <div style="font-size: 12px; color: var(--muted-foreground) !important; margin-bottom: 4px;">Total Followers</div>
+                        <div style="font-size: 20px; font-weight: 600; color: var(--foreground) !important;">
+                            {{ total_followers|floatformat:0|intcomma }}
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 12px; color: var(--muted-foreground) !important; margin-bottom: 4px;">Verified Platforms</div>
+                        <div style="font-size: 20px; font-weight: 600; color: var(--foreground) !important;">
+                            {{ verified_platforms_count }}/{{ total_platforms_count }}
+                        </div>
+                    </div>
+                </div>
+                {% if total_earned > 0 %}
+                    <div style="padding-top: 16px; border-top: 1px solid var(--border);">
+                        <div style="font-size: 12px; color: var(--muted-foreground) !important; margin-bottom: 4px;">Lifetime Earnings</div>
+                        <div style="font-size: 18px; font-weight: 600; color: var(--foreground) !important;">
+                            {{ currency_symbol }}{{ total_earned|floatformat:2 }}
+                        </div>
+                    </div>
+                {% endif %}
+                <a href="{% url 'influencers:profile' %}" class="section-action" style="display: inline-block; margin-top: 12px;">View Profile →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="grid-column">
+        <!-- Action Required -->
+        {% if not influencer.is_verified %}
+            <div class="alert-box">
+                <iconify-icon icon="lucide:alert-circle" style="font-size: 24px; flex-shrink: 0;"></iconify-icon>
+                <div class="alert-content">
+                    <h4>Complete Verification</h4>
+                    <p>You must verify your platform accounts before you can withdraw earnings.</p>
+                    <a href="{% url 'influencers:profile' %}">Verify Now</a>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Tasks / To-do -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-title">Tasks</div>
+            </div>
+            <div class="task-list">
+                {% if active_submissions %}
+                    {% for submission in active_submissions|slice:":3" %}
+                        {% if submission.campaign.due_date %}
+                            <label class="task-item">
+                                <input type="checkbox" class="task-check" disabled>
+                                <div class="task-text">
+                                    <span class="task-title">Submit proof for '{{ submission.campaign.name }}'</span>
+                                    <span class="task-sub">
+                                        Due: {{ submission.campaign.due_date|date:"M d" }}
+                                        {% if submission.campaign.due_date < today %}(Overdue){% endif %}
+                                    </span>
+                                </div>
+                            </label>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <div style="text-align: center; padding: 20px; color: var(--muted-foreground) !important;">
+                        <p style="font-size: 13px;">No pending tasks</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

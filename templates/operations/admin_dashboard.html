@@ -1,0 +1,616 @@
+{% extends "operations/base_admin.html" %}
+{% load static %}
+
+{% block title %}Overview · Admin · Push-it{% endblock %}
+
+{% block breadcrumb %}Overview{% endblock %}
+
+{% block admin_extra_styles %}
+<style>
+/* Content Header */
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.content-header-left h1 {
+    font-size: 24px;
+    margin: 0 0 6px 0;
+    font-weight: 600;
+    color: var(--foreground) !important;
+}
+
+.content-header-left p {
+    margin: 0;
+    color: var(--muted-foreground) !important;
+    font-size: 15px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    height: 38px;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+    border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    background-color: var(--muted);
+}
+
+/* Cards and grids */
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.grid-2-1 {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr;
+    gap: 16px;
+}
+
+.card {
+    background-color: var(--card);
+    border-radius: var(--radius-lg);
+    padding: 14px 14px 12px 14px;
+    border: 1px solid var(--border);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.card-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted-foreground) !important;
+}
+
+.card-value {
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 6px;
+    color: var(--foreground) !important;
+}
+
+.badge-soft-success {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background-color: var(--success);
+    color: var(--success-foreground);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badge-soft-warning {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background-color: var(--warning);
+    color: var(--warning-foreground);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.muted-text {
+    color: var(--muted-foreground) !important;
+}
+
+/* Progress bar */
+.progress-track {
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    background-color: var(--muted);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    background-color: var(--primary);
+}
+
+/* Table */
+.table-shell {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    table-layout: fixed;
+}
+
+.table-shell thead tr {
+    background-color: var(--brand-cyan) !important;
+}
+
+.table-shell th {
+    background-color: var(--brand-cyan) !important;
+    color: #ffffff !important;
+    font-weight: 500;
+    text-align: left;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+html.light .table-shell th {
+    color: #0f172a !important;
+    background-color: var(--brand-cyan) !important;
+}
+
+.table-shell tbody tr td {
+    vertical-align: middle !important;
+}
+
+.table-shell td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    color: var(--foreground) !important;
+    background-color: var(--card);
+    vertical-align: middle;
+    overflow: visible;
+    box-sizing: border-box;
+    line-height: 1.5;
+}
+
+.table-shell tbody tr {
+    height: auto;
+    vertical-align: middle;
+}
+
+.table-shell tbody tr:hover td {
+    background-color: var(--secondary);
+}
+
+.table-shell tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-shell td > div,
+.table-shell td > span {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    vertical-align: middle;
+    min-height: 28px;
+    box-sizing: border-box;
+}
+
+.status-active {
+    background-color: var(--success);
+    color: var(--success-foreground);
+}
+
+.status-pending {
+    background-color: var(--warning);
+    color: var(--warning-foreground);
+}
+
+.status-completed {
+    background-color: var(--muted);
+    color: var(--muted-foreground);
+}
+
+/* Inputs and filters */
+.input-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.input-label {
+    font-size: 13px;
+    color: var(--muted-foreground) !important;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.pill-filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.pill-filter {
+    padding: 5px 12px;
+    border-radius: 50px;
+    background-color: var(--secondary);
+    color: var(--muted-foreground) !important;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pill-filter:hover {
+    background-color: var(--muted);
+}
+
+.pill-filter-active {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+}
+
+/* Stack layout */
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mini-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: var(--foreground);
+}
+
+.mini-row span {
+    color: inherit;
+}
+
+.link-inline {
+    font-size: 14px;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.link-inline:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 1024px) {
+    .grid-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .grid-2-1 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+    .grid-3 {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block admin_content %}
+<div class="content-header">
+    <div class="content-header-left">
+        <h1>Overview</h1>
+        <p>Monitor campaigns, creator submissions, and payments across the platform.</p>
+    </div>
+    <div class="content-header-right">
+        <button class="btn btn-primary">
+            <iconify-icon icon="lucide:plus" style="font-size: 16px; margin-right: 6px"></iconify-icon>
+            Create new campaign
+        </button>
+    </div>
+</div>
+
+<!-- Stat cards -->
+<div class="grid-4">
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Total campaigns</div>
+                <div class="card-value">{{ stats.total_campaigns }}</div>
+            </div>
+        </div>
+        <div class="mini-row muted-text">
+            <span>Active</span>
+            <span>{{ stats.active_campaigns }}</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Videos in progress</div>
+                <div class="card-value">{{ stats.videos_in_progress }}</div>
+            </div>
+            <span class="muted-text" style="font-size: 13px">Next 7 days</span>
+        </div>
+        <div class="mini-row muted-text">
+            <span>On-time delivery</span>
+            <span>{{ stats.on_time_delivery }}%</span>
+        </div>
+        <div class="progress-track" style="margin-top: 6px">
+            <div class="progress-fill" style="width: {{ stats.on_time_delivery }}%"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Completed videos</div>
+                <div class="card-value">{{ stats.videos_completed }}</div>
+            </div>
+            <span class="muted-text" style="font-size: 13px">Last 30 days</span>
+        </div>
+        <div class="mini-row muted-text">
+            <span>Avg. views per video</span>
+            <span>41.3k</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Total spend</div>
+                <div class="card-value">${{ stats.total_spend|floatformat:0 }}</div>
+            </div>
+            <span class="muted-text" style="font-size: 13px">All time</span>
+        </div>
+        <div class="mini-row muted-text">
+            <span>Open disputes</span>
+            <span style="color: {% if stats.disputes_open > 0 %}#b91c1c{% else %}var(--muted-foreground){% endif %}; font-weight: {% if stats.disputes_open > 0 %}500{% else %}400{% endif %}">{{ stats.disputes_open }}</span>
+        </div>
+    </div>
+</div>
+
+<!-- Secondary metrics -->
+<div class="grid-3" style="margin-top: 16px; margin-bottom: 8px;">
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Campaigns at risk</div>
+                <div class="card-value">{{ stats.campaigns_at_risk }}</div>
+            </div>
+        </div>
+        <p class="muted-text" style="font-size: 13px; margin: 0;">
+            Less than 70% delivered or due within 3 days.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Pending verifications</div>
+                <div class="card-value">{{ stats.pending_verifications }}</div>
+            </div>
+        </div>
+        <p class="muted-text" style="font-size: 13px; margin: 0;">
+            Creators waiting for ID & content review.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Pending payouts</div>
+                <div class="card-value">{{ stats.pending_payouts }}</div>
+            </div>
+        </div>
+        <p class="muted-text" style="font-size: 13px; margin: 0;">
+            Approved work where payment has not yet been sent.
+        </p>
+    </div>
+</div>
+
+<!-- Middle layout: campaigns + submissions -->
+<div class="grid-2-1">
+    <!-- Recent campaigns -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Recent campaigns</div>
+            </div>
+            <a class="link-inline">View all</a>
+        </div>
+
+        <div class="input-row" style="margin-bottom: 10px">
+            <div style="flex: 1">
+                <div class="input-label">Filters</div>
+                <div class="pill-filter-row">
+                    <div class="pill-filter pill-filter-active">Active</div>
+                    <div class="pill-filter">Draft</div>
+                    <div class="pill-filter">Completed</div>
+                </div>
+            </div>
+        </div>
+
+        <table class="table-shell">
+            <thead>
+                <tr>
+                    <th>Campaign</th>
+                    <th>Platform / niche</th>
+                    <th>Package</th>
+                    <th>Status</th>
+                    <th>Progress</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="color: var(--foreground) !important;">Summer launch UGC</td>
+                    <td style="color: var(--foreground) !important;">TikTok · Beverages</td>
+                    <td style="color: var(--foreground) !important;">10 videos</td>
+                    <td>
+                        <span class="status-pill status-active">Active</span>
+                    </td>
+                    <td>
+                        <div class="mini-row" style="gap: 8px">
+                            <span class="muted-text">6 / 10</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="color: var(--foreground) !important;">Q4 performance push</td>
+                    <td style="color: var(--foreground) !important;">Reels · Fitness</td>
+                    <td style="color: var(--foreground) !important;">20 videos</td>
+                    <td>
+                        <span class="status-pill status-pending">Pending start</span>
+                    </td>
+                    <td>
+                        <span class="muted-text">0 / 20</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="color: var(--foreground) !important;">Creator whitelisting test</td>
+                    <td style="color: var(--foreground) !important;">Shorts · SaaS</td>
+                    <td style="color: var(--foreground) !important;">5 videos</td>
+                    <td>
+                        <span class="status-pill status-completed">Completed</span>
+                    </td>
+                    <td>
+                        <span class="muted-text">5 / 5</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="badge-soft-warning" style="margin-top: 10px">
+            <iconify-icon icon="lucide:info" style="font-size: 14px"></iconify-icon>
+            Campaigns lock after payment. Editing is disabled once funded.
+        </div>
+    </div>
+
+    <!-- Latest submissions -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Latest submissions</div>
+            <a class="link-inline">Open submissions queue</a>
+        </div>
+
+        <div class="stack">
+            <div class="mini-row">
+                <div style="display: flex; align-items: center; gap: 6px">
+                    <div style="width: 24px; height: 24px; border-radius: 6px; background: var(--muted); display: flex; align-items: center; justify-content: center;">
+                        <iconify-icon icon="lucide:play" style="font-size: 14px; color: var(--muted-foreground);"></iconify-icon>
+                    </div>
+                    <div style="display: flex; flex-direction: column">
+                        <span style="font-size: 14px; font-weight: 500; color: var(--foreground);">@fitlucas • TikTok</span>
+                        <span class="muted-text" style="font-size: 13px">"Summer launch UGC" · 3h ago</span>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" style="height: 32px; font-size: 13px; padding: 0 12px">
+                    <iconify-icon icon="lucide:download" style="font-size: 14px; margin-right: 4px"></iconify-icon>
+                    Download proof
+                </button>
+            </div>
+
+            <div class="mini-row">
+                <div style="display: flex; align-items: center; gap: 6px">
+                    <div style="width: 24px; height: 24px; border-radius: 6px; background: var(--muted); display: flex; align-items: center; justify-content: center;">
+                        <iconify-icon icon="lucide:play" style="font-size: 14px; color: var(--muted-foreground);"></iconify-icon>
+                    </div>
+                    <div style="display: flex; flex-direction: column">
+                        <span style="font-size: 14px; font-weight: 500; color: var(--foreground);">@beautybyana • Reels</span>
+                        <span class="muted-text" style="font-size: 13px">"Holiday bundle" · 1d ago</span>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" style="height: 32px; font-size: 13px; padding: 0 12px">
+                    <iconify-icon icon="lucide:download" style="font-size: 14px; margin-right: 4px"></iconify-icon>
+                    Download proof
+                </button>
+            </div>
+
+            <div class="mini-row" style="margin-top: 4px">
+                <span class="muted-text" style="font-size: 13px">Accepted formats: .mp4, .mov, public links</span>
+                <a class="link-inline" style="font-size: 13px">View format guidelines</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent activity -->
+<div class="card" style="margin-top: 16px;">
+    <div class="card-header">
+        <div class="card-title">Recent activity</div>
+    </div>
+
+    <div class="stack">
+        {% for item in activity %}
+            <div class="mini-row">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 24px; height: 24px; border-radius: 6px; background: var(--muted); display: flex; align-items: center; justify-content: center;">
+                        <iconify-icon icon="lucide:clock" style="font-size: 14px; color: var(--muted-foreground);"></iconify-icon>
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                        <span style="font-size: 14px; font-weight: 500; color: var(--foreground);">
+                            {{ item.label }}
+                        </span>
+                        <span class="muted-text" style="font-size: 13px;">
+                            {{ item.detail }}
+                        </span>
+                    </div>
+                </div>
+                <span class="muted-text" style="font-size: 13px;">
+                    {{ item.time }}
+                </span>
+            </div>
+        {% empty %}
+            <span class="muted-text" style="font-size: 13px;">No recent activity.</span>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

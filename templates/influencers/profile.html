@@ -1,0 +1,1079 @@
+{% extends "influencers/base_influencer.html" %}
+
+{% block title %}Profile · Push-it{% endblock %}
+
+{% block breadcrumb %}Profile & Verification{% endblock %}
+
+{% block inf_extra_styles %}
+<style>
+/* Ensure all text uses theme colors */
+.content * {
+    color: inherit;
+}
+
+/* Page Header */
+.page-header {
+    margin-bottom: 24px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--foreground) !important;
+    margin: 0 0 4px 0;
+}
+
+.page-subtitle {
+    color: var(--muted-foreground) !important;
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Verification Banner */
+.verification-banner {
+    background: var(--warning); /* Use theme warning color */
+    border: 1px solid var(--warning-foreground);
+    color: var(--warning-foreground) !important;
+    padding: 16px 24px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+html.light .verification-banner {
+    background: linear-gradient(to right, #fef3c7, #fef9c3);
+    border: 1px solid #fde047;
+    color: #92400e !important;
+}
+
+.banner-icon {
+    background: rgba(146, 64, 14, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.banner-text {
+    flex: 1;
+}
+
+.banner-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 2px;
+    color: inherit !important;
+}
+
+.banner-desc {
+    font-size: 13px;
+    opacity: 0.9;
+    color: inherit !important;
+}
+
+.banner-btn {
+    background: #92400e;
+    color: #fff !important;
+    border: none;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+html:not(.light) .banner-btn {
+    background: var(--warning-foreground);
+    color: var(--warning) !important;
+}
+
+.banner-btn:hover {
+    opacity: 0.9;
+}
+
+/* Grid Layout */
+.grid-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.card:last-child {
+    margin-bottom: 0;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--foreground) !important;
+}
+
+/* Form Grid */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+.label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--foreground) !important;
+}
+
+.input,
+.form-select,
+select.form-select,
+input[type="text"],
+input[type="number"],
+input[type="url"],
+select {
+    height: 40px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0 12px;
+    font-size: 14px;
+    color: var(--foreground) !important;
+    background: var(--input) !important;
+    font-family: inherit;
+}
+
+/* Ensure select dropdowns are visible */
+select.form-select option,
+select option {
+    color: var(--foreground) !important;
+    background: var(--input) !important;
+}
+
+/* Ensure all form text is visible - target by ID using proper CSS */
+input[id^="id_"],
+select[id^="id_"] {
+    color: var(--foreground) !important;
+    background: var(--input) !important;
+}
+
+/* Ensure all form labels are visible */
+.form-grid label,
+.form-group label,
+.label {
+    color: var(--foreground) !important;
+    font-weight: 500;
+}
+
+.input:disabled {
+    background: var(--muted) !important;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.textarea {
+    height: 100px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    font-size: 14px;
+    color: var(--foreground) !important;
+    background: var(--input) !important;
+    resize: none;
+    font-family: inherit;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+/* Social Row */
+.social-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    margin-bottom: 12px;
+}
+
+.social-row:last-child {
+    margin-bottom: 0;
+}
+
+.social-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.social-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: rgba(16, 183, 214, 0.15); /* Cyan tint instead of solid */
+    color: #0ea5c0 !important; /* Darker cyan icon */
+}
+
+html.light .social-icon {
+    color: #0891b2 !important;
+}
+
+.social-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--foreground) !important;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 4px;
+}
+
+.status-badge.verified {
+    background: var(--success);
+    color: var(--success-foreground) !important;
+}
+
+.status-badge.pending {
+    background: var(--warning);
+    color: var(--warning-foreground) !important;
+}
+
+.status-badge.unconnected {
+    background: rgba(16, 183, 214, 0.15); /* Cyan tint instead of solid */
+    color: #0ea5c0 !important; /* Darker cyan text */
+    border: 1px solid rgba(16, 183, 214, 0.3);
+}
+
+html.light .status-badge.unconnected {
+    color: #0891b2 !important;
+}
+
+.connect-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--foreground) !important;
+}
+
+.connect-btn:hover {
+    background: rgba(16, 183, 214, 0.1); /* Cyan tint instead of solid */
+    color: var(--foreground) !important;
+}
+
+/* Checklist */
+.checklist-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.checklist-item:last-child {
+    margin-bottom: 0;
+}
+
+.check-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--muted-foreground);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: transparent;
+}
+
+.checklist-item.completed .check-circle {
+    border-color: var(--success-foreground);
+    background: var(--success);
+    color: var(--success-foreground);
+}
+
+.check-content {
+    flex: 1;
+}
+
+.check-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--foreground) !important;
+    margin-bottom: 4px;
+}
+
+.check-desc {
+    font-size: 12px;
+    color: var(--muted-foreground) !important;
+}
+
+/* Upload Area */
+.upload-area {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 12px;
+}
+
+.upload-area:hover {
+    border-color: var(--primary);
+}
+
+.upload-text {
+    font-size: 13px;
+    color: var(--muted-foreground) !important;
+    margin-top: 8px;
+}
+
+/* Help Card */
+.help-card {
+    background: rgba(16, 183, 214, 0.1); /* Cyan tint instead of solid */
+    border: 1px solid rgba(16, 183, 214, 0.2);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+}
+
+.help-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: var(--foreground) !important;
+}
+
+.help-text {
+    font-size: 13px;
+    color: var(--muted-foreground) !important;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.help-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--primary) !important;
+    text-decoration: none;
+}
+
+.help-link:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-group.full-width {
+        grid-column: span 1;
+    }
+}
+</style>
+{% endblock %}
+
+{% block inf_content %}
+<!-- Messages -->
+{% if messages %}
+    <div style="margin-bottom: 24px;">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="
+                padding: 12px 16px;
+                border-radius: var(--radius-md);
+                margin-bottom: 12px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                {% if message.tags == 'success' %}
+                    background: var(--success);
+                    color: var(--success-foreground);
+                    border: 1px solid var(--success-foreground);
+                {% elif message.tags == 'error' or message.tags == 'danger' %}
+                    background: var(--destructive);
+                    color: var(--destructive-foreground);
+                    border: 1px solid var(--destructive-foreground);
+                {% elif message.tags == 'warning' %}
+                    background: var(--warning);
+                    color: var(--warning-foreground);
+                    border: 1px solid var(--warning-foreground);
+                {% else %}
+                    background: var(--secondary);
+                    color: var(--secondary-foreground);
+                    border: 1px solid var(--border);
+                {% endif %}
+            ">
+                {% if message.tags == 'success' %}
+                    <iconify-icon icon="lucide:check-circle-2" style="font-size: 18px;"></iconify-icon>
+                {% elif message.tags == 'error' or message.tags == 'danger' %}
+                    <iconify-icon icon="lucide:alert-circle" style="font-size: 18px;"></iconify-icon>
+                {% elif message.tags == 'warning' %}
+                    <iconify-icon icon="lucide:alert-triangle" style="font-size: 18px;"></iconify-icon>
+                {% else %}
+                    <iconify-icon icon="lucide:info" style="font-size: 18px;"></iconify-icon>
+                {% endif %}
+                <span style="flex: 1;">{{ message }}</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="
+                    background: none;
+                    border: none;
+                    color: inherit;
+                    opacity: 0.7;
+                    cursor: pointer;
+                    font-size: 18px;
+                    padding: 0;
+                    width: 20px;
+                    height: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                ">&times;</button>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="page-header">
+    <h1 class="page-title">Profile & Verification</h1>
+    <p class="page-subtitle">Manage your public profile and complete verification to start earning.</p>
+</div>
+
+<!-- Profile Picture Upload Section -->
+<div class="card" style="margin-bottom: 24px;">
+    <div class="card-header">
+        <div class="card-title">Profile Picture</div>
+    </div>
+    
+    <form method="post" action="{% url 'influencers:profile' %}" enctype="multipart/form-data" id="profile-picture-form" style="padding: 24px;">
+        {% csrf_token %}
+        <input type="hidden" name="update_profile_picture" value="1">
+        
+        <div style="display: flex; gap: 24px; align-items: start;">
+            <div style="flex-shrink: 0;">
+                <div id="profile-picture-preview" style="width: 120px; height: 120px; border-radius: 50%; background: var(--muted); display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--border);">
+                    {% if influencer.profile_picture %}
+                        <img src="{{ influencer.profile_picture.url }}" alt="Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                    {% else %}
+                        <iconify-icon icon="lucide:user" style="font-size: 48px; color: var(--muted-foreground);"></iconify-icon>
+                    {% endif %}
+                </div>
+            </div>
+            <div style="flex: 1;">
+                <label class="form-label" style="display: block; margin-bottom: 8px;">Upload Profile Picture</label>
+                <div style="font-size: 13px; color: var(--muted-foreground); margin-bottom: 12px;">
+                    Recommended size 400x400px. Max file size: 5MB. JPG, PNG, or GIF.
+                </div>
+                <label for="id_profile_picture" class="btn-primary" style="cursor: pointer; display: inline-block;">
+                    <iconify-icon icon="lucide:{% if influencer.profile_picture %}refresh-cw{% else %}upload{% endif %}" style="font-size: 14px; margin-right: 4px;"></iconify-icon>
+                    {% if influencer.profile_picture %}Update Picture{% else %}Upload Picture{% endif %}
+                </label>
+                <input type="file" name="profile_picture" id="id_profile_picture" accept="image/*" style="display: none;">
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if 'profile picture' in message|lower %}
+                            <div style="color: var(--destructive); font-size: 13px; margin-top: 8px;">{{ message }}</div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Verification Banner -->
+{% if not influencer.is_verified %}
+    {% if not platform_connections.exists %}
+        {# Only show banner if no platforms have been added at all #}
+        <div class="verification-banner">
+            <div class="banner-icon">
+                <iconify-icon icon="lucide:shield-alert" style="font-size: 20px;"></iconify-icon>
+            </div>
+            <div class="banner-text">
+                <div class="banner-title">Verification Incomplete</div>
+                <div class="banner-desc">
+                    You must verify at least one platform account to start accepting jobs.
+                </div>
+            </div>
+            <a href="#platforms" class="banner-btn" style="text-decoration: none; display: inline-block;">Add Platform</a>
+        </div>
+    {% elif pending_platforms.exists and not verified_platforms.exists %}
+        {# Show banner if platforms are pending but none verified yet #}
+        <div class="verification-banner">
+            <div class="banner-icon">
+                <iconify-icon icon="lucide:loader" style="font-size: 20px;"></iconify-icon>
+            </div>
+            <div class="banner-text">
+                <div class="banner-title">Verification In Progress</div>
+                <div class="banner-desc">
+                    Your platform{{ pending_platforms.count|pluralize }} {{ pending_platforms.count|pluralize:"is,are" }} being verified. This usually takes a few minutes.
+                </div>
+            </div>
+        </div>
+    {% elif verified_platforms.exists and influencer.verification_status == 'pending' %}
+        {# Show banner if platforms are verified but account requirements not fully met yet #}
+        <div class="verification-banner">
+            <div class="banner-icon">
+                <iconify-icon icon="lucide:loader" style="font-size: 20px;"></iconify-icon>
+            </div>
+            <div class="banner-text">
+                <div class="banner-title">Almost There!</div>
+                <div class="banner-desc">
+                    {% if not influencer.niche %}
+                        Please select your niche to complete verification.
+                    {% elif not influencer.primary_platform %}
+                        Please select your primary platform to complete verification.
+                    {% else %}
+                        Your platform{{ verified_platforms.count|pluralize }} {{ verified_platforms.count|pluralize:"is,are" }} verified! Completing final checks...
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% elif verified_platforms.exists and influencer.verification_status != 'pending' %}
+        {# Platforms verified but account status is something else (rejected, paused, etc.) #}
+        <div class="verification-banner">
+            <div class="banner-icon">
+                <iconify-icon icon="lucide:shield-alert" style="font-size: 20px;"></iconify-icon>
+            </div>
+            <div class="banner-text">
+                <div class="banner-title">Account Status: {{ influencer.get_verification_status_display }}</div>
+                <div class="banner-desc">
+                    {% if influencer.verification_status == 'rejected' %}
+                        Your account verification was rejected. Please contact support for assistance.
+                    {% elif influencer.verification_status == 'paused' %}
+                        Your account has been paused. Please contact support for more information.
+                    {% else %}
+                        Your account status: {{ influencer.get_verification_status_display }}. Please contact support if you have questions.
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}
+
+<div class="grid-layout">
+    <!-- Left Column: Forms -->
+    <div class="left-col">
+        <!-- Personal Details -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Personal Details</div>
+            </div>
+            <form class="form-grid">
+                <div class="form-group">
+                    <label class="label">First Name</label>
+                    <input type="text" class="input" value="{{ request.user.first_name }}">
+                </div>
+                <div class="form-group">
+                    <label class="label">Last Name</label>
+                    <input type="text" class="input" value="{{ request.user.last_name }}">
+                </div>
+                <div class="form-group full-width">
+                    <label class="label">Email Address</label>
+                    <input type="email" class="input" value="{{ request.user.email }}" disabled>
+                </div>
+                <div class="form-group full-width">
+                    <label class="label">Bio (Visible to Brands)</label>
+                    <textarea class="textarea">Tech enthusiast and lifestyle vlogger sharing daily tips and reviews.</textarea>
+                </div>
+            </form>
+            
+            <!-- Currency Selection -->
+            <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
+                <div style="margin-bottom: 12px;">
+                    <label class="label" style="color: var(--foreground) !important;">Currency</label>
+                    <div style="font-size: 12px; color: var(--muted-foreground) !important; margin-bottom: 8px;">
+                        Your wallet and earnings will be displayed in this currency. Amounts from campaigns will be automatically converted.
+                    </div>
+                </div>
+                <form method="post" action="{% url 'influencers:profile' %}" style="display: flex; gap: 12px; align-items: end;">
+                    {% csrf_token %}
+                    <input type="hidden" name="update_currency" value="1">
+                    <div style="flex: 1;">
+                        <select name="currency" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--background); color: var(--foreground); font-size: 14px;">
+                            {% for currency in available_currencies %}
+                                <option value="{{ currency.id }}" {% if influencer.currency.id == currency.id %}selected{% endif %}>
+                                    {{ currency.code }} - {{ currency.name }} ({{ currency.symbol }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" style="padding: 8px 16px; background: var(--primary); color: var(--primary-foreground); border: none; border-radius: var(--radius-md); font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap;">
+                        Update Currency
+                    </button>
+                </form>
+            </div>
+            
+            <div style="margin-top: 24px; text-align: right;">
+                <button class="btn-primary">Save Changes</button>
+            </div>
+        </div>
+
+        <!-- Connected Accounts -->
+        <div class="card" id="platforms">
+            <div class="card-header">
+                <div class="card-title">Connected Accounts</div>
+            </div>
+
+            {% if platform_connections %}
+                {% for conn in platform_connections %}
+                    <div class="social-row" {% if conn.verification_status == 'rejected' and conn.verification_flags %}style="border-left: 3px solid var(--destructive); padding-left: 13px;"{% endif %}>
+                        <div class="social-info">
+                            <div class="social-icon">
+                                {% if conn.platform == 'tiktok' %}
+                                    <iconify-icon icon="ic:baseline-tiktok" style="font-size: 18px;"></iconify-icon>
+                                {% elif conn.platform == 'instagram' %}
+                                    <iconify-icon icon="mdi:instagram" style="font-size: 18px;"></iconify-icon>
+                                {% elif conn.platform == 'youtube' %}
+                                    <iconify-icon icon="mdi:youtube" style="font-size: 18px;"></iconify-icon>
+                                {% elif conn.platform == 'twitter' %}
+                                    <iconify-icon icon="mdi:twitter" style="font-size: 18px;"></iconify-icon>
+                                {% elif conn.platform == 'snapchat' %}
+                                    <iconify-icon icon="mdi:snapchat" style="font-size: 18px;"></iconify-icon>
+                                {% else %}
+                                    <iconify-icon icon="lucide:video" style="font-size: 18px;"></iconify-icon>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <div class="social-name">{{ conn.get_platform_display }}</div>
+                                {% if conn.verification_status == 'verified' %}
+                                    <div class="status-badge verified">Verified</div>
+                                {% elif conn.verification_status == 'pending' %}
+                                    <div class="status-badge pending">Pending</div>
+                                {% elif conn.verification_status == 'rejected' %}
+                                    <div class="status-badge unconnected">Rejected</div>
+                                {% else %}
+                                    <div class="status-badge unconnected">Not Verified</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--foreground) !important;">
+                                @{{ conn.handle }}
+                            </div>
+                            <div style="font-size: 12px; color: var(--muted-foreground) !important;">
+                                {% if conn.verified_followers_count and conn.verified_followers_count != conn.followers_count %}
+                                    <span style="text-decoration: line-through; opacity: 0.5;">{{ conn.followers_count|floatformat:0 }}</span>
+                                    <span style="color: var(--foreground) !important; font-weight: 600; margin-left: 4px;">
+                                        {{ conn.verified_followers_count|floatformat:0 }}
+                                    </span>
+                                {% else %}
+                                    {{ conn.followers_count|floatformat:0 }}
+                                {% endif %}
+                                {% if conn.platform == 'youtube' %}Subscribers{% else %}Followers{% endif %}
+                            </div>
+                            {% if conn.verified_followers_count and conn.verified_followers_count != conn.followers_count %}
+                                <div style="font-size: 11px; color: var(--warning-foreground) !important; margin-top: 4px; font-weight: 500;">
+                                    ✓ Verified count: {{ conn.verified_followers_count|floatformat:0 }}
+                                </div>
+                            {% endif %}
+                            {% if conn.verification_status == 'pending' %}
+                                <div style="font-size: 11px; color: var(--muted-foreground) !important; margin-top: 4px; margin-bottom: 8px;">
+                                    Under review
+                                </div>
+                                <form method="post" action="{% url 'influencers:reverify_platform' conn.id %}" style="display: inline-block;" id="reverify-form-{{ conn.id }}" onsubmit="return handleReverify(event, {{ conn.id }})">
+                                    {% csrf_token %}
+                                    <button type="submit" id="reverify-btn-{{ conn.id }}" style="background: var(--primary); color: var(--primary-foreground); border: none; padding: 6px 12px; border-radius: var(--radius-md); font-size: 11px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                        <iconify-icon icon="lucide:refresh-cw" id="reverify-icon-{{ conn.id }}" style="font-size: 12px;"></iconify-icon>
+                                        <span id="reverify-text-{{ conn.id }}">Re-verify</span>
+                                    </button>
+                                </form>
+                            {% elif conn.verification_status == 'rejected' %}
+                                <div style="font-size: 11px; color: var(--destructive) !important; margin-top: 4px; max-width: 200px; text-align: right;">
+                                    {% if conn.verification_flags %}
+                                        {% for flag in conn.verification_flags %}
+                                            {% if 'you need at least' in flag|lower %}
+                                                {{ flag }}
+                                            {% elif 'below minimum' in flag|lower %}
+                                                {{ flag }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        Verification failed
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            {% if conn.platform == 'facebook' or conn.platform == 'instagram' or conn.platform == 'tiktok' %}
+                                {% if not conn.access_token %}
+                                    <div style="font-size: 11px; color: var(--muted-foreground) !important; margin-top: 8px; padding: 6px 12px; background: var(--muted); border-radius: var(--radius-md); display: inline-block; opacity: 0.6;">
+                                        Auto-connect unavailable
+                                    </div>
+                                {% else %}
+                                    <div style="font-size: 11px; color: var(--success-foreground) !important; margin-top: 4px;">
+                                        ✓ Connected via OAuth
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div style="text-align: center; padding: 40px 20px; color: var(--muted-foreground) !important;">
+                    <iconify-icon icon="lucide:link" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px;"></iconify-icon>
+                    <p>No platforms connected yet</p>
+                </div>
+            {% endif %}
+
+            <!-- Quick Connect (OAuth) -->
+            <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
+                <h3 style="font-size: 14px; font-weight: 600; color: var(--foreground) !important; margin-bottom: 12px;">
+                    Quick Connect (OAuth)
+                </h3>
+                
+                <!-- Notice about OAuth being unavailable -->
+                <div style="background: var(--warning); color: var(--warning-foreground); padding: 12px 16px; border-radius: var(--radius-md); margin-bottom: 16px; border: 1px solid var(--warning-foreground); display: flex; align-items: start; gap: 12px;">
+                    <iconify-icon icon="lucide:info" style="font-size: 18px; flex-shrink: 0; margin-top: 2px;"></iconify-icon>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; margin-bottom: 4px; font-size: 13px;">Auto-Connect Temporarily Unavailable</div>
+                        <div style="font-size: 12px; opacity: 0.9;">
+                            OAuth integration for Facebook, Instagram, and TikTok is being configured. Please use the manual form below to add your platforms for now.
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap;">
+                    <!-- Facebook - Disabled -->
+                    <div style="flex: 1; min-width: 120px; text-align: center; padding: 10px 16px; background: var(--muted); color: var(--muted-foreground); border-radius: var(--radius-md); opacity: 0.5; cursor: not-allowed; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <iconify-icon icon="mdi:facebook" style="font-size: 18px;"></iconify-icon>
+                        <span>Connect Facebook</span>
+                    </div>
+                    
+                    <!-- Instagram - Disabled -->
+                    <div style="flex: 1; min-width: 120px; text-align: center; padding: 10px 16px; background: var(--muted); color: var(--muted-foreground); border-radius: var(--radius-md); opacity: 0.5; cursor: not-allowed; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <iconify-icon icon="mdi:instagram" style="font-size: 18px;"></iconify-icon>
+                        <span>Connect Instagram</span>
+                    </div>
+                    
+                    <!-- TikTok - Disabled -->
+                    <div style="flex: 1; min-width: 120px; text-align: center; padding: 10px 16px; background: var(--muted); color: var(--muted-foreground); border-radius: var(--radius-md); opacity: 0.5; cursor: not-allowed; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <iconify-icon icon="ic:baseline-tiktok" style="font-size: 18px;"></iconify-icon>
+                        <span>Connect TikTok</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Platform Form -->
+            <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
+                <h3 style="font-size: 14px; font-weight: 600; color: var(--foreground) !important; margin-bottom: 16px;">
+                    Add New Platform (Manual)
+                </h3>
+                <form method="post" class="form-grid">
+                    {% csrf_token %}
+                    <input type="hidden" name="add_platform" value="1">
+                    <div class="form-group">
+                        <label class="label" style="color: var(--foreground) !important;">Platform</label>
+                        {{ platform_form.platform }}
+                        {% if platform_form.platform.errors %}
+                            <div style="color: var(--destructive) !important; font-size: 12px; margin-top: 4px;">
+                                {{ platform_form.platform.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label class="label" style="color: var(--foreground) !important;">Handle (without @)</label>
+                        {{ platform_form.handle }}
+                        {% if platform_form.handle.errors %}
+                            <div style="color: var(--destructive) !important; font-size: 12px; margin-top: 4px;">
+                                {{ platform_form.handle.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label class="label" style="color: var(--foreground) !important;">Followers</label>
+                        {{ platform_form.followers_count }}
+                        <small style="font-size: 11px; color: var(--muted-foreground) !important; margin-top: 4px; display: block;" id="minFollowersHint">
+                            Minimum: 1,000
+                        </small>
+                        {% if platform_form.followers_count.errors %}
+                            <div style="color: var(--destructive) !important; font-size: 12px; margin-top: 4px;">
+                                {{ platform_form.followers_count.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label class="label" style="color: var(--foreground) !important;">Sample Post URL (optional)</label>
+                        {{ platform_form.sample_post_url }}
+                        {% if platform_form.sample_post_url.errors %}
+                            <div style="color: var(--destructive) !important; font-size: 12px; margin-top: 4px;">
+                                {{ platform_form.sample_post_url.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group full-width" style="margin-top: 8px;">
+                        <button type="submit" class="btn-primary">Add Platform</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Verification Status -->
+    <div class="right-col">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Verification Steps</div>
+            </div>
+
+            <div class="checklist-item {% if influencer.user.email %}completed{% endif %}">
+                <div class="check-circle">
+                    {% if influencer.user.email %}
+                        <iconify-icon icon="lucide:check" style="font-size: 12px;"></iconify-icon>
+                    {% endif %}
+                </div>
+                <div class="check-content">
+                    <div class="check-title">Email Confirmation</div>
+                    <div class="check-desc">
+                        {% if influencer.user.email %}
+                            Verified: {{ influencer.user.email }}
+                        {% else %}
+                            Confirm your email address
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-item {% if verified_platforms.exists %}completed{% endif %}">
+                <div class="check-circle">
+                    {% if verified_platforms.exists %}
+                        <iconify-icon icon="lucide:check" style="font-size: 12px;"></iconify-icon>
+                    {% endif %}
+                </div>
+                <div class="check-content">
+                    <div class="check-title">Platform Verification</div>
+                    <div class="check-desc">
+                        {% if verified_platforms.exists %}
+                            {{ verified_platforms.count }} platform{{ verified_platforms.count|pluralize }} verified
+                        {% else %}
+                            Verify at least one platform account
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-item {% if influencer.niche and influencer.primary_platform %}completed{% endif %}">
+                <div class="check-circle">
+                    {% if influencer.niche and influencer.primary_platform %}
+                        <iconify-icon icon="lucide:check" style="font-size: 12px;"></iconify-icon>
+                    {% endif %}
+                </div>
+                <div class="check-content">
+                    <div class="check-title">Profile Completion</div>
+                    <div class="check-desc">
+                        {% if influencer.niche and influencer.primary_platform %}
+                            Profile complete ({{ completeness_score }}%)
+                        {% else %}
+                            Add niche and primary platform
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-item {% if influencer.verification_status == 'approved' %}completed{% endif %}">
+                <div class="check-circle">
+                    {% if influencer.verification_status == 'approved' %}
+                        <iconify-icon icon="lucide:check" style="font-size: 12px;"></iconify-icon>
+                    {% endif %}
+                </div>
+                <div class="check-content">
+                    <div class="check-title">Account Verification</div>
+                    <div class="check-desc">
+                        {% if influencer.verification_status == 'approved' %}
+                            Account verified and approved
+                        {% elif influencer.verification_status == 'pending' %}
+                            Under review by admin
+                        {% elif influencer.verification_status == 'rejected' %}
+                            Verification rejected - contact support
+                        {% else %}
+                            Pending admin approval
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="help-card">
+            <div class="help-title">Need Help?</div>
+            <div class="help-text">If you're having trouble verifying your account, please contact our support team with your username.</div>
+            <a href="#" class="help-link">Contact Support →</a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Update minimum followers hint based on selected platform
+const platformSelect = document.querySelector('#id_platform');
+const followersInput = document.querySelector('#id_followers_count');
+const minFollowersHint = document.getElementById('minFollowersHint');
+
+const platformRequirements = {
+    {% for platform, min_followers in platform_requirements.items %}
+        '{{ platform }}': {{ min_followers }},
+    {% endfor %}
+};
+
+if (platformSelect && minFollowersHint) {
+    platformSelect.addEventListener('change', function() {
+        const selectedPlatform = this.value;
+        if (selectedPlatform && platformRequirements[selectedPlatform]) {
+            minFollowersHint.textContent = `Minimum: ${platformRequirements[selectedPlatform].toLocaleString()}`;
+            if (followersInput) {
+                followersInput.setAttribute('min', platformRequirements[selectedPlatform]);
+            }
+        } else {
+            minFollowersHint.textContent = 'Minimum: 1,000';
+            if (followersInput) {
+                followersInput.setAttribute('min', 1000);
+            }
+        }
+    });
+}
+
+// Handle re-verify button click
+function handleReverify(event, connectionId) {
+    const form = document.getElementById('reverify-form-' + connectionId);
+    const button = document.getElementById('reverify-btn-' + connectionId);
+    const icon = document.getElementById('reverify-icon-' + connectionId);
+    const text = document.getElementById('reverify-text-' + connectionId);
+    
+    if (!form || !button) {
+        console.error('Form elements not found');
+        return true; // Allow form to submit normally
+    }
+    
+    // Disable button and show loading state
+    button.disabled = true;
+    button.style.opacity = '0.6';
+    button.style.cursor = 'not-allowed';
+    if (icon) {
+        icon.setAttribute('icon', 'lucide:loader-2');
+        icon.style.animation = 'spin 1s linear infinite';
+    }
+    if (text) {
+        text.textContent = 'Verifying...';
+    }
+    
+    // Add spin animation
+    if (!document.getElementById('spin-style')) {
+        const style = document.createElement('style');
+        style.id = 'spin-style';
+        style.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
+        document.head.appendChild(style);
+    }
+    
+    // Allow form to submit (don't prevent default)
+    return true;
+}
+
+// Handle Instagram connection with helpful prompt
+function confirmInstagramConnection(event) {
+    const message = `To connect Instagram, you'll be redirected to Facebook to log in and grant permissions.\n\n` +
+        `Requirements:\n` +
+        `• Your Instagram account must be a Business or Creator account\n` +
+        `• Your Instagram must be connected to a Facebook Page\n` +
+        `• You must be an admin of that Facebook Page\n\n` +
+        `If your Instagram isn't connected to a Facebook Page yet:\n` +
+        `1. Go to your Facebook Page Settings → Instagram\n` +
+        `2. Click "Connect Account" and log in with Instagram\n` +
+        `3. Then come back here and try again\n\n` +
+        `Continue to Facebook login?`;
+    
+    if (confirm(message)) {
+        // User confirmed, allow navigation
+        return true;
+    } else {
+        // User cancelled
+        event.preventDefault();
+        return false;
+    }
+}
+
+// Handle profile picture preview and auto-submit
+document.addEventListener('DOMContentLoaded', function() {
+    const profilePictureInput = document.getElementById('id_profile_picture');
+    const profilePicturePreview = document.getElementById('profile-picture-preview');
+    const profilePictureForm = document.getElementById('profile-picture-form');
+    
+    if (profilePictureInput && profilePicturePreview) {
+        profilePictureInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Check file size (5MB max)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size must be less than 5MB');
+                    e.target.value = '';
+                    return;
+                }
+                
+                // Check file type
+                if (!file.type.match('image.*')) {
+                    alert('Please select an image file');
+                    e.target.value = '';
+                    return;
+                }
+                
+                // Show preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profilePicturePreview.innerHTML = `<img src="${e.target.result}" alt="Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">`;
+                };
+                reader.readAsDataURL(file);
+                
+                // Auto-submit the form when a file is selected
+                if (profilePictureForm) {
+                    profilePictureForm.submit();
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}
+

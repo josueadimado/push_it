@@ -1,0 +1,72 @@
+// Team Section One
+.team-section-one {
+    .shape_01 {
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .shape_02 {
+        width: 100%;
+        bottom: 0%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .section-btn {
+        position: absolute;
+        right: 0;
+        top:50px;
+    }
+    .team-block {
+        img {
+            border-radius: 30px 30px 0 0;
+        }
+        .text  {
+            padding: 25px 30px 15px;
+            text-align: center;
+            background: #FFFFFF;
+            box-shadow: 0px 30px 70px rgba(0, 0, 0, 0.04);
+            border-radius: 0px 0px 30px 30px;
+            position: relative;
+            span {
+                font-size: 15px;
+            }
+            h5 {
+                font-size: 24px;
+                margin: 15px 0 0;
+            }
+        }
+
+    }
+}
+// Team Section Two
+.team-section-two { 
+    .team-block {
+        border: 2px solid #000;
+        border-radius: 30px;
+        box-shadow: 0 6px 0 #000;
+        overflow: hidden;
+        .text {
+            padding: 30px 12px;
+            h6 {
+                font-family: $font-Montserrat;
+                font-size: 24px;
+                text-transform: uppercase;
+                margin-bottom: 13px;
+            }
+            span {
+                color: #000;
+            }
+        }
+        &:hover {
+            h6 {
+                text-decoration: underline;
+            }
+        }
+    }
+    .shape_01 {
+        top:8%;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 84%;
+    }
+}
