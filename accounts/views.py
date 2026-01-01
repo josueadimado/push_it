@@ -472,4 +472,3 @@ def influencer_verification_pending(request):
     return render(request, "accounts/influencer_verification_pending.html", {
         "influencer": influencer,
     })
-

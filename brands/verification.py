@@ -282,4 +282,3 @@ class BrandVerificationService:
                 brand.save()
         
         return result
-
