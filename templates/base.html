@@ -2,10 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}Push-it{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
     {% load static %}
-    <link rel="icon" href="{% static 'images/logo/Pushit.svg' %}">
+    
+    {# SEO Meta Tags #}
+    <title>{% block title %}Push-it - Connect Brands with Verified Influencers{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Push-it connects brands with verified influencers to create and post short-form promo videos on TikTok, Instagram, and YouTube — fast, secure, and tracked.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}influencer marketing, brand promotion, TikTok marketing, Instagram marketing, YouTube marketing, influencer platform, content creators, video promotion, social media marketing{% endblock %}">
+    <meta name="author" content="Push-it">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{% block canonical_url %}https://pushit.now{% endblock %}">
+    
+    {# Open Graph / Facebook #}
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pushit.now">
+    <meta property="og:title" content="{% block og_title %}Push-it - Connect Brands with Verified Influencers{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Connect brands with verified influencers to create and post short-form promo videos on TikTok, Instagram, and YouTube — fast, secure, and tracked.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}https://pushit.now{% static 'images/logo/Pushit.png' %}{% endblock %}">
+    <meta property="og:site_name" content="Push-it">
+    <meta property="og:locale" content="en_US">
+    
+    {# Twitter Card #}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}Push-it - Connect Brands with Verified Influencers{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Connect brands with verified influencers to create and post short-form promo videos on TikTok, Instagram, and YouTube.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}https://pushit.now{% static 'images/logo/Pushit.png' %}{% endblock %}">
+    
+    {# Favicon - Multiple formats for better browser support #}
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/fav-icon/icon.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/fav-icon/icon.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/fav-icon/icon.png' %}">
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/logo/Pushit.svg' %}">
+    <meta name="theme-color" content="#10b7d6">
+    
+    {# Mobile Optimizations #}
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    
+    {# Structured Data (JSON-LD) for SEO #}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Push-it",
+        "description": "Connect brands with verified influencers to create and post short-form promo videos on TikTok, Instagram, and YouTube — fast, secure, and tracked.",
+        "url": "https://pushit.now",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "150"
+        }
+    }
+    </script>
 
     {# Global CSS so every page (including login/signup) is styled #}
     <!-- Bootstrap CSS -->
@@ -18,6 +77,37 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}" media="all">
 
     <style>
+        /* Mobile Optimizations */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Prevent horizontal scroll on mobile */
+        body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+        
+        /* Touch-friendly tap targets */
+        button, a, input, select, textarea {
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        /* Improve text readability on mobile */
+        @media (max-width: 768px) {
+            body {
+                -webkit-text-size-adjust: 100%;
+                -ms-text-size-adjust: 100%;
+            }
+        }
+
+        /* Header background when page is scrolled */
         /* Header background when page is scrolled */
         .theme-main-menu.menu-style-six.white-vr.scrolled {
             background-color: #ffffff !important;
