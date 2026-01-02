@@ -1123,9 +1123,9 @@ html.light .cta-button-large {
         <div class="footer-copyright">© 2025 PushIt. All right reserved</div>
         <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
             <ul class="footer-links">
-                <li><a href="#privacy">Privacy</a></li>
-                <li><a href="#terms">Terms</a></li>
-                <li><a href="#support">Support</a></li>
+                <li><a href="{% url 'core:privacy_policy' %}">Privacy</a></li>
+                <li><a href="{% url 'core:terms_of_service' %}">Terms</a></li>
+                <li><a href="mailto:support@pushit.now">Support</a></li>
             </ul>
             <div class="footer-social-icons">
                 <a href="https://www.instagram.com/pushit.now/" target="_blank" rel="noopener noreferrer" class="instagram" title="Follow us on Instagram" aria-label="Follow us on Instagram">
