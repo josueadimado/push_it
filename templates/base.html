@@ -107,6 +107,137 @@
             }
         }
 
+        /* Mobile Header Improvements */
+        @media (max-width: 991px) {
+            .theme-main-menu {
+                padding: 12px 0 !important;
+            }
+            
+            .theme-main-menu .gap-one {
+                padding: 12px 16px !important;
+            }
+            
+            .theme-main-menu .logo img {
+                height: 40px !important;
+            }
+            
+            .theme-main-menu .right-widget {
+                gap: 8px !important;
+            }
+            
+            .theme-main-menu .login-btn-four {
+                padding: 8px 16px !important;
+                font-size: 14px !important;
+            }
+            
+            .theme-main-menu .login-btn-four img {
+                width: 16px !important;
+                height: 16px !important;
+            }
+            
+            .theme-main-menu .login-btn-four span {
+                display: none;
+            }
+            
+            .theme-main-menu .theme-toggle {
+                width: 40px !important;
+                height: 40px !important;
+                padding: 0 !important;
+            }
+            
+            .theme-main-menu .navbar-toggler {
+                width: 40px !important;
+                height: 40px !important;
+                padding: 0 !important;
+                border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                border-radius: 8px !important;
+                background: rgba(255, 255, 255, 0.1) !important;
+            }
+            
+            .theme-main-menu .navbar-toggler span {
+                width: 20px !important;
+                height: 2px !important;
+                background: #ffffff !important;
+            }
+            
+            .theme-main-menu .navbar-toggler::before,
+            .theme-main-menu .navbar-toggler::after {
+                width: 20px !important;
+                height: 2px !important;
+                background: #ffffff !important;
+            }
+            
+            .theme-main-menu .navbar-collapse {
+                position: fixed !important;
+                top: 64px !important;
+                left: 0 !important;
+                right: 0 !important;
+                background: var(--background, #0f172a) !important;
+                padding: 20px 16px !important;
+                max-height: calc(100vh - 64px) !important;
+                overflow-y: auto !important;
+                z-index: 1000 !important;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+            }
+            
+            .theme-main-menu .navbar-nav {
+                gap: 0 !important;
+            }
+            
+            .theme-main-menu .nav-item {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+            }
+            
+            .theme-main-menu .nav-item:last-child {
+                border-bottom: none !important;
+            }
+            
+            .theme-main-menu .nav-link {
+                padding: 16px 0 !important;
+                font-size: 16px !important;
+                color: #ffffff !important;
+                display: block !important;
+            }
+            
+            .theme-main-menu .mobile-logo-white,
+            .theme-main-menu .mobile-logo-color {
+                display: none !important;
+            }
+            
+            /* Scrolled state on mobile */
+            .theme-main-menu.menu-style-six.white-vr.scrolled .navbar-toggler {
+                border-color: rgba(0, 0, 0, 0.2) !important;
+                background: rgba(0, 0, 0, 0.05) !important;
+            }
+            
+            .theme-main-menu.menu-style-six.white-vr.scrolled .navbar-toggler span,
+            .theme-main-menu.menu-style-six.white-vr.scrolled .navbar-toggler::before,
+            .theme-main-menu.menu-style-six.white-vr.scrolled .navbar-toggler::after {
+                background: #000000 !important;
+            }
+            
+            .theme-main-menu.menu-style-six.white-vr.scrolled .navbar-collapse {
+                background: #ffffff !important;
+            }
+            
+            .theme-main-menu.menu-style-six.white-vr.scrolled .nav-item {
+                border-bottom-color: rgba(0, 0, 0, 0.1) !important;
+            }
+            
+            .theme-main-menu.menu-style-six.white-vr.scrolled .nav-link {
+                color: #000000 !important;
+            }
+            
+            /* Smooth menu animation */
+            .theme-main-menu .navbar-collapse {
+                transition: all 0.3s ease-in-out !important;
+            }
+            
+            .theme-main-menu .navbar-collapse:not(.show) {
+                display: none !important;
+            }
+        }
+
         /* Header background when page is scrolled */
         /* Header background when page is scrolled */
         .theme-main-menu.menu-style-six.white-vr.scrolled {
@@ -179,13 +310,18 @@
                         <!-- logo -->
                         <div class="right-widget ms-auto ms-lg-0 me-3 me-lg-0 order-lg-3">
                             <ul class="d-flex align-items-center style-none">
-                                <li>
+                                <li class="d-none d-sm-inline-block">
                                     <a href="{% url 'accounts:login' %}" class="login-btn-four fw-500 d-flex align-items-center tran3s">
                                         <img src="{% static 'images/icon/icon_26.svg' %}" alt="" class="me-2">
                                         <span>Login</span>
                                     </a>
                                 </li>
-                                <li class="ms-3">
+                                <li class="d-sm-none">
+                                    <a href="{% url 'accounts:login' %}" class="login-btn-four fw-500 d-flex align-items-center tran3s" title="Login">
+                                        <img src="{% static 'images/icon/icon_26.svg' %}" alt="Login">
+                                    </a>
+                                </li>
+                                <li class="ms-2 ms-sm-3">
                                     <button class="theme-toggle" id="themeToggle" title="Toggle theme">
                                         <i class="bi bi-sun-fill icon-sun"></i>
                                         <i class="bi bi-moon-fill icon-moon"></i>
