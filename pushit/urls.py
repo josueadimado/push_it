@@ -41,8 +41,16 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 else:
     # Production: Fallback to serve static files if web server isn't configured
-    # This is not ideal for performance but works if web server can't serve static files
-    urlpatterns += [
-        re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
-        re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
-    ]
+    # Note: Ideally, configure your web server (nginx/Apache) to serve static files for better performance
+    # This is a temporary solution if web server configuration isn't available
+    import os
+    
+    # Only add static file serving if directories exist
+    if os.path.exists(settings.STATIC_ROOT) and os.path.isdir(settings.STATIC_ROOT):
+        urlpatterns += [
+            re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT, 'show_indexes': False}),
+        ]
+    if os.path.exists(settings.MEDIA_ROOT) and os.path.isdir(settings.MEDIA_ROOT):
+        urlpatterns += [
+            re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT, 'show_indexes': False}),
+        ]
