@@ -107,8 +107,51 @@
             }
         }
 
-        /* Mobile Header Improvements */
-        @media (max-width: 991px) {
+        /* Tablet Header - Show menu items on the right */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .theme-main-menu {
+                padding: 16px 0 !important;
+            }
+            
+            .theme-main-menu .gap-one {
+                padding: 16px 24px !important;
+            }
+            
+            .theme-main-menu .logo img {
+                height: 44px !important;
+            }
+            
+            /* Show menu items horizontally on tablets */
+            .theme-main-menu .navbar-collapse {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: flex-end !important;
+            }
+            
+            .theme-main-menu .navbar-nav {
+                flex-direction: row !important;
+                gap: 8px !important;
+                align-items: center !important;
+            }
+            
+            .theme-main-menu .nav-link {
+                padding: 8px 12px !important;
+                font-size: 15px !important;
+                white-space: nowrap !important;
+            }
+            
+            .theme-main-menu .navbar-toggler {
+                display: none !important;
+            }
+            
+            .theme-main-menu .mobile-logo-white,
+            .theme-main-menu .mobile-logo-color {
+                display: none !important;
+            }
+        }
+
+        /* Mobile Header Improvements (International Standards) */
+        @media (max-width: 767px) {
             .theme-main-menu {
                 padding: 12px 0 !important;
             }
@@ -121,13 +164,20 @@
                 height: 40px !important;
             }
             
+            /* Better mobile arrangement: Logo left, Actions right */
+            .theme-main-menu .top-header > div {
+                flex-wrap: nowrap !important;
+            }
+            
             .theme-main-menu .right-widget {
-                gap: 8px !important;
+                gap: 6px !important;
+                margin-left: auto !important;
             }
             
             .theme-main-menu .login-btn-four {
-                padding: 8px 16px !important;
-                font-size: 14px !important;
+                padding: 8px 12px !important;
+                font-size: 13px !important;
+                min-width: auto !important;
             }
             
             .theme-main-menu .login-btn-four img {
@@ -135,17 +185,21 @@
                 height: 16px !important;
             }
             
-            /* Hide login text only on very small screens */
-            @media (max-width: 575px) {
-                .theme-main-menu .login-btn-four span {
-                    display: none;
-                }
+            /* Hide login text on mobile - icon only */
+            .theme-main-menu .login-btn-four span {
+                display: none !important;
             }
             
             .theme-main-menu .theme-toggle {
                 width: 40px !important;
                 height: 40px !important;
                 padding: 0 !important;
+                flex-shrink: 0 !important;
+            }
+            
+            /* Hamburger menu on far right */
+            .theme-main-menu .navbar {
+                margin-left: 8px !important;
             }
             
             .theme-main-menu .navbar-toggler {
@@ -155,6 +209,9 @@
                 border: 1px solid rgba(255, 255, 255, 0.2) !important;
                 border-radius: 8px !important;
                 background: rgba(255, 255, 255, 0.1) !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
             }
             
             .theme-main-menu .navbar-toggler span {
@@ -170,25 +227,56 @@
                 background: #ffffff !important;
             }
             
+            /* Backdrop overlay for mobile menu */
+            .theme-main-menu .navbar-collapse::before {
+                content: '';
+                position: fixed;
+                top: 64px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: -1;
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+                pointer-events: none;
+            }
+            
+            .theme-main-menu .navbar-collapse.show::before {
+                opacity: 1;
+                pointer-events: auto;
+            }
+            
+            /* Full-screen mobile menu overlay - slides from right */
             .theme-main-menu .navbar-collapse {
                 position: fixed !important;
                 top: 64px !important;
                 left: 0 !important;
                 right: 0 !important;
+                bottom: 0 !important;
                 background: var(--background, #0f172a) !important;
-                padding: 20px 16px !important;
+                padding: 24px 20px !important;
                 max-height: calc(100vh - 64px) !important;
                 overflow-y: auto !important;
                 z-index: 1000 !important;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+                box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3) !important;
+                transform: translateX(100%) !important;
+                transition: transform 0.3s ease-in-out !important;
+            }
+            
+            .theme-main-menu .navbar-collapse.show {
+                transform: translateX(0) !important;
             }
             
             .theme-main-menu .navbar-nav {
+                flex-direction: column !important;
                 gap: 0 !important;
+                width: 100% !important;
             }
             
             .theme-main-menu .nav-item {
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+                width: 100% !important;
             }
             
             .theme-main-menu .nav-item:last-child {
@@ -196,10 +284,11 @@
             }
             
             .theme-main-menu .nav-link {
-                padding: 16px 0 !important;
-                font-size: 16px !important;
+                padding: 18px 0 !important;
+                font-size: 17px !important;
                 color: #ffffff !important;
                 display: block !important;
+                font-weight: 500 !important;
             }
             
             .theme-main-menu .mobile-logo-white,
@@ -229,15 +318,6 @@
             
             .theme-main-menu.menu-style-six.white-vr.scrolled .nav-link {
                 color: #000000 !important;
-            }
-            
-            /* Smooth menu animation */
-            .theme-main-menu .navbar-collapse {
-                transition: all 0.3s ease-in-out !important;
-            }
-            
-            .theme-main-menu .navbar-collapse:not(.show) {
-                display: none !important;
             }
         }
 
@@ -340,7 +420,7 @@
                             </ul>
                         </div>
                         <nav class="navbar navbar-expand-lg p0 order-lg-2 ms-lg-5">
-                            <button class="navbar-toggler d-block d-lg-none" type="button" data-bs-toggle="collapse"
+                            <button class="navbar-toggler d-block d-md-none" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                                     aria-label="Toggle navigation">
                                 <span></span>
