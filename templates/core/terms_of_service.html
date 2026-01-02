@@ -45,10 +45,6 @@ body {
     text-rendering: optimizeLegibility;
 }
 
-h1, h2, h3, h4, h5, h6, p, span, div, a, li, ul, ol {
-    color: var(--text-primary);
-}
-
 /* Navigation */
 .new-nav {
     position: fixed;
@@ -118,8 +114,6 @@ html.light .new-nav {
     display: flex;
     align-items: center;
     gap: 1rem;
-    position: relative;
-    z-index: 10;
 }
 
 .nav-btn {
@@ -132,9 +126,6 @@ html.light .new-nav {
     border: none;
     cursor: pointer;
     display: inline-block;
-    pointer-events: auto;
-    position: relative;
-    z-index: 10;
 }
 
 .nav-btn-login {
@@ -189,8 +180,8 @@ html.light .new-nav {
 /* Legal Page Content */
 .legal-page-wrapper {
     min-height: 100vh;
-    background: var(--bg-primary);
     padding: 100px 0 60px;
+    background: var(--bg-primary);
 }
 
 .legal-content {
@@ -207,16 +198,21 @@ html.light .new-nav {
     font-weight: 800;
     color: var(--text-primary);
     margin-bottom: 8px;
-    font-family: 'Inter', sans-serif;
 }
 
 .legal-content h2 {
     font-size: 24px;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 16px;
     margin-top: 32px;
-    font-family: 'Inter', sans-serif;
+    margin-bottom: 16px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-color);
+}
+
+.legal-content h2:first-of-type {
+    margin-top: 40px;
+    padding-top: 40px;
 }
 
 .legal-content p {
@@ -224,7 +220,6 @@ html.light .new-nav {
     line-height: 1.7;
     color: var(--text-primary);
     margin-bottom: 16px;
-    font-family: 'Inter', sans-serif;
 }
 
 .legal-content ul {
@@ -233,7 +228,6 @@ html.light .new-nav {
     line-height: 1.8;
     margin-left: 24px;
     margin-bottom: 32px;
-    font-family: 'Inter', sans-serif;
 }
 
 .legal-content li {
@@ -340,32 +334,13 @@ html.light .new-nav {
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
     .nav-links {
         display: none;
     }
     
     .mobile-menu-btn {
         display: block;
-    }
-}
-
-@media (max-width: 768px) {
-    .nav-container {
-        padding: 0 1rem;
-    }
-    
-    .nav-actions {
-        gap: 0.5rem;
-    }
-    
-    .nav-btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.85rem;
-    }
-    
-    .legal-page-wrapper {
-        padding: 80px 0 40px;
     }
     
     .legal-content {
@@ -467,7 +442,9 @@ html.light .new-nav {
             <li>Brands/Advertisers</li>
             <li>Creators/Influencers</li>
         </ul>
-        <p>You are responsible for maintaining the confidentiality of your account and all activities under it.</p>
+        <p>
+            You are responsible for maintaining the confidentiality of your account and all activities under it.
+        </p>
 
         <h2>4. Campaigns & Content</h2>
         <ul>
@@ -475,7 +452,9 @@ html.light .new-nav {
             <li>Creators choose campaigns and submit content links for review.</li>
             <li>PushIt may review submissions for compliance but does not own creator content.</li>
         </ul>
-        <p>Creators grant PushIt a non-exclusive, royalty-free license to display submitted content for platform, marketing, and reporting purposes.</p>
+        <p>
+            Creators grant PushIt a non-exclusive, royalty-free license to display submitted content for platform, marketing, and reporting purposes.
+        </p>
 
         <h2>5. Payments & Fees</h2>
         <ul>
@@ -486,8 +465,12 @@ html.light .new-nav {
         </ul>
 
         <h2>6. Creator Trust Score (BTS™️)</h2>
-        <p>PushIt uses internal performance metrics to rank creators.</p>
-        <p>Scores are informational only and do not constitute financial or professional guarantees.</p>
+        <p>
+            PushIt uses internal performance metrics to rank creators.
+        </p>
+        <p>
+            Scores are informational only and do not constitute financial or professional guarantees.
+        </p>
 
         <h2>7. Prohibited Activities</h2>
         <p>Users must not:</p>
@@ -499,7 +482,9 @@ html.light .new-nav {
         </ul>
 
         <h2>8. Suspension & Termination</h2>
-        <p>PushIt reserves the right to suspend or terminate accounts that violate these Terms without prior notice.</p>
+        <p>
+            PushIt reserves the right to suspend or terminate accounts that violate these Terms without prior notice.
+        </p>
 
         <h2>9. Limitation of Liability</h2>
         <p>PushIt is not liable for:</p>
@@ -511,7 +496,9 @@ html.light .new-nav {
         </ul>
 
         <h2>10. Governing Law</h2>
-        <p>These Terms are governed by the laws of the Federal Republic of Nigeria.</p>
+        <p>
+            These Terms are governed by the laws of the Federal Republic of Nigeria.
+        </p>
 
         <h2>11. Contact</h2>
         <p>📧 <a href="mailto:support@pushit.now">support@pushit.now</a></p>
@@ -564,7 +551,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (logoWhite) logoWhite.style.display = 'none';
         if (logoColor) logoColor.style.display = 'block';
     } else {
-        html.classList.remove('light');
         if (sunIcon) sunIcon.style.display = 'block';
         if (moonIcon) moonIcon.style.display = 'none';
         if (logoWhite) logoWhite.style.display = 'block';
@@ -601,6 +587,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     logoColor.style.display = 'none';
                 }
             }
+        });
+    }
+    
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (mobileMenuBtn && navLinks) {
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
         });
     }
 });
