@@ -135,8 +135,11 @@
                 height: 16px !important;
             }
             
-            .theme-main-menu .login-btn-four span {
-                display: none;
+            /* Hide login text only on very small screens */
+            @media (max-width: 575px) {
+                .theme-main-menu .login-btn-four span {
+                    display: none;
+                }
             }
             
             .theme-main-menu .theme-toggle {
