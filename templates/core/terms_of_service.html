@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Terms of Service - Push-it{% endblock %}
+
+{% block content %}
+<div class="legal-page-wrapper" style="min-height: 100vh; background: var(--background, #0f172a); padding: 80px 0 60px;">
+    <div class="container" style="max-width: 900px; margin: 0 auto; padding: 0 20px;">
+        <div class="legal-content" style="background: var(--card-background, #1e293b); border-radius: 16px; padding: 48px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);">
+            <h1 style="font-size: 36px; font-weight: 700; color: var(--foreground, #ffffff); margin-bottom: 8px;">Terms of Service</h1>
+            <p style="color: var(--muted-foreground, #94a3b8); font-size: 14px; margin-bottom: 40px;">Effective Date: {{ effective_date }}</p>
+            
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 40px;">
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    Welcome to Push It Global Technologies Limited ("PushIt", "we", "us", or "our").<br>
+                    These Terms of Service ("Terms") govern your access to and use of the PushIt platform, including our website, mobile services, WhatsApp/Telegram bots, and related tools (collectively, the "Platform").
+                </p>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 40px;">
+                    By accessing or using PushIt, you agree to be bound by these Terms. If you do not agree, do not use the Platform.
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">1. About PushIt</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 24px;">
+                    PushIt is a digital marketing and creator engagement platform that connects brands, musicians, and organizations with content creators and influencers to run promotional campaigns across social media platforms.
+                </p>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    PushIt does not guarantee campaign results, follower growth, or sales outcomes.
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">2. Eligibility</h2>
+                <ul style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.8; margin-left: 24px; margin-bottom: 32px;">
+                    <li style="margin-bottom: 12px;">You must be at least 18 years old to use PushIt.</li>
+                    <li>By using the Platform, you confirm that all information provided is accurate and lawful.</li>
+                </ul>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">3. User Accounts</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 16px;">
+                    Users may register as:
+                </p>
+                <ul style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.8; margin-left: 24px; margin-bottom: 16px;">
+                    <li style="margin-bottom: 8px;">Brands/Advertisers</li>
+                    <li>Creators/Influencers</li>
+                </ul>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    You are responsible for maintaining the confidentiality of your account and all activities under it.
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">4. Campaigns & Content</h2>
+                <ul style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.8; margin-left: 24px; margin-bottom: 16px;">
+                    <li style="margin-bottom: 12px;">Brands submit campaign briefs.</li>
+                    <li style="margin-bottom: 12px;">Creators choose campaigns and submit content links for review.</li>
+                    <li style="margin-bottom: 12px;">PushIt may review submissions for compliance but does not own creator content.</li>
+                </ul>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    Creators grant PushIt a non-exclusive, royalty-free license to display submitted content for platform, marketing, and reporting purposes.
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">5. Payments & Fees</h2>
+                <ul style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.8; margin-left: 24px; margin-bottom: 32px;">
+                    <li style="margin-bottom: 12px;">Payments may be processed via third-party providers (e.g., Paystack, Flutterwave).</li>
+                    <li style="margin-bottom: 12px;">PushIt may hold funds in escrow until campaign requirements are fulfilled.</li>
+                    <li style="margin-bottom: 12px;">Platform service fees apply and are disclosed before payment.</li>
+                    <li>Refunds are subject to campaign status and platform policies.</li>
+                </ul>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">6. Creator Trust Score (BTS™️)</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 16px;">
+                    PushIt uses internal performance metrics to rank creators.
+                </p>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    Scores are informational only and do not constitute financial or professional guarantees.
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">7. Prohibited Activities</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 16px;">
+                    Users must not:
+                </p>
+                <ul style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.8; margin-left: 24px; margin-bottom: 32px;">
+                    <li style="margin-bottom: 12px;">Submit false or misleading information</li>
+                    <li style="margin-bottom: 12px;">Use bots, fake engagement, or fraudulent methods</li>
+                    <li style="margin-bottom: 12px;">Harass, abuse, or impersonate others</li>
+                    <li>Violate third-party platform policies (TikTok, Instagram, etc.)</li>
+                </ul>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">8. Suspension & Termination</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    PushIt reserves the right to suspend or terminate accounts that violate these Terms without prior notice.
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">9. Limitation of Liability</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 16px;">
+                    PushIt is not liable for:
+                </p>
+                <ul style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.8; margin-left: 24px; margin-bottom: 32px;">
+                    <li style="margin-bottom: 12px;">Campaign performance outcomes</li>
+                    <li style="margin-bottom: 12px;">Platform downtime</li>
+                    <li style="margin-bottom: 12px;">Third-party platform actions</li>
+                    <li>Creator or brand disputes beyond escrow obligations</li>
+                </ul>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">10. Governing Law</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    These Terms are governed by the laws of the Federal Republic of Nigeria.
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">11. Contact</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 8px;">
+                    📧 <a href="mailto:support@pushit.now" style="color: var(--primary, #10b7d6); text-decoration: none;">support@pushit.now</a>
+                </p>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    🏢 Push It Global Technologies Limited, Nigeria
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+@media (max-width: 768px) {
+    .legal-content {
+        padding: 32px 24px !important;
+    }
+    
+    .legal-content h1 {
+        font-size: 28px !important;
+    }
+    
+    .legal-content h2 {
+        font-size: 20px !important;
+    }
+    
+    .legal-content p,
+    .legal-content li {
+        font-size: 15px !important;
+    }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Privacy Policy - Push-it{% endblock %}
+
+{% block content %}
+<div class="legal-page-wrapper" style="min-height: 100vh; background: var(--background, #0f172a); padding: 80px 0 60px;">
+    <div class="container" style="max-width: 900px; margin: 0 auto; padding: 0 20px;">
+        <div class="legal-content" style="background: var(--card-background, #1e293b); border-radius: 16px; padding: 48px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);">
+            <h1 style="font-size: 36px; font-weight: 700; color: var(--foreground, #ffffff); margin-bottom: 8px;">Privacy Policy</h1>
+            <p style="color: var(--muted-foreground, #94a3b8); font-size: 14px; margin-bottom: 8px;">Effective Date: {{ effective_date }}</p>
+            <p style="color: var(--muted-foreground, #94a3b8); font-size: 14px; margin-bottom: 40px;">(NDPR-aligned, TikTok-safe)</p>
+            
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 40px;">
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    Push It Global Technologies Limited ("PushIt") respects your privacy and is committed to protecting your personal data in accordance with the Nigeria Data Protection Regulation (NDPR).
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">1. Information We Collect</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 16px;">
+                    We may collect:
+                </p>
+                <ul style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.8; margin-left: 24px; margin-bottom: 32px;">
+                    <li style="margin-bottom: 12px;">Personal details (name, email, phone number)</li>
+                    <li style="margin-bottom: 12px;">Account information</li>
+                    <li style="margin-bottom: 12px;">Campaign data</li>
+                    <li style="margin-bottom: 12px;">Payment-related information (processed by third parties)</li>
+                    <li style="margin-bottom: 12px;">Device and usage data</li>
+                    <li>Content and links submitted by creators</li>
+                </ul>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">2. How We Collect Data</h2>
+                <ul style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.8; margin-left: 24px; margin-bottom: 32px;">
+                    <li style="margin-bottom: 12px;">Website forms</li>
+                    <li style="margin-bottom: 12px;">Platform sign-ups</li>
+                    <li style="margin-bottom: 12px;">WhatsApp/Telegram bots</li>
+                    <li style="margin-bottom: 12px;">Cookies and analytics tools</li>
+                    <li>Third-party integrations (e.g., TikTok APIs)</li>
+                </ul>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">3. How We Use Data</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 16px;">
+                    We use data to:
+                </p>
+                <ul style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.8; margin-left: 24px; margin-bottom: 32px;">
+                    <li style="margin-bottom: 12px;">Operate the Platform</li>
+                    <li style="margin-bottom: 12px;">Match brands with creators</li>
+                    <li style="margin-bottom: 12px;">Process payments</li>
+                    <li style="margin-bottom: 12px;">Improve services</li>
+                    <li style="margin-bottom: 12px;">Prevent fraud</li>
+                    <li>Communicate updates and support</li>
+                </ul>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">4. Data Sharing</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 16px;">
+                    We may share data with:
+                </p>
+                <ul style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.8; margin-left: 24px; margin-bottom: 16px;">
+                    <li style="margin-bottom: 12px;">Payment processors</li>
+                    <li style="margin-bottom: 12px;">Analytics providers</li>
+                    <li style="margin-bottom: 12px;">Legal authorities (if required)</li>
+                    <li style="margin-bottom: 12px;">Third-party platforms for campaign execution</li>
+                </ul>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    We do not sell personal data.
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">5. Cookies & Tracking</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    We use cookies and similar technologies to enhance user experience and analyze platform usage.
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">6. Data Security</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    We implement reasonable security measures to protect your information. However, no system is 100% secure.
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">7. User Rights</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 16px;">
+                    You have the right to:
+                </p>
+                <ul style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.8; margin-left: 24px; margin-bottom: 16px;">
+                    <li style="margin-bottom: 12px;">Access your data</li>
+                    <li style="margin-bottom: 12px;">Request corrections</li>
+                    <li style="margin-bottom: 12px;">Request deletion</li>
+                    <li style="margin-bottom: 12px;">Withdraw consent</li>
+                </ul>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    Requests can be sent to <a href="mailto:support@pushit.now" style="color: var(--primary, #10b7d6); text-decoration: none;">support@pushit.now</a>.
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">8. Data Retention</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    We retain personal data only as long as necessary to fulfill platform purposes or legal obligations.
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">9. Children's Privacy</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    PushIt does not knowingly collect data from individuals under 18.
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">10. Changes to This Policy</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    We may update this Privacy Policy periodically. Continued use of the Platform constitutes acceptance of updates.
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border, #334155); padding-top: 32px; margin-top: 32px;">
+                <h2 style="font-size: 24px; font-weight: 600; color: var(--foreground, #ffffff); margin-bottom: 16px;">11. Contact</h2>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 8px;">
+                    📧 <a href="mailto:support@pushit.now" style="color: var(--primary, #10b7d6); text-decoration: none;">support@pushit.now</a>
+                </p>
+                <p style="color: var(--foreground, #ffffff); font-size: 16px; line-height: 1.7; margin-bottom: 32px;">
+                    🏢 Push It Global Technologies Limited, Nigeria
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+@media (max-width: 768px) {
+    .legal-content {
+        padding: 32px 24px !important;
+    }
+    
+    .legal-content h1 {
+        font-size: 28px !important;
+    }
+    
+    .legal-content h2 {
+        font-size: 20px !important;
+    }
+    
+    .legal-content p,
+    .legal-content li {
+        font-size: 15px !important;
+    }
+}
+</style>
+{% endblock %}
