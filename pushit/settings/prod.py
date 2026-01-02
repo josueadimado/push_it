@@ -2,6 +2,10 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",") if os.getenv("DJANGO_ALLOWED_HOSTS") else []
+# Set ALLOWED_HOSTS - include pushit.now and any additional hosts from environment
+ALLOWED_HOSTS = ["pushit.now"]
+if os.getenv("DJANGO_ALLOWED_HOSTS"):
+    additional_hosts = [host.strip() for host in os.getenv("DJANGO_ALLOWED_HOSTS").split(",") if host.strip()]
+    ALLOWED_HOSTS.extend(additional_hosts)
 
 
